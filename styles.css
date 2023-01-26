@@ -103,21 +103,31 @@ h1{
 .alejar{
     padding-bottom: 20px;
 }
-@media screen and (min-width: 400px) and (max-width: 900px){
+@media screen and (max-width: 800px) {
     .foto {
       max-width: 30px !important;
+      display: none !important;
     }
     h1{
-        font-size: 30px !important;
+        font-size: 10px !important;
+        
+    }
+    .nombre{
+        width: 340px !important;
+        font-size: 10px !important;
+    }
+    .Derecha{
+        width: 280px;
     }
     .resumen{
-        width: 340px;
+        width: 340px !important;
         font-size: 16px !important;
     }
     .acerca{
         
         width: 300px !important;
-        
+        padding: 0px 0px 0px 60px;
+  
     }
     .contactame{
         line-height: 20px;
@@ -136,23 +146,24 @@ h1{
 
 
 }
-@media screen and (min-width: 900px) and( max-width: 900px) {
-    .quitar {
+@media screen and (max-width: 1000px)  {
+    .foto {
       width: 150px !important;
+      display: none !important;
     }
     .nombre{
         width: 300px;
     }
     h1{
-        font-size: 30px !important;
+        font-size: 80px !important;
     }
     .resumen{
-        width: 340px;
+        width: 700px;
         font-size: 16px !important;
     }
     .acerca{
         
-        width: 900px !important;
+        width: 850px !important;
         
     }
     .contactame{
@@ -163,7 +174,7 @@ h1{
         padding-left: 0px;
     }
 }
-@media screen and (max-width: 1000px) and (max-width: 1400px) {
+@media screen and  (max-width: 1450px) and (min-width: 1200px) {
     .quitar {
       width: 300px !important;
     }
@@ -179,7 +190,7 @@ h1{
     }
     .acerca{
         
-        width: 1200px !important;
+        width: 1450px !important;
         
     }
     .contactame{
