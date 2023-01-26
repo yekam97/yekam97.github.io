@@ -103,7 +103,7 @@ h1{
 .alejar{
     padding-bottom: 20px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 400px) and (max-width: 900px){
     .foto {
       max-width: 30px !important;
     }
@@ -116,7 +116,7 @@ h1{
     }
     .acerca{
         
-        width: 400px !important;
+        width: 300px !important;
         
     }
     .contactame{
@@ -136,9 +136,9 @@ h1{
 
 
 }
-@media screen and (max-width: 900px) {
+@media screen and (min-width: 900px) and( max-width: 900px) {
     .quitar {
-      width: 30px !important;
+      width: 150px !important;
     }
     .nombre{
         width: 300px;
@@ -163,9 +163,9 @@ h1{
         padding-left: 0px;
     }
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) and (max-width: 1400px) {
     .quitar {
-      width: 30px !important;
+      width: 300px !important;
     }
     .nombre{
         width: 400px;
