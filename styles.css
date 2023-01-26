@@ -9,7 +9,7 @@ h1{
     font-size: 120px !important;
 }
 .nombre{
-    width: 800px;
+    width: 30%;
     margin-top: 194px;
     margin-left: 40px;
 }
@@ -109,4 +109,5 @@ h1{
     .nombre{
         max-width: 80% !important;
     }
+
   }
