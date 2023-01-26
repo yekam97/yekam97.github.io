@@ -102,3 +102,8 @@ h1{
 .alejar{
     padding-bottom: 20px;
 }
+@media screen and (max-width: 640px) {
+    .quitar {
+      display: none;
+    }
+  }
