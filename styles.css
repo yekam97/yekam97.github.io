@@ -104,9 +104,9 @@ h1{
 }
 @media screen and (max-width: 640px) {
     .quitar {
-      max-width: 80%;
+      max-width: 80% !important;
     }
     .nombre{
-        max-width: 80%;
+        max-width: 80% !important;
     }
   }
