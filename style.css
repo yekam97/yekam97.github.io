@@ -317,3 +317,54 @@ footer{margin-top:32px; padding:18px 0; text-align:center; color:var(--muted); f
   .hero{grid-template-columns:1fr}
   .hero-title{font-size:34px}
 }
+/* ===== Experiencia laboral ===== */
+.xp-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.xp {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(0,0,0,.02);
+}
+
+.xp-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.xp-title { font-weight: 700; }
+.xp-body { margin: 8px 0 0 18px; }
+.xp-body li { margin-bottom: 6px; }
+
+@media (prefers-color-scheme: dark) {
+  .xp { 
+    border-color: rgba(255,255,255,.12);
+    background: rgba(255,255,255,.03);
+  }
+}
+
+/* Variante “línea de tiempo” (actívala añadiendo class="reveal timeline" al section#experiencia) */
+#experiencia.timeline .xp-list { 
+  position: relative; 
+  padding-left: 18px; 
+  border-left: 2px solid currentColor; 
+  opacity: .9;
+}
+#experiencia.timeline .xp { position: relative; }
+#experiencia.timeline .xp::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 18px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: currentColor;
+  opacity: .9;
+}
+
