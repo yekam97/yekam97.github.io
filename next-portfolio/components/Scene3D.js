@@ -40,7 +40,7 @@ const Scene3D = () => {
       <directionalLight position={[-2, 5, 2]} intensity={1} />
 
       {/* OrbitControls permite al usuario rotar la escena con el ratón */}
-      <OrbitControls enableZoom={false} />
+      <OrbitControls enableZoom={false} enablePan={false} />
 
       {/* Aquí renderizamos nuestro objeto animado */}
       <AnimatedSphere />
