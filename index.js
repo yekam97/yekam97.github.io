@@ -1,10 +1,52 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import Roles from '../components/Roles';
 import Showcase from '../components/Showcase';
 import Sticker from '../components/Sticker';
 
 export default function HomePage() {
+  return (
+    <Layout>
+      <Hero />
+      <Showcase />
+      <Roles />
+    </Layout>
+  );
+}
+
+function Layout({ children }) {
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    // Este efecto se ejecuta solo en el cliente, después del primer renderizado.
+    const savedTheme = localStorage.getItem('site-theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('site-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  const handleNavClick = (e) => {
+    e.preventDefault();
+    const targetId = e.currentTarget.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const offset = 20; // Ajuste para el header pegajoso
+      const top = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <Head>
@@ -25,21 +67,18 @@ export default function HomePage() {
               <p className="tiny">Diseñador Industrial — Diseño Interior & Visualización Arquitectónica</p>
             </div>
           </div>
-          {/* La navegación del index.html original puede ser reemplazada por componentes Link de Next.js si se crean más páginas */}
           <nav className="primary" aria-label="Navegación principal">
-            <a href="#inicio">Inicio</a>
-            <a href="#roles">Enfoques</a>
-            <a href="#contacto">Contacto</a>
+            {/* Para enlaces a otras páginas, usarías: <Link href="/about"><a>Acerca de</a></Link> */}
+            <a href="#inicio" onClick={handleNavClick}>Inicio</a>
+            <a href="#roles" onClick={handleNavClick}>Enfoques</a>
+            <a href="#contacto" onClick={handleNavClick}>Contacto</a>
           </nav>
-          {/* El theme-toggle del script.js necesitaría ser reimplementado en React para funcionar aquí */}
-          <button id="theme-toggle" aria-label="Cambiar tema" title="Alternar tema" className="theme-toggle" type="button">🌗</button>
+          <button id="theme-toggle" aria-label="Cambiar tema" title="Alternar tema" className="theme-toggle" type="button" onClick={toggleTheme}>
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
         </header>
 
-        <main>
-          <Hero />
-          <Showcase />
-          <Roles />
-        </main>
+        <main>{children}</main>
 
         <Sticker />
 
