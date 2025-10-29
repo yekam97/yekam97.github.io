@@ -1,7 +1,17 @@
 {
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
-    "@react-three/drei": "^10.7.6",
-    "@react-three/fiber": "^9.4.0",
-    "three": "^0.180.0"
+    "@react-three/drei": "^9.108.3",
+    "@react-three/fiber": "^8.15.11",
+    "next": "^14.2.33",
+    "framer-motion": "^11.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.158.0"
   }
 }
