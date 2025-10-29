@@ -1,3 +1,0 @@
-.container{position:fixed; inset:0; pointer-events:none; z-index:9999}
-.dot{position:absolute; width:20px; height:20px; border-radius:999px; background: radial-gradient(circle at 30% 30%, rgba(255,200,120,0.95), rgba(37,99,235,0.7)); mix-blend-mode:screen; transform:translate3d(-50%,-50%,0); will-change:transform; transition:opacity .3s}
-@media (prefers-reduced-motion: reduce){ .dot{transition:none} }

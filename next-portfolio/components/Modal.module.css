@@ -1,5 +1,0 @@
-.backdrop{position:fixed; inset:0; background:rgba(2,6,12,0.6); display:flex; align-items:center; justify-content:center; z-index:1400}
-.frame{background:white; border-radius:12px; max-width:900px; width:calc(100% - 40px); overflow:hidden}
-.frame img{width:100%; height:auto; display:block}
-.body{padding:14px}
-.close{position:absolute; right:12px; top:12px; background:#fff; border-radius:8px; padding:6px}
