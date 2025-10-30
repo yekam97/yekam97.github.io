@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Roles from '../components/Roles';
@@ -8,6 +9,8 @@ import Experience from '../components/Experience';
 import Certifications from '../components/Certifications';
 import Contact from '../components/Contact';
 import Sticker from '../components/Sticker';
+
+const FloatingSphere = dynamic(() => import('../components/FloatingSphere'), { ssr: false });
 
 export default function HomePage() {
   return (
@@ -25,21 +28,35 @@ export default function HomePage() {
 function Layout({ children }) {
   const [theme, setTheme] = useState('light');
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
-    // Lógica para la animación "reveal on scroll"
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 }); // El elemento se revela cuando el 10% es visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (entry.target.id) {
+              setActiveSection(entry.target.id);
+            }
+            if (entry.target.classList.contains('reveal')) {
+              entry.target.classList.add('visible');
+            }
+          }
+        });
+      },
+      { threshold: 0.5 } // Adjust this value as needed
+    );
+
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach((section) => observer.observe(section));
 
     const elementsToReveal = document.querySelectorAll('.reveal');
     elementsToReveal.forEach((el) => observer.observe(el));
 
-    return () => elementsToReveal.forEach((el) => observer.unobserve(el));
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+      elementsToReveal.forEach((el) => observer.unobserve(el));
+    };
   }, []);
 
   useEffect(() => {
@@ -98,6 +115,8 @@ function Layout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
       </Head>
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />
+
+      <FloatingSphere activeSection={activeSection} />
 
       <div className="wrap">
         <header className="site-header visible">

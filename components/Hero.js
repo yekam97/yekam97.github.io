@@ -38,7 +38,7 @@ const Typewriter = () => {
 
 const Hero = () => {
   return (
-    <section className={styles.heroSection}>
+    <section id="hero" className={styles.heroSection}>
       {/* Columna izquierda opcional para foto */}
       {/* <div className={styles.photoColumn}></div> */}
       <motion.div 
