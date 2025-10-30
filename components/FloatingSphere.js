@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import styles from './FloatingSphere.module.css';
 
 const sectionStyles = {
@@ -11,20 +12,31 @@ const sectionStyles = {
 };
 
 const FloatingSphere = ({ activeSection }) => {
-  const style = sectionStyles[activeSection] || sectionStyles.hero;
+  const [style, setStyle] = useState(sectionStyles.hero);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const newStyle = sectionStyles[activeSection] || sectionStyles.hero;
+    setStyle(newStyle);
+
+    setScale(1.5);
+    const timer = setTimeout(() => setScale(1), 500);
+
+    return () => clearTimeout(timer);
+  }, [activeSection]);
 
   return (
     <motion.div
       className={styles.sphere}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ 
-        scale: 1, 
+        scale: scale,
         opacity: 1, 
         top: style.top, 
         left: style.left, 
         background: style.background 
       }}
-      transition={{ duration: 1.2, type: 'spring' }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
       whileHover={{ scale: 1.1 }}
     >
       <div className={styles.tooltip}>{style.name}</div>
