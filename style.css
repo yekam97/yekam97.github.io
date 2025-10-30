@@ -34,7 +34,7 @@
 
 /* Base */
 *{box-sizing:border-box}
-html{font-family:var(--ff-body); font-size:16px; scroll-behavior: smooth;}
+html{font-family:var(--ff-body); font-size:16px; scroll-behavior: smooth; scroll-snap-type: y mandatory;}
 body{height:100%; margin:0; color:var(--color-text); background-color: var(--color-bg); font-size:var(--step-1); line-height:1.6}
 a,button{font-family:inherit}
 img{max-width:100%; display:block}
@@ -48,7 +48,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Header */
 .site-header{position:sticky; top:1rem; backdrop-filter: blur(10px); background:rgba(255,255,255,0.8); border-radius:var(--radius); border:1px solid var(--color-neutral-light); padding:1rem 1.5rem; display:flex; align-items:center; justify-content:space-between; z-index:60; transition: transform 0.3s ease-out; width: calc(100% - 2rem); max-width: var(--maxw); margin: 1rem auto;}
-.site-header:not(.visible) { transform: translateY(-120%); }
 .brand{display:flex; gap:14px; align-items:center}
 .logo-mark{width:48px; height:48px; border-radius: 50%; background:var(--color-secondary); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; font-family: var(--ff-heading);}
 .brand h1{font-size:15px; margin:0}
@@ -220,6 +219,88 @@ footer{margin-top:32px; padding:18px 0; text-align:center; color:var(--muted); f
   .grid-projects{grid-template-columns:1fr}
   .wrap{padding:12px}
   header.site-header{flex-direction:column; gap:12px; align-items:flex-start}
+
+  .nav-toggle {
+    display: block;
+  }
+
+  nav.primary {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--color-bg);
+    flex-direction: column;
+    align-items: stretch;
+    border-top: 1px solid var(--color-neutral-light);
+    padding: 1rem 0;
+  }
+
+  nav.primary.nav-open {
+    display: flex;
+  }
+
+  nav.primary a {
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-neutral-light);
+  }
+
+  nav.primary a:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Hamburger Menu */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.hamburger {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-text);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-text);
+  transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  bottom: -8px;
+}
+
+.nav-open .hamburger {
+  transform: rotate(45deg);
+}
+
+.nav-open .hamburger::before {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.nav-open .hamburger::after {
+  bottom: 0;
+  transform: rotate(90deg);
 }
 
 /* Animations & accessibility */
@@ -320,57 +401,8 @@ footer{margin-top:32px; padding:18px 0; text-align:center; color:var(--muted); f
   .hero{grid-template-columns:1fr}
   .hero-title{font-size:34px}
 }
-/* ===== Experiencia laboral ===== */
-.xp-list {
-  display: grid;
-  gap: 1rem;
-  margin-top: 10px;
-}
-
-.xp {
-  border: 1px solid var(--color-neutral-light);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  transition: background-color 0.3s ease;
-}
-.xp:hover { background-color: rgba(0,0,0,0.02); }
-
-.xp-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.xp-title { font-weight: 700; }
-.xp-body { margin: 8px 0 0 18px; }
-.xp-body li { margin-bottom: 6px; }
-
-/* Variante “línea de tiempo” (actívala añadiendo class="reveal timeline" al section#experiencia) */
-#experiencia.timeline .xp-list { 
-  position: relative; 
-  padding-left: 18px; 
-  border-left: 2px solid currentColor; 
-  opacity: .9;
-}
-#experiencia.timeline .xp { position: relative; }
-#experiencia.timeline .xp::before {
-  content: "";
-  position: absolute;
-  left: -10px;
-  top: 18px;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: currentColor;
-  opacity: .9;
-}
-
-:root[data-theme="dark"] .xp {
-  border-color: var(--color-neutral-light);
-}
-:root[data-theme="dark"] .xp:hover {
-  background-color: rgba(255,255,255,0.03);
-}
-:root[data-theme="dark"] #experiencia.timeline .xp-list {
-  border-left-color: var(--color-neutral-dark);
+main > section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  padding-top: 80px; /* Adjust this value based on the actual height of your sticky header */
 }

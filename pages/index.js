@@ -24,8 +24,7 @@ export default function HomePage() {
 
 function Layout({ children }) {
   const [theme, setTheme] = useState('light');
-  const [showHeader, setShowHeader] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     // Lógica para la animación "reveal on scroll"
@@ -49,24 +48,7 @@ function Layout({ children }) {
     if (savedTheme) {
       setTheme(savedTheme);
     }
-
-    // Lógica para ocultar/mostrar header al hacer scroll
-    const controlHeader = () => {
-      if (typeof window !== 'undefined') {
-        if (window.scrollY > lastScrollY && window.scrollY > 100) { // si se hace scroll hacia abajo
-          setShowHeader(false);
-        } else { // si se hace scroll hacia arriba
-          setShowHeader(true);
-        }
-        setLastScrollY(window.scrollY);
-      }
-    };
-
-    window.addEventListener('scroll', controlHeader);
-    return () => {
-      window.removeEventListener('scroll', controlHeader);
-    };
-  }, [lastScrollY]);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -88,8 +70,13 @@ function Layout({ children }) {
     setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
   const handleNavClick = (e) => {
     e.preventDefault();
+    setIsNavOpen(false);
     const targetId = e.currentTarget.getAttribute('href').substring(1);
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
@@ -113,7 +100,7 @@ function Layout({ children }) {
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />
 
       <div className="wrap">
-        <header className={`site-header ${showHeader ? 'visible' : ''}`}>
+        <header className="site-header visible">
           <div className="brand">
             <div className="logo-mark">YG</div>
             <div>
@@ -121,7 +108,10 @@ function Layout({ children }) {
               <p className="tiny">Diseñador Industrial & Gestor de Proyectos</p>
             </div>
           </div>
-          <nav className="primary" aria-label="Navegación principal">
+          <button className="nav-toggle" onClick={toggleNav} aria-label="Toggle navigation">
+            <span className="hamburger"></span>
+          </button>
+          <nav className={`primary ${isNavOpen ? 'nav-open' : ''}`} aria-label="Navegación principal">
             <a href="#about" onClick={handleNavClick}>Sobre mí</a>
             <a href="#roles" onClick={handleNavClick}>Portafolio</a>
             <a href="#experiencia" onClick={handleNavClick}>Experiencia</a>
