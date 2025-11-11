@@ -9,8 +9,7 @@ import Experience from '../components/Experience';
 import Certifications from '../components/Certifications';
 import Contact from '../components/Contact';
 import Sticker from '../components/Sticker';
-
-const FloatingSphere = dynamic(() => import('../components/FloatingSphere'), { ssr: false });
+import ScrollProgress from '../components/ScrollProgress';
 
 export default function HomePage() {
   return (
@@ -60,32 +59,97 @@ function Layout({ children }) {
   }, []);
 
   useEffect(() => {
-    // Lógica para el tema
-    const savedTheme = localStorage.getItem('site-theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    const currentHour = new Date().getHours();
+    const isDayTime = currentHour >= 7 && currentHour < 19; // 7 AM to 7 PM
+    setTheme(isDayTime ? 'light' : 'dark');
   }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('site-theme', theme);
   }, [theme]);
 
   useEffect(() => {
-    // Lógica para el "Lienzo del Diseñador"
     const canvas = document.getElementById('background-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 100; // Number of particles
+
+    // Particle class
+    class Particle {
+      constructor(x, y, radius, color, velocity) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.velocity = velocity;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      update() {
+        this.draw();
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
+
+        // Reverse direction if hitting canvas edges
+        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+          this.velocity.x = -this.velocity.x;
+        }
+        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+          this.velocity.y = -this.velocity.y;
+        }
+      }
+    }
+
+    // Initialize particles
+    const initParticles = () => {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        const radius = Math.random() * 2 + 1; // Particle size
+        const x = Math.random() * (canvas.width - radius * 2) + radius;
+        const y = Math.random() * (canvas.height - radius * 2) + radius;
+        const color = `rgba(108, 99, 255, ${Math.random() * 0.3 + 0.1})`; // Subtle purple
+        const velocity = {
+          x: (Math.random() - 0.5) * 0.5, // Slower movement
+          y: (Math.random() - 0.5) * 0.5,
+        };
+        particles.push(new Particle(x, y, radius, color, velocity));
+      }
+    };
+
+    // Animation loop
+    const animate = () => {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+      particles.forEach((particle) => {
+        particle.update();
+      });
+    };
+
+    // Handle window resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles(); // Re-initialize particles on resize
+    };
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // Aquí iría la lógica de dibujo, por ahora lo dejamos configurado.
-    // Puedes añadir la lógica de dibujo en el IntersectionObserver si lo deseas.
-  }, []); // El array vacío asegura que este efecto se ejecute solo una vez
+    initParticles();
+    animate();
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
-  };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []); // Empty dependency array ensures this effect runs only once
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -105,6 +169,7 @@ function Layout({ children }) {
 
   return (
     <>
+      <ScrollProgress />
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -115,8 +180,6 @@ function Layout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
       </Head>
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />
-
-      <FloatingSphere activeSection={activeSection} />
 
       <div className="wrap">
         <header className="site-header visible">
@@ -131,15 +194,12 @@ function Layout({ children }) {
             <span className="hamburger"></span>
           </button>
           <nav className={`primary ${isNavOpen ? 'nav-open' : ''}`} aria-label="Navegación principal">
-            <a href="#about" onClick={handleNavClick}>Sobre mí</a>
             <a href="#roles" onClick={handleNavClick}>Portafolio</a>
-            <a href="#experiencia" onClick={handleNavClick}>Experiencia</a>
-            <a href="#certificaciones" onClick={handleNavClick}>Certificaciones</a>
-            <a href="#contacto" onClick={handleNavClick}>Contacto</a>
+            <Link href="/servicios" legacyBehavior>
+              <a>Servicios</a>
+            </Link>
           </nav>
-          <button id="theme-toggle" aria-label="Cambiar tema" title="Alternar tema" className="theme-toggle" type="button" onClick={toggleTheme}>
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
+
         </header>
         <main>{children}</main>
 

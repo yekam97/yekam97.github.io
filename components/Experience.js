@@ -1,3 +1,6 @@
+import { useState, useEffect, useRef } from 'react';
+import styles from './Experience.module.css';
+
 const experienceData = [
   {
     company: 'Creat3d Diseño y Arquitectura',
@@ -27,27 +30,92 @@ const experienceData = [
     company: 'Universidad Pedagógica y Tecnológica de Colombia (UPTC)',
     role: 'Diseñador Industrial — Contrato de Apoyo Académico',
     period: 'Octubre - Diciembre 2024',
-    description: 'Diseñé y desarrollé piezas experimentales en hilo dentro de un proyecto de investigación académica, explorando procesos artesanales aplicados al diseño contemporáneo. Mi trabajo integró materiales naturales, técnicas tradicionales y criterios de sostenibilidad, fortaleciendo el vínculo entre diseño, innovación y cultura material',
+    description: 'Diseñé y desarrolló piezas experimentales en hilo dentro de un proyecto de investigación académica, explorando procesos artesanales aplicados al diseño contemporáneo. Mi trabajo integró materiales naturales, técnicas tradicionales y criterios de sostenibilidad, fortaleciendo el vínculo entre diseño, innovación y cultura material',
   },
 ];
 
 export default function Experience() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const sliderRef = useRef(null);
+  const dotsRef = useRef(null);
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const handleScroll = () => {
+      const scrollLeft = slider.scrollLeft;
+      const itemWidth = slider.children[0].offsetWidth + parseFloat(getComputedStyle(slider.children[0]).marginRight); // Assuming consistent gap
+      const newIndex = Math.round(scrollLeft / itemWidth);
+      setActiveIndex(newIndex);
+    };
+
+    slider.addEventListener('scroll', handleScroll);
+    return () => {
+      slider.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Delegated click handler on dots container for debugging and robustness
+  useEffect(() => {
+    const container = dotsRef.current;
+    if (!container) return;
+
+    const onClick = (e) => {
+      // Log target for debugging
+      console.log('[xp-dots] click event target:', e.target);
+      // Find the closest dot element with data-index
+      const dot = e.target.closest('[data-index]');
+      if (!dot) return;
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      console.log('[xp-dots] detected index:', idx);
+      // call existing scroll helper
+      scrollToItem(idx);
+    };
+
+    container.addEventListener('click', onClick);
+    return () => container.removeEventListener('click', onClick);
+  }, [sliderRef.current]);
+
+  const scrollToItem = (index) => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    // Use the target child's offsetLeft for more robust scrolling
+    const target = slider.children[index];
+    if (!target) return;
+    const left = target.offsetLeft;
+    slider.scrollTo({ left, behavior: 'smooth' });
+  };
+
   return (
-    <section id="experiencia" className="reveal timeline" style={{ marginTop: '4rem' }}>
+    <section id="experiencia" className="reveal timeline">
       <div className="card">
-        <h2>Donde las ideas tomaron forma</h2>
-        <p className="tiny">Un resumen de mis roles, responsabilidades e impacto en los últimos años.</p>
-        <div className="xp-list">
-          {experienceData.map((job, index) => (
-            <article className="xp" key={index}>
-              <div className="xp-header">
-                <h3 className="xp-title" style={{ fontSize: 'var(--step-0)' }}>{job.company}</h3>
-                <span className="xp-period muted tiny">{job.period}</span>
-              </div>
-              <h4 className="xp-role" style={{ margin: '0', fontWeight: '600' }}>{job.role}</h4>
-              <p className="muted" style={{ margin: '4px 0 0 0', fontSize: 'var(--step--1)' }}>{job.description}</p>
-            </article>
-          ))}
+        <h2 className="reveal">Donde las ideas tomaron forma</h2>
+        <p className="tiny reveal">Un resumen de mis roles, responsabilidades e impacto en los últimos años.</p>
+        <div className={styles['xp-slider-container']}>
+          <div className={styles['timeline-line']}></div>
+          <div className={styles['xp-slider']} ref={sliderRef}>
+            {experienceData.map((job, index) => (
+              <article className={styles['xp-item']} key={index}>
+                <div className={styles['xp-header']}>
+                  <h3 className={styles['xp-title']}>{job.company}</h3>
+                  <span className={styles['xp-period']}>{job.period}</span>
+                </div>
+                <h4 className={styles['xp-role']}>{job.role}</h4>
+                <p className={styles['xp-description']}>{job.description}</p>
+              </article>
+            ))}
+          </div>
+          <div className={styles['xp-dots-container']} ref={dotsRef}>
+            {experienceData.map((_, index) => (
+              <div
+                key={index}
+                data-index={index}
+                className={`${styles['timeline-dot']} ${index === activeIndex ? styles['active'] : ''}`}
+                onClick={() => scrollToItem(index)}
+              ></div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,89 @@
+
+.section {
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  max-width: var(--maxw);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.title {
+  font-size: var(--step-2);
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: var(--step-0);
+  color: var(--color-neutral-dark);
+  margin: 0;
+}
+
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(108,99,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid rgba(108,99,255,0.12);
+  color: var(--color-text);
+  font-size: var(--step--1);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  cursor: default;
+}
+
+.chip:focus {
+  outline: 3px solid rgba(108,99,255,0.18);
+  outline-offset: 2px;
+}
+
+.chip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(16,24,40,0.08);
+}
+
+.chip-icon {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .title { font-size: var(--step-1); }
+  .chip { font-size: var(--step--1); padding: 0.4rem 0.6rem; }
+}
+
+/* small entrance animation for chips */
+.chip {
+  transform: translateY(6px);
+  opacity: 0;
+  animation: chipIn 420ms cubic-bezier(.2,.9,.3,1) forwards;
+}
+
+.chip:nth-child(1) { animation-delay: 60ms; }
+.chip:nth-child(2) { animation-delay: 120ms; }
+.chip:nth-child(3) { animation-delay: 180ms; }
+.chip:nth-child(4) { animation-delay: 240ms; }
+.chip:nth-child(5) { animation-delay: 300ms; }
+
+@keyframes chipIn {
+  to { transform: translateY(0); opacity: 1; }
+}

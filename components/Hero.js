@@ -39,22 +39,53 @@ const Typewriter = () => {
 const Hero = () => {
   return (
     <section id="hero" className={styles.heroSection}>
-      {/* Columna izquierda opcional para foto */}
-      {/* <div className={styles.photoColumn}></div> */}
       <motion.div 
         className={styles.textColumn}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h1 className={styles.title}>Hola, soy Camilo Gamba</h1>
-        <h2 className={styles.subtitle}>
-          <Typewriter />
-        </h2>
-        <a href="#roles" className={styles.ctaButton}>
-          Ver Portafolio ↓
-        </a>
+        <div className={styles.titleGroup}>
+          <h1 className={styles.title}>Camilo Gamba</h1>
+          <h2 className={styles.subtitle}>
+            <Typewriter />
+          </h2>
+        </div>
+        
+        <p className={styles.description}>
+          Diseñador industrial con pasión por la innovación, la estrategia y la creación de experiencias de usuario memorables. Transformo ideas en soluciones tangibles que combinan estética, funcionalidad y impacto real.
+        </p>
+
+        <div className={styles.statsBar}>
+          <div className={styles.statItem}>
+            <span className={styles.statNumber}>10+</span>
+            <span className={styles.statLabel}>Años de Experiencia</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statNumber}>50+</span>
+            <span className={styles.statLabel}>Proyectos Completados</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statNumber}>15+</span>
+            <span className={styles.statLabel}>Equipos Liderados</span>
+          </div>
+        </div>
+
+        <div className={styles.ctaGroup}>
+          <a href="#roles" className={`${styles.ctaButton} ${styles.primary}`}>
+            Explorar Portafolio
+            <svg className={styles.ctaIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 5v14M19 12l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+          <a href="#contact" className={`${styles.ctaButton} ${styles.secondary}`}>
+            Contactar
+          </a>
+        </div>
       </motion.div>
+      <div className={styles.photoColumn}>
+        <img src="/images/profile-placeholder-placeholder.png" alt="Camilo Gamba" className={styles.profileImage} />
+      </div>
     </section>
   );
 };

@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"pages\\\\index.js -> ../components/FloatingSphere\":{\"id\":\"pages\\\\index.js -> ../components/FloatingSphere\",\"files\":[\"static/chunks/components_FloatingSphere_js.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{}"

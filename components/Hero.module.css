@@ -1,13 +1,28 @@
 .heroSection {
   min-height: 80vh;
-  display: flex;
+  display: grid; /* Changed to grid */
+  grid-template-columns: 1fr; /* Default to single column */
+  gap: 2rem;
   justify-content: center;
   align-items: center;
   padding: 4rem 2rem;
 }
 
+@media (min-width: 980px) { /* Apply two-column layout on larger screens */
+  .heroSection {
+    grid-template-columns: 2fr 1fr; /* Two columns: 2/3 for text, 1/3 for photo */
+    text-align: left; /* Align text to left on larger screens */
+  }
+}
+
 .textColumn {
   text-align: center;
+}
+
+@media (min-width: 980px) {
+  .textColumn {
+    text-align: left; /* Align text to left on larger screens */
+  }
 }
 
 .title {
@@ -22,8 +37,92 @@
   font-family: var(--ff-body);
   color: var(--color-neutral-dark);
   font-weight: 400;
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0 1rem 0; /* Adjusted margin */
   min-height: 2.5rem; /* Espacio para el typewriter */
+}
+
+.description {
+  font-size: var(--step-0);
+  color: var(--color-text);
+  margin-bottom: 2.5rem;
+  max-width: 60ch; /* Limit line length for readability */
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.titleGroup {
+  margin-bottom: 2rem;
+}
+
+.statsBar {
+  display: flex;
+  gap: 2rem;
+  margin: 2.5rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 980px) {
+  .statsBar {
+    justify-content: flex-start;
+  }
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 980px) {
+  .statItem {
+    align-items: flex-start;
+  }
+}
+
+.statNumber {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1.1;
+}
+
+.statLabel {
+  font-size: var(--step--1);
+  color: var(--color-neutral-light);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ctaGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 980px) {
+  .ctaGroup {
+    justify-content: flex-start;
+  }
+}
+
+.photoColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileImage {
+  width: 100%;
+  max-width: 300px; /* Max width for the image */
+  height: auto;
+  border-radius: var(--radius); /* Use global radius variable */
+  box-shadow: var(--shadow-soft); /* Use global shadow variable */
+  object-fit: cover;
 }
 
 .typewriter {
@@ -43,17 +142,59 @@
 }
 
 .ctaButton {
-  display: inline-block;
-  background-color: var(--color-secondary);
-  color: white;
-  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
   border-radius: var(--radius);
   text-decoration: none;
-  font-weight: 700;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: var(--step-0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
-.ctaButton:hover {
-  background-color: var(--color-accent-alt);
-  transform: translateY(-2px);
+.ctaButton.primary {
+  background-color: var(--color-secondary);
+  color: white;
 }
+
+.ctaButton.primary:hover {
+  background-color: #5a52d9;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+}
+
+.ctaButton.primary:active {
+  transform: translateY(-1px);
+}
+
+.ctaButton.secondary {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border: 1.5px solid var(--color-secondary);
+}
+
+.ctaButton.secondary:hover {
+  background-color: rgba(108, 99, 255, 0.1);
+  border-color: #5a52d9;
+  color: #5a52d9;
+}
+
+.ctaButton.secondary:active {
+  background-color: rgba(108, 99, 255, 0.2);
+}
+
+.ctaIcon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

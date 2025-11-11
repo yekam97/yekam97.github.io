@@ -1,3 +1,5 @@
+import styles from './Certifications.module.css';
+
 const certifications = [
   'Certificación en Diseño UX/UI – Google',
   'Curso de Modelado 3D y Render avanzado – SketchUp & Lumion',
@@ -8,11 +10,20 @@ const certifications = [
 
 export default function Certifications() {
   return (
-    <section id="certificaciones" className="card reveal" style={{ marginTop: '4rem' }}>
-      <h2>Certificaciones y aprendizaje continuo</h2>
-      <div className="chips">
+    <section id="certificaciones" className={`${styles.section} card`} aria-labelledby="certs-heading">
+      <h2 id="certs-heading" className={styles.title}>Certificaciones y aprendizaje continuo</h2>
+      <div className={styles.chips} role="list">
         {certifications.map((cert, index) => (
-          <div className="chip" key={index}>{cert}</div>
+          <div
+            role="listitem"
+            tabIndex={0}
+            aria-label={`Certificación ${index + 1}: ${cert}`}
+            className={styles.chip}
+            key={index}
+          >
+            <span className={styles['chip-icon']} aria-hidden>🏅</span>
+            <span>{cert}</span>
+          </div>
         ))}
       </div>
     </section>
