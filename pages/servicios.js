@@ -3,6 +3,7 @@ import styles from '../components/Services.module.css';
 import ServiciosNav from '../components/ServiciosNav';
 import ServiceDetails from '../components/ServiceDetails';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const servicios = [
   {
@@ -114,25 +115,57 @@ export default function Servicios() {
     };
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
     <>
       <Head>
         <title>Servicios Profesionales | Camilo Gamba</title>
         <meta name="description" content="Servicios creativos: Diseño, branding, desarrollo web, contenido y más." />
+        <link rel="stylesheet" href="/fixes-servicios.css" />
       </Head>
       <canvas id="background-canvas-servicios" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />
+
+      {/* Formas flotantes decorativas */}
+      <div className="floatingShape" style={{ top: '10%', left: '5%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(108,99,255,0.2) 0%, rgba(0,0,0,0) 70%)' }}></div>
+      <div className="floatingShape" style={{ bottom: '20%', right: '10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(255,120,73,0.15) 0%, rgba(0,0,0,0) 70%)', animationDelay: '-5s' }}></div>
+
       <div className={styles.layoutWrap}>
         <ServiciosNav />
         <div className={styles.mainGrid}>
           <section className={styles.leftCol}>
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <h1 className={styles.title}>Servicios</h1>
               <p className={styles.subtitle}>Soluciones creativas y estratégicas para transformar tu idea en realidad. Selecciona un servicio para conocer más detalles, precios y opciones de pago.</p>
-            </div>
-            <div className={styles.listGrid}>
+            </motion.div>
+
+            <motion.div
+              className={styles.listGrid}
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+            >
               {servicios.map((servicio, idx) => (
-                <div
+                <motion.div
                   key={idx}
+                  variants={itemVariants}
                   className={selected === idx ? `${styles.card} ${styles.selected}` : styles.card}
                   onClick={() => setSelected(idx)}
                   onKeyDown={(e) => {
@@ -145,17 +178,32 @@ export default function Servicios() {
                   role="button"
                   aria-pressed={selected === idx}
                   aria-expanded={selected === idx}
+                  whileHover={{
+                    scale: 1.02,
+                    rotateX: 2,
+                    rotateY: 2,
+                    perspective: 1000,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <h2 className={styles.nombre}>{servicio.nombre}</h2>
                   <p className={styles.descripcion}>{servicio.descripcion}</p>
                   <div className={styles.precio}>{servicio.precio}</div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </section>
           <aside className={styles.rightCol}>
-            {!selected ? (
-              <img src="/images/servicio-default.jpg" alt="Servicios profesionales - Diseño, branding y más" className={styles.imagenDefault} />
+            {selected === null ? (
+              <motion.img
+                src="/images/grafico-creat3d-branding.png"
+                alt="Servicios profesionales - Diseño, branding y más"
+                className={styles.imagenDefault}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              />
             ) : (
               <ServiceDetails servicio={servicios[selected]} onClose={() => setSelected(null)} />
             )}

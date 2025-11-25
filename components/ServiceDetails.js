@@ -1,39 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import styles from './ServiceDetails.module.css';
 
 export default function ServiceDetails({ servicio, onClose }) {
-  const [showPayment, setShowPayment] = useState(false);
-  const paypalRef = useRef(null);
-
-  useEffect(() => {
-    if (showPayment && paypalRef.current) {
-      if (window.paypal) {
-        window.paypal.Buttons({
-          style: { layout: 'vertical', color: 'blue', shape: 'pill', label: 'pay' },
-          createOrder: (data, actions) => {
-            return actions.order.create({
-              purchase_units: [{
-                amount: { value: getPayPalAmount(servicio.precio) },
-                description: servicio.nombre,
-              }],
-            });
-          },
-          onApprove: (data, actions) => {
-            return actions.order.capture().then(details => {
-              alert('¡Pago realizado con éxito! Gracias, ' + details.payer.name.given_name);
-            });
-          },
-        }).render(paypalRef.current);
-      }
-    }
-  }, [showPayment, servicio]);
-
-  function getPayPalAmount(precio) {
-    // Extrae el valor numérico del string de precio
-    const match = precio.match(/\$(\d+[.,]?\d*)/);
-    if (match) return match[1].replace('.', '').replace(',', '.');
-    return '10.00'; // fallback
-  }
+  const [showContact, setShowContact] = useState(false);
 
   if (!servicio) return null;
 
@@ -56,44 +25,30 @@ export default function ServiceDetails({ servicio, onClose }) {
         </div>
         <button 
           className={styles.payBtn} 
-          onClick={() => setShowPayment(true)}
+          onClick={() => setShowContact(!showContact)}
         >
-          💳 Solicitar y Pagar
+          ✉️ {showContact ? 'Ocultar contacto' : 'Solicitar información'}
         </button>
-        {showPayment && (
-          <div className={styles.paymentSection}>
-            <div className={styles.contacto}>
-              <h3 className={styles.contactTitle}>¿Tienes dudas?</h3>
-              <p className={styles.contactDesc}>Contáctame antes de proceder con el pago</p>
-              <div className={styles.contactLinks}>
-                <a 
-                  href="mailto:camilo.gamba@email.com" 
-                  className={styles.contactLink}
-                  title="Enviar correo electrónico"
-                >
-                  📧 Correo
-                </a>
-                <a 
-                  href="https://wa.me/573001234567" 
-                  className={styles.contactLink}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  title="Abrir WhatsApp"
-                >
-                  💬 WhatsApp
-                </a>
-              </div>
-            </div>
-            <div className={styles.pasarela}>
-              <h3>Métodos de Pago:</h3>
-              <div ref={paypalRef} style={{ minHeight: 60 }}></div>
+        {showContact && (
+          <div className={styles.contactSection}>
+            <h3 className={styles.contactTitle}>Contáctame</h3>
+            <p className={styles.contactDesc}>Escríbeme para más información y detalles del proyecto</p>
+            <div className={styles.contactLinks}>
               <a 
-                href="https://www.nequi.com.co/" 
+                href="mailto:camilo.gamba@email.com" 
+                className={styles.contactLink}
+                title="Enviar correo electrónico"
+              >
+                📧 Correo
+              </a>
+              <a 
+                href="https://wa.me/573001234567" 
+                className={styles.contactLink}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className={styles.payOption}
+                title="Abrir WhatsApp"
               >
-                💰 Nequi
+                💬 WhatsApp
               </a>
             </div>
           </div>

@@ -31,6 +31,9 @@ export default function Contact() {
     if (Object.keys(clientErrors).length) {
       setErrors(clientErrors);
       setStatus('Corrige los errores antes de enviar.');
+      // Focus on first error field
+      const firstErrorField = Object.keys(clientErrors)[0];
+      document.getElementById(firstErrorField)?.focus();
       return;
     }
 
@@ -75,22 +78,66 @@ export default function Contact() {
         >
           <label htmlFor="name" className="visually-hidden">Nombre</label>
           <div className={styles.field}>
-            <input id="name" name="name" className={styles.input} placeholder="Tu nombre" required aria-invalid={errors.name ? 'true' : 'false'} />
-            {errors.name && <div className={`${styles['form-status']} ${styles['form-error']}`}>{errors.name}</div>}
+            <input
+              id="name"
+              name="name"
+              className={styles.input}
+              placeholder="Tu nombre"
+              required
+              aria-invalid={errors.name ? 'true' : 'false'}
+              aria-describedby={errors.name ? 'name-error' : undefined}
+            />
+            {errors.name && (
+              <div id="name-error" className={`${styles['form-status']} ${styles['form-error']}`} role="alert">
+                {errors.name}
+              </div>
+            )}
           </div>
           <label htmlFor="email" className="visually-hidden">Correo</label>
           <div className={styles.field}>
-            <input id="email" name="email" className={styles.input} placeholder="Tu correo" type="email" required aria-invalid={errors.email ? 'true' : 'false'} />
-            {errors.email && <div className={`${styles['form-status']} ${styles['form-error']}`}>{errors.email}</div>}
+            <input
+              id="email"
+              name="email"
+              className={styles.input}
+              placeholder="Tu correo"
+              type="email"
+              required
+              aria-invalid={errors.email ? 'true' : 'false'}
+              aria-describedby={errors.email ? 'email-error' : undefined}
+            />
+            {errors.email && (
+              <div id="email-error" className={`${styles['form-status']} ${styles['form-error']}`} role="alert">
+                {errors.email}
+              </div>
+            )}
           </div>
           <label htmlFor="message" className="visually-hidden">Mensaje</label>
           <div className={`${styles.field} ${styles['field-full']}`}>
-            <textarea id="message" name="message" className={styles.textarea} rows={5} placeholder="Escribe tu mensaje" required aria-invalid={errors.message ? 'true' : 'false'}></textarea>
-            {errors.message && <div className={`${styles['form-status']} ${styles['form-error']}`}>{errors.message}</div>}
+            <textarea
+              id="message"
+              name="message"
+              className={styles.textarea}
+              rows={5}
+              placeholder="Escribe tu mensaje"
+              required
+              aria-invalid={errors.message ? 'true' : 'false'}
+              aria-describedby={errors.message ? 'message-error' : undefined}
+            />
+            {errors.message && (
+              <div id="message-error" className={`${styles['form-status']} ${styles['form-error']}`} role="alert">
+                {errors.message}
+              </div>
+            )}
           </div>
           <div className={styles.actions}>
-            <button className={styles.send} type="submit" disabled={submitting} aria-disabled={submitting}>{submitting ? 'Enviando...' : 'Enviar mensaje'}</button>
-            {status && <div id="form-status" className={`${styles['form-status']}`}>{status}</div>}
+            <button className={styles.send} type="submit" disabled={submitting} aria-disabled={submitting}>
+              {submitting ? 'Enviando...' : 'Enviar mensaje'}
+            </button>
+            {status && (
+              <div id="form-status" className={`${styles['form-status']}`} role="status" aria-live="polite" aria-atomic="true">
+                {status}
+              </div>
+            )}
           </div>
         </form>
       </div>

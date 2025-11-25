@@ -1,0 +1,34 @@
+/* Fixes for role tabs and skill pills */
+
+/* Fix: Ensure white text is visible on active role tabs */
+.role-tab.active {
+    background: var(--color-secondary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--color-secondary) !important;
+}
+
+.role-tab.active .label {
+    color: #FFFFFF !important;
+}
+
+/* Fix: Make skill pills look like non-interactive badges instead of buttons */
+.skill-pill {
+    background: rgba(108, 99, 255, 0.08) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    cursor: default !important;
+    user-select: none !important;
+    transition: none !important;
+}
+
+/* Remove hover effect from skill pills */
+.skill-pill:hover {
+    background: rgba(108, 99, 255, 0.08) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Fix: Stat labels in Hero section - better contrast */
+.statLabel {
+    color: #6B7280 !important;
+}

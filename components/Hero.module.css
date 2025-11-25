@@ -1,17 +1,17 @@
 .heroSection {
   min-height: 80vh;
-  display: grid; /* Changed to grid */
-  grid-template-columns: 1fr; /* Default to single column */
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 2rem;
   justify-content: center;
   align-items: center;
   padding: 4rem 2rem;
 }
 
-@media (min-width: 980px) { /* Apply two-column layout on larger screens */
+@media (min-width: 980px) {
   .heroSection {
-    grid-template-columns: 2fr 1fr; /* Two columns: 2/3 for text, 1/3 for photo */
-    text-align: left; /* Align text to left on larger screens */
+    grid-template-columns: 2fr 1fr;
+    text-align: left;
   }
 }
 
@@ -21,32 +21,38 @@
 
 @media (min-width: 980px) {
   .textColumn {
-    text-align: left; /* Align text to left on larger screens */
+    text-align: left;
   }
 }
 
 .title {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(3rem, 10vw, 6.5rem);
   font-family: var(--ff-heading);
   margin: 0;
-  line-height: 1.1;
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
-  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
   font-family: var(--ff-body);
-  color: var(--color-neutral-dark);
-  font-weight: 400;
-  margin: 1rem 0 1rem 0; /* Adjusted margin */
-  min-height: 2.5rem; /* Espacio para el typewriter */
+  color: var(--color-secondary);
+  font-weight: 600;
+  margin: 1.5rem 0;
+  min-height: 2.5rem;
 }
 
 .description {
-  font-size: var(--step-0);
-  color: var(--color-text);
+  font-size: var(--step-1);
+  color: #4A4A4A;
   margin-bottom: 2.5rem;
-  max-width: 60ch; /* Limit line length for readability */
-  line-height: 1.6;
+  max-width: 60ch;
+  line-height: var(--lh-relaxed);
   font-weight: 400;
 }
 
@@ -90,7 +96,7 @@
 
 .statLabel {
   font-size: var(--step--1);
-  color: var(--color-neutral-light);
+  color: #6B7280;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -118,11 +124,21 @@
 
 .profileImage {
   width: 100%;
-  max-width: 300px; /* Max width for the image */
+  max-width: 320px;
   height: auto;
-  border-radius: var(--radius); /* Use global radius variable */
-  box-shadow: var(--shadow-soft); /* Use global shadow variable */
+  border-radius: calc(var(--radius) * 2);
+  box-shadow: var(--shadow-large);
   object-fit: cover;
+  position: relative;
+  border: 4px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+    var(--gradient-secondary) border-box;
+  transition: all var(--transition-smooth);
+}
+
+.profileImage:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow);
 }
 
 .typewriter {
@@ -136,38 +152,59 @@
 }
 
 @keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .ctaButton {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
-  border-radius: var(--radius);
+  padding: 1rem 2rem;
+  border-radius: calc(var(--radius) * 1.5);
   text-decoration: none;
-  font-weight: 600;
-  font-size: var(--step-0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 700;
+  font-size: var(--step-1);
+  transition: all var(--transition-smooth);
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
+  min-height: 48px;
+  position: relative;
+  overflow: hidden;
 }
 
 .ctaButton.primary {
-  background-color: var(--color-secondary);
+  background: var(--gradient-secondary);
   color: white;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.2);
+}
+
+.ctaButton.primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.ctaButton.primary:hover::before {
+  opacity: 1;
 }
 
 .ctaButton.primary:hover {
-  background-color: #5a52d9;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-glow);
 }
 
 .ctaButton.primary:active {
@@ -177,13 +214,16 @@
 .ctaButton.secondary {
   background-color: transparent;
   color: var(--color-secondary);
-  border: 1.5px solid var(--color-secondary);
+  border: 2px solid var(--color-secondary);
+  box-shadow: 0 0 0 rgba(108, 99, 255, 0);
 }
 
 .ctaButton.secondary:hover {
-  background-color: rgba(108, 99, 255, 0.1);
+  background: rgba(108, 99, 255, 0.08);
   border-color: #5a52d9;
   color: #5a52d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.15);
 }
 
 .ctaButton.secondary:active {
@@ -197,4 +237,3 @@
   align-items: center;
   justify-content: center;
 }
-
