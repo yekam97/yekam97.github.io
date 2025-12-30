@@ -269,17 +269,19 @@ nav.primary {
 }
 
 .cta {
-  background: var(--color-secondary);
+  background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%);
   color: white;
   padding: 0.625rem 1rem;
   border-radius: var(--radius);
-  font-weight: 700;
+  font-weight: 800;
   font-size: var(--step--1);
   min-height: 44px;
   display: flex;
   align-items: center;
   border: none;
   cursor: pointer;
+  box-shadow: 0 6px 16px rgba(108, 99, 255, 0.3);
+  transition: all var(--transition);
 }
 
 /* Hero / Slider */
@@ -354,13 +356,13 @@ nav.primary {
 
 .role-tab {
   padding: var(--space-xs) var(--space-sm);
-  border: 1px solid rgba(108, 99, 255, 0.3);
-  background: rgba(240, 242, 247, 0.8);
+  border: 2px solid #6C63FF;
+  background: #F5F3FF;
   border-radius: var(--radius);
   cursor: pointer;
   transition: all var(--transition);
-  font-weight: 600;
-  color: var(--color-secondary);
+  font-weight: 700;
+  color: #3D36CC;
   font-size: max(14px, 0.95rem);
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -378,9 +380,10 @@ nav.primary {
 
 @media (hover: hover) {
   .role-tab:hover {
-    transform: translateY(-2px);
-    background: rgba(108, 99, 255, 0.1);
-    border-color: var(--color-secondary);
+    transform: translateY(-3px);
+    background: #E8E0FF;
+    border-color: #4A3FD4;
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.25);
   }
 }
 
@@ -392,18 +395,20 @@ nav.primary {
 }
 
 .role-tab:hover {
-  background: rgba(108, 99, 255, 0.1);
-  border-color: var(--color-secondary);
-  transform: translateY(-2px);
-  color: var(--color-secondary);
+  background: #E8E0FF;
+  border-color: #4A3FD4;
+  transform: translateY(-3px);
+  color: #2A1F99;
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.25);
 }
 
 .role-tab.active {
-  background: var(--color-secondary);
-  color: #ffffff;
-  border-color: var(--color-secondary);
+  background: #6C63FF;
+  color: #FFFFFF;
+  border-color: #4A3FD4;
   position: relative;
-  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+  box-shadow: 0 8px 28px rgba(108, 99, 255, 0.4);
+  font-weight: 800;
 }
 
 .role-tab .active-indicator {
@@ -482,13 +487,13 @@ nav.primary {
 }
 
 .skill-pill {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(108, 99, 255, 0.15);
   padding: 0.5rem 1rem;
   border-radius: 999px;
   font-size: var(--step--1);
-  color: var(--color-secondary);
-  border: 1px solid rgba(108, 99, 255, 0.3);
-  font-weight: 500;
+  color: #4A3FD4;
+  border: 1.5px solid #6C63FF;
+  font-weight: 600;
   letter-spacing: 0.02em;
   transition: all var(--transition);
   backdrop-filter: blur(5px);

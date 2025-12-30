@@ -1,0 +1,213 @@
+/* MEJORAS GLOBALES DE CONTRASTE - Aplicadas a todas las secciones */
+
+/* ===== HERO SECTION BUTTONS ===== */
+.ctaButton.primary {
+  background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.3) !important;
+  font-weight: 800 !important;
+  border: none !important;
+}
+
+.ctaButton.primary:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4) !important;
+}
+
+.ctaButton.secondary {
+  background-color: transparent !important;
+  color: #4A3FD4 !important;
+  border: 2.5px solid #4A3FD4 !important;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+  font-weight: 700 !important;
+}
+
+.ctaButton.secondary:hover {
+  background: rgba(108, 99, 255, 0.1) !important;
+  border-color: #3D36CC !important;
+  color: #3D36CC !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.25) !important;
+}
+
+/* ===== ROLES/TABS SECTION ===== */
+.role-tab {
+  padding: 0.75rem 1rem !important;
+  border: 2px solid #6C63FF !important;
+  background: #F5F3FF !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 700 !important;
+  color: #3D36CC !important;
+  font-size: 14px !important;
+  white-space: nowrap !important;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.1) !important;
+}
+
+.role-tab:hover {
+  background: #E8E0FF !important;
+  border-color: #4A3FD4 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.2) !important;
+  color: #2A1F99 !important;
+}
+
+.role-tab.active {
+  background: #6C63FF !important;
+  color: #FFFFFF !important;
+  border-color: #4A3FD4 !important;
+  box-shadow: 0 8px 28px rgba(108, 99, 255, 0.4) !important;
+  font-weight: 800 !important;
+}
+
+/* ===== SKILL PILLS ===== */
+.skill-pill {
+  background: rgba(108, 99, 255, 0.15) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  color: #4A3FD4 !important;
+  border: 1.5px solid #6C63FF !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+}
+
+.skill-pill:hover {
+  background: rgba(108, 99, 255, 0.25) !important;
+  border-color: #4A3FD4 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.25) !important;
+}
+
+/* ===== GLOBAL BUTTONS ===== */
+.btn {
+  padding: 11px 16px !important;
+  border-radius: 10px !important;
+  border: 0 !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%) !important;
+  color: white !important;
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.3) !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4) !important;
+}
+
+.btn-outline {
+  background: white !important;
+  border: 2px solid #6C63FF !important;
+  color: #3D36CC !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+}
+
+.btn-outline:hover {
+  background: #F5F3FF !important;
+  border-color: #4A3FD4 !important;
+  color: #4A3FD4 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ===== GENERAL FORM ELEMENTS ===== */
+input, textarea, select {
+  border: 2px solid #6C63FF !important;
+  background: #F5F3FF !important;
+  color: #0A0A0A !important;
+  font-weight: 500 !important;
+}
+
+input:hover, textarea:hover, select:hover {
+  border-color: #4A3FD4 !important;
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.2) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: #3D36CC !important;
+  box-shadow: inset 0 0 0 2px #3D36CC, 0 12px 28px rgba(108, 99, 255, 0.25) !important;
+  background: #FFFFFF !important;
+}
+
+/* ===== CARD ELEMENTS ===== */
+.card {
+  border: 2px solid #6C63FF !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15) !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02) !important;
+  box-shadow: 0 16px 40px rgba(108, 99, 255, 0.3) !important;
+  border-color: #4A3FD4 !important;
+}
+
+/* ===== TEXT IMPROVEMENTS ===== */
+.section-title,
+h2,
+h3 {
+  color: #0A0A0A !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.section-description,
+p {
+  color: #1A1A1A !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+.stat-label {
+  color: #2D3748 !important;
+  font-weight: 600 !important;
+}
+
+/* ===== BADGES & LABELS ===== */
+.badge, .label, .tag {
+  background: #E8E0FF !important;
+  border: 1.5px solid #6C63FF !important;
+  color: #3D36CC !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+}
+
+/* ===== NAVBAR IMPROVEMENTS ===== */
+.site-header {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.nav.primary a {
+  color: #0A0A0A !important;
+  font-weight: 700 !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.nav.primary a:hover {
+  background: rgba(108, 99, 255, 0.15) !important;
+  color: #3D36CC !important;
+  border-radius: 8px !important;
+}
+
+/* ===== FOCUS ACCESSIBILITY ===== */
+*:focus-visible {
+  outline: 3px solid #3D36CC !important;
+  outline-offset: 2px !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #3D36CC !important;
+  outline-offset: 2px !important;
+}

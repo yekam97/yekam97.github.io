@@ -80,17 +80,17 @@
 
 .xp-item h3 {
   font-size: var(--step-3);
-  color: var(--color-secondary);
+  color: #3D36CC;
   margin: 0 0 var(--space-sm) 0;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .xp-item h4 {
   font-size: var(--step-1);
-  color: var(--color-text);
+  color: #1A1A1A;
   margin: 0 0 var(--space-xs) 0;
-  font-weight: 600;
-  opacity: 0.85;
+  font-weight: 700;
+  opacity: 1;
 }
 
 .xp-description {
@@ -99,8 +99,9 @@
   word-break: break-word;
   font-size: var(--step-0);
   line-height: var(--lh-relaxed);
-  color: #333333;
+  color: #2A2A2A;
   margin-top: var(--space-sm);
+  font-weight: 500;
 }
 
 /* Dots and timeline removed for cleaner design */
@@ -152,25 +153,26 @@
   font-size: var(--step-3);
   margin: 0;
   color: #0A0A0A;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 .xp-period {
   font-size: var(--step-0);
-  color: var(--color-secondary);
-  font-weight: 500;
+  color: #FFFFFF;
+  font-weight: 700;
   padding: var(--space-xs) var(--space-sm);
-  background: rgba(108, 99, 255, 0.1);
+  background: #6C63FF;
   border-radius: calc(var(--radius) / 2);
   white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25);
 }
 
 .xp-role {
   font-size: var(--step-1);
   margin: 0;
-  font-weight: 600;
-  color: #1A1A1A;
+  font-weight: 700;
+  color: #0A0A0A;
 }
 
 .xp-description {

@@ -158,7 +158,15 @@ export default function Roles() {
               transition={{ duration: 0.3 }}
               className="role-panel"
             >
-              <h3>{currentRoleData.title}</h3>
+              <h3 style={{ 
+                fontSize: 'clamp(1rem, 3vw, 2rem)', 
+                fontWeight: 900, 
+                color: '#3D36CC',
+                marginBottom: '1.5rem',
+                letterSpacing: '-0.02em'
+              }}>
+                {currentRoleData.title}
+              </h3>
               <div className="skills-list">
                 {currentRoleData.skills.map((skill, index) => (
                   <span key={index} className="skill-pill">{skill}</span>

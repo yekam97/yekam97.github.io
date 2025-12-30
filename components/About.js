@@ -41,26 +41,6 @@ export default function About() {
                   title: 'Diseño UX/UI',
                   icon: '💻',
                   category: 'Especialización'
-                },
-                {
-                  title: 'Modelado y Renderizado 3D',
-                  icon: '🎨',
-                  category: 'Técnica'
-                },
-                {
-                  title: 'Innovación y emprendimiento',
-                  icon: '💡',
-                  category: 'Gestión'
-                },
-                {
-                  title: 'Metodologías Ágiles',
-                  icon: '📊',
-                  category: 'Gestión'
-                },
-                {
-                  title: 'Formación pedagógica',
-                  icon: '📚',
-                  category: 'Complementaria'
                 }
               ].map((skill, index) => (
                 <div key={index} className={styles['skill-card']}>

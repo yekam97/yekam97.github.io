@@ -180,12 +180,13 @@
 
 /* Botón de pago mejorado */
 .payBtn {
-    background: linear-gradient(135deg, #6C63FF 0%, #8B7DFF 100%) !important;
-    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.3) !important;
+    background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%) !important;
+    box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4) !important;
     border-radius: calc(var(--radius, 12px) * 1.2) !important;
-    font-weight: 800 !important;
+    font-weight: 900 !important;
     transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1) !important;
     animation: pulseGlow 3s infinite;
+    color: #FFFFFF !important;
 }
 
 .payBtn:hover {
