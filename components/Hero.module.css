@@ -30,21 +30,18 @@
   font-family: var(--ff-heading);
   margin: 0;
   line-height: 0.95;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: -0.03em;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #FFFFFF;
 }
 
 .subtitle {
-  font-size: clamp(1.5rem, 6vw, 3.5rem);
+  font-size: clamp(1.25rem, 5vw, 2.5rem);
   font-family: var(--ff-body);
-  color: var(--color-secondary);
-  font-weight: 600;
+  color: #888888;
+  font-weight: 400;
   margin: 1rem 0;
-  min-height: 2.5rem;
+  min-height: 2.25rem;
 }
 
 .description {
@@ -88,9 +85,9 @@
 }
 
 .statNumber {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
   font-weight: 700;
-  color: var(--color-secondary);
+  color: #FFFFFF;
   line-height: 1.1;
 }
 
@@ -126,19 +123,16 @@
   width: 100%;
   max-width: 320px;
   height: auto;
-  border-radius: calc(var(--radius) * 2);
-  box-shadow: var(--shadow-large);
+  border-radius: 4px;
+  filter: grayscale(100%) contrast(1.1);
   object-fit: cover;
-  position: relative;
-  border: 4px solid transparent;
-  background: linear-gradient(white, white) padding-box,
-    var(--gradient-secondary) border-box;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all var(--transition-smooth);
 }
 
 .profileImage:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-glow);
+  filter: grayscale(0%) contrast(1);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .typewriter {
@@ -184,48 +178,31 @@
 }
 
 .ctaButton.primary {
-  background: var(--gradient-secondary);
-  color: #0A0A0A;
-  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.3);
-  font-weight: 800;
-}
-
-.ctaButton.primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
-  opacity: 0;
-  transition: opacity var(--transition);
-}
-
-.ctaButton.primary:hover::before {
-  opacity: 1;
+  background: #FFFFFF;
+  color: #000000;
+  font-weight: 600;
 }
 
 .ctaButton.primary:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-glow);
+  background: #E5E5E5;
+  transform: translateY(-2px);
 }
 
 .ctaButton.primary:active {
-  transform: translateY(-1px);
+  transform: translateY(0);
 }
 
 .ctaButton.secondary {
   background-color: transparent;
-  color: #C0BBFF;
-  border: 2.5px solid rgba(108, 99, 255, 0.7);
-  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15);
-  font-weight: 700;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: 600;
 }
 
 .ctaButton.secondary:hover {
-  background: rgba(108, 99, 255, 0.15);
-  border-color: #8B7DFF;
-  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
 }
 
 .ctaButton.secondary:active {

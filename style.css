@@ -4,24 +4,24 @@
    - Smooth microinteractions and accessible focus
 */
 :root {
-  /* Paleta de Colores - Dark Mode Enforced */
+  /* Paleta de Colores - Minimalist Monochromatic */
   --color-primary: #FFFFFF;
-  --color-secondary: #6C63FF;
-  --color-accent-alt: #FF7849;
-  --color-neutral-light: #2C2C2C;
-  --color-neutral-dark: #808080;
-  --color-bg: #0A0A0A;
-  --color-text: #F0F0F0;
-  --color-card-bg: #1A1A1A;
-  --color-border: #3A3A3A;
+  --color-secondary: #FFFFFF;
+  --color-accent-alt: #888888;
+  --color-neutral-light: #1A1A1A;
+  --color-neutral-dark: #666666;
+  --color-bg: #050505;
+  --color-text: #E5E5E5;
+  --color-card-bg: #111111;
+  --color-border: rgba(255, 255, 0.1);
 
-  /* Missing Variables for Dark Mode */
-  --muted: #A0A0A0;
-  --card: #1A1A1A;
-  --accent: #6C63FF;
-  --accent-2: #FF7849;
-  --accent-3: #4A3FD4;
-  --card-elev: 0 8px 32px rgba(0, 0, 0, 0.3);
+  /* Variables for Dark Mode */
+  --muted: #888888;
+  --card: #111111;
+  --accent: #FFFFFF;
+  --accent-2: #AAAAAA;
+  --accent-3: #444444;
+  --card-elev: 0 4px 24px rgba(0, 0, 0, 0.5);
 
   /* Espaciado Responsivo */
   --space-xs: clamp(0.75rem, 2vw, 1rem);
@@ -30,22 +30,22 @@
   --space-lg: clamp(2rem, 6vw, 3rem);
   --space-xl: clamp(3rem, 8vw, 4rem);
 
-  --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --shadow-large: 0 16px 48px rgba(0, 0, 0, 0.4);
-  --transition: 320ms cubic-bezier(.2, .9, .3, 1);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-large: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --transition: 300ms cubic-bezier(.4, 0, .2, 1);
 
-  /* Typographic Scale (1.125 ratio - better for modern designs) */
-  --step--2: 11px;
-  --step--1: 12px;
-  --step-0: 14px;
-  --step-1: 16px;
-  --step-2: 18px;
-  --step-3: 20px;
-  --step-4: 24px;
-  --step-5: 28px;
-  --step-6: 34px;
-  --step-7: 42px;
-  --step-8: 48px;
+  /* Typographic Scale */
+  --step-2: 12px;
+  --step-1: 14px;
+  --step-0: 16px;
+  --step-1: 18px;
+  --step-2: 20px;
+  --step-3: 24px;
+  --step-4: 30px;
+  --step-5: 38px;
+  --step-6: 46px;
+  --step-7: 54px;
+  --step-8: 62px;
 
   /* Line heights for better readability */
   --lh-tight: 1.1;
@@ -58,25 +58,25 @@
   /* ── Previously missing variables ── */
 
   /* Typography */
-  --ff-heading: 'Playfair Display', 'Bebas Neue', Georgia, serif;
-  --ff-body: 'Roboto Slab', 'Merriweather', system-ui, sans-serif;
+  --ff-heading: 'Playfair Display', serif;
+  --ff-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Layout */
-  --radius: 12px;
-  --maxw: 1280px;
-  --bp-wide: 1100px;
+  --radius: 4px;
+  --maxw: 1100px;
+  --bp-wide: 1000px;
 
-  /* Gradients */
-  --gradient-text: linear-gradient(135deg, #FFFFFF 0%, #6C63FF 60%, #FF7849 100%);
-  --gradient-secondary: linear-gradient(135deg, #6C63FF 0%, #8B7DFF 100%);
-  --gradient-accent: linear-gradient(135deg, #FF7849 0%, #FF4D00 100%);
+  /* Gradients - Subtle & Monochromatic */
+  --gradient-text: linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%);
+  --gradient-secondary: linear-gradient(180deg, #FFFFFF 0%, #E0E0E0 100%);
+  --gradient-accent: linear-gradient(180deg, #AAAAAA 0%, #666666 100%);
 
   /* Extended transitions */
   --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Shadows */
-  --shadow-glow: 0 8px 32px rgba(108, 99, 255, 0.45), 0 0 64px rgba(108, 99, 255, 0.15);
+  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.05);
 }
 
 /* Utilidades de Accesibilidad */
@@ -198,27 +198,36 @@ h6 {
   letter-spacing: 0.05em;
 }
 
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
+
 .brand {
   display: flex;
   gap: 1rem;
   align-items: center;
-  min-height: 44px;
 }
 
 .logo-mark {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
-  background: var(--color-secondary);
+  border-radius: 4px;
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #000000;
   font-weight: 700;
   font-size: 18px;
   font-family: var(--ff-heading);
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand h1 {
@@ -230,13 +239,87 @@ h6 {
 .brand p {
   margin: 0;
   font-size: var(--step--1);
-  color: var(--color-neutral-dark);
+  color: var(--muted);
+  font-weight: 400;
 }
 
 nav.primary {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
+}
+
+.nav-toggle {
+  display: none;
+  background: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+}
+
+.hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #000000;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #000000;
+  left: 0;
+  transition: all 0.3s;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  bottom: -8px;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  nav.primary {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 320px;
+    height: 100vh;
+    background: #000000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 2rem;
+    gap: 2.5rem !important;
+    z-index: 1900;
+  }
+
+  nav.primary.nav-open {
+    right: 0 !important;
+  }
 }
 
 nav.primary a {
@@ -255,8 +338,8 @@ nav.primary a {
 }
 
 nav.primary a:hover {
-  background: rgba(108, 99, 255, 0.15);
-  color: #C0BBFF;
+  background: var(--color-surface-hover);
+  color: #FFFFFF;
 }
 
 /* floatingShape — decorative ambient blobs used in servicios.js */
@@ -285,19 +368,23 @@ nav.primary a:hover {
 }
 
 .cta {
-  background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%);
-  color: white;
-  padding: 0.625rem 1rem;
+  background: #FFFFFF;
+  color: #000000;
+  padding: 0.625rem 1.25rem;
   border-radius: var(--radius);
-  font-weight: 800;
+  font-weight: 600;
   font-size: var(--step--1);
   min-height: 44px;
   display: flex;
   align-items: center;
   border: none;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(108, 99, 255, 0.3);
   transition: all var(--transition);
+}
+
+.cta:hover {
+  background: #F0F0F0;
+  transform: translateY(-1px);
 }
 
 /* Hero / Slider */
@@ -2019,74 +2106,72 @@ main>section {
   top: 0;
 }
 
-/* ===== POLISHED GLOBAL OVERRIDES (dark-mode safe) ===== */
+/* ===== MINIMALIST GLOBAL OVERRIDES ===== */
 
 /* CTA buttons */
 .ctaButton.primary {
-  background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.3) !important;
-  font-weight: 800 !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
   border: none !important;
+  box-shadow: none !important;
 }
 
 .ctaButton.primary:hover {
-  transform: translateY(-4px) scale(1.02) !important;
-  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4) !important;
+  background: #E5E5E5 !important;
+  transform: translateY(-2px) !important;
 }
 
-/* Role tabs - dark compatible */
+/* Role tabs - Monochrome */
 .role-tab {
-  border: 2px solid rgba(108, 99, 255, 0.6) !important;
-  background: rgba(108, 99, 255, 0.08) !important;
-  color: #C0BBFF !important;
-  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: transparent !important;
+  color: #888888 !important;
+  font-weight: 400 !important;
 }
 
 .role-tab:hover {
-  background: rgba(108, 99, 255, 0.2) !important;
-  border-color: #8B7DFF !important;
-  color: #E0DCFF !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
 }
 
 .role-tab.active {
-  background: linear-gradient(135deg, #6C63FF 0%, #8B7DFF 100%) !important;
-  color: #FFFFFF !important;
-  border-color: #6C63FF !important;
-  box-shadow: 0 8px 28px rgba(108, 99, 255, 0.5) !important;
-  font-weight: 800 !important;
-}
-
-/* Skill pills - dark compatible */
-.skill-pill {
-  background: rgba(108, 99, 255, 0.12) !important;
-  color: #C0BBFF !important;
-  border: 1.5px solid rgba(108, 99, 255, 0.5) !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #FFFFFF !important;
   font-weight: 600 !important;
 }
 
+/* Skill pills - Monochrome */
+.skill-pill {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #A0A0A0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  font-weight: 400 !important;
+}
+
 .skill-pill:hover {
-  background: rgba(108, 99, 255, 0.22) !important;
-  border-color: #8B7DFF !important;
-  transform: translateY(-2px) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #FFFFFF !important;
 }
 
 /* Cards */
 .card {
-  border: 1px solid rgba(108, 99, 255, 0.25) !important;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25) !important;
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  background: #111111 !important;
 }
 
 .card:hover {
-  transform: translateY(-4px) scale(1.01) !important;
-  box-shadow: 0 16px 40px rgba(108, 99, 255, 0.25) !important;
-  border-color: rgba(108, 99, 255, 0.5) !important;
+  transform: translateY(-2px) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Focus accessibility */
 *:focus-visible {
-  outline: 3px solid #8B7DFF;
+  outline: 2px solid #FFFFFF;
   outline-offset: 2px;
 }
 

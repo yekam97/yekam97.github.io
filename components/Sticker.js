@@ -1,10 +1,12 @@
-export default function Sticker(){
+export default function Sticker() {
   const number = '573175244453'
   const text = encodeURIComponent('Hola Yeison, estoy interesado en contactarte como profesional del diseño. ¿Podemos conversar sobre una oportunidad?')
   const url = `https://wa.me/${number}?text=${text}`
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" style={{position:'fixed', right:18, bottom:18, width:64, height:64, borderRadius:999, display:'grid', placeItems:'center', background:'#fff', boxShadow:'0 10px 30px rgba(2,6,12,0.12)', zIndex:1400}}> 
-      <img src="/avatar-sticker.png" alt="Avatar" style={{width:56, height:56, borderRadius:999}} />
+    <a href={url} target="_blank" rel="noopener noreferrer" style={{ position: 'fixed', right: 18, bottom: 18, width: 64, height: 64, borderRadius: 4, display: 'grid', placeItems: 'center', background: '#111', border: '1px solid rgba(255,255,255,0.1)', zIndex: 1400, transition: 'all 0.3s ease' }}>
+      <img src="/avatar-sticker.png" alt="Avatar" style={{ width: 52, height: 52, borderRadius: 2, filter: 'grayscale(100%) brightness(0.9)', transition: 'filter 0.3s ease' }}
+        onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) brightness(1)'}
+        onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) brightness(0.9)'} />
     </a>
   )
 }

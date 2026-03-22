@@ -126,11 +126,11 @@ export default function Roles() {
   return (
     <section id="roles" className="roles-section" style={{ background: 'transparent' }}>
       <div className="roles-content">
-        <h2 className="section-title" style={{ fontSize: 'var(--step-4)', color: 'var(--color-secondary)', textAlign: 'center' }}>
+        <h2 className="section-title" style={{ textAlign: 'center' }}>
           Mis facetas como diseñador
         </h2>
-        <p className="section-description" style={{ fontSize: 'var(--step-1)', color: 'var(--color-secondary)', textAlign: 'center' }}>
-          Cada botón/rol muestra 3 proyectos destacados según el enfoque.
+        <p className="section-description" style={{ textAlign: 'center' }}>
+          Cada enfoque muestra proyectos destacados.
         </p>
         <nav className="roles-nav reveal" role="tablist" aria-label="Enfoques profesionales">
           {roleKeys.map(key => (
@@ -160,8 +160,8 @@ export default function Roles() {
             >
               <h3 style={{
                 fontSize: 'clamp(1rem, 3vw, 2rem)',
-                fontWeight: 900,
-                color: '#3D36CC',
+                fontWeight: 700,
+                color: '#FFFFFF',
                 marginBottom: '1.5rem',
                 letterSpacing: '-0.02em'
               }}>

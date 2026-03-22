@@ -100,10 +100,10 @@ function Layout({ children }) {
     const initParticles = () => {
       particles = [];
       for (let i = 0; i < particleCount; i++) {
-        const radius = Math.random() * 2 + 1; // Particle size
+        const radius = Math.random() * 1.5 + 0.5; // Smaller particles
         const x = Math.random() * (canvas.width - radius * 2) + radius;
         const y = Math.random() * (canvas.height - radius * 2) + radius;
-        const color = `rgba(108, 99, 255, ${Math.random() * 0.3 + 0.1})`; // Subtle purple
+        const color = `rgba(255, 255, 255, ${Math.random() * 0.15 + 0.05})`; // Subtle white/gray
         const velocity = {
           x: (Math.random() - 0.5) * 0.5, // Slower movement
           y: (Math.random() - 0.5) * 0.5,
@@ -190,14 +190,15 @@ function Layout({ children }) {
               </a>
             </Link>
           </div>
-          <button className="nav-toggle" onClick={toggleNav} aria-label="Toggle navigation">
+          <button id="mobile-nav-toggle" className="nav-toggle" onClick={toggleNav} aria-label="Toggle navigation">
             <span className="hamburger"></span>
           </button>
           <nav className={`primary ${isNavOpen ? 'nav-open' : ''}`} aria-label="Navegación principal">
+            <a href="#about" onClick={handleNavClick}>Sobre mí</a>
             <a href="#roles" onClick={handleNavClick}>Portafolio</a>
-            <Link href="/servicios" legacyBehavior>
-              <a>Servicios</a>
-            </Link>
+            <a href="#experiencia" onClick={handleNavClick}>Experiencia</a>
+            <a href="#certificaciones" onClick={handleNavClick}>Logros</a>
+            <a href="#contacto" className="cta" onClick={handleNavClick}>Contacto</a>
           </nav>
 
         </header>
