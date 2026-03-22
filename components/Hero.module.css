@@ -39,21 +39,21 @@
 }
 
 .subtitle {
-  font-size: clamp(2.5rem, 8vw, 3.5rem);
+  font-size: clamp(1.5rem, 6vw, 3.5rem);
   font-family: var(--ff-body);
   color: var(--color-secondary);
   font-weight: 600;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   min-height: 2.5rem;
 }
 
 .description {
   font-size: var(--step-1);
-  color: #1A1A1A;
+  color: rgba(240, 240, 240, 0.85);
   margin-bottom: 2.5rem;
   max-width: 60ch;
   line-height: var(--lh-relaxed);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .titleGroup {
@@ -96,7 +96,7 @@
 
 .statLabel {
   font-size: var(--step--1);
-  color: #2D3748;
+  color: var(--muted);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -214,18 +214,18 @@
 
 .ctaButton.secondary {
   background-color: transparent;
-  color: #2D24B5;
-  border: 2.5px solid #4A3FD4;
+  color: #C0BBFF;
+  border: 2.5px solid rgba(108, 99, 255, 0.7);
   box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15);
   font-weight: 700;
 }
 
 .ctaButton.secondary:hover {
-  background: rgba(108, 99, 255, 0.08);
-  border-color: #5a52d9;
-  color: #2D24B5;
+  background: rgba(108, 99, 255, 0.15);
+  border-color: #8B7DFF;
+  color: #FFFFFF;
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
 }
 
 .ctaButton.secondary:active {

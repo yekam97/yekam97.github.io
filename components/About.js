@@ -6,7 +6,12 @@ export default function About() {
       <div className={styles['about-grid']}>
         <div className={styles['about-profile']}>
           <div className={styles['profile-header']}>
-            <div className={`${styles['profile-image']} reveal`}>
+            <div className={styles['profile-image']}>
+              <img
+                src="/avatar-sticker.png"
+                alt="Camilo Gamba — Diseñador Industrial"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }}
+              />
               <div className={styles['image-overlay']}></div>
             </div>
             <div className={styles['profile-info']}>
@@ -16,7 +21,7 @@ export default function About() {
               </p>
             </div>
           </div>
-          
+
           <div className={styles['profile-bio']}>
             <p className={`${styles['bio-text']} reveal`}>
               Soy un diseñador industrial con enfoque en arquitectura, innovación y estrategia. Combino la creatividad del diseño con el pensamiento empresarial para transformar ideas en proyectos sostenibles y funcionales.

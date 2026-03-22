@@ -39,7 +39,7 @@ const Typewriter = () => {
 const Hero = () => {
   return (
     <section id="hero" className={styles.heroSection}>
-      <motion.div 
+      <motion.div
         className={styles.textColumn}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ const Hero = () => {
             <Typewriter />
           </h2>
         </div>
-        
+
         <p className={styles.description}>
           Diseñador industrial con pasión por la innovación, la estrategia y la creación de experiencias de usuario memorables. Transformo ideas en soluciones tangibles que combinan estética, funcionalidad y impacto real.
         </p>
@@ -75,7 +75,7 @@ const Hero = () => {
           <a href="#roles" className={`${styles.ctaButton} ${styles.primary}`}>
             Explorar Portafolio
             <svg className={styles.ctaIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M12 5v14M19 12l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 5v14M19 12l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <a href="#contact" className={`${styles.ctaButton} ${styles.secondary}`}>
@@ -84,7 +84,7 @@ const Hero = () => {
         </div>
       </motion.div>
       <div className={styles.photoColumn}>
-        <img src="/images/profile-placeholder-placeholder.png" alt="Camilo Gamba" className={styles.profileImage} />
+        <img src="/avatar-sticker.png" alt="Camilo Gamba" className={styles.profileImage} />
       </div>
     </section>
   );

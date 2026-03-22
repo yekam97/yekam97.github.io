@@ -25,7 +25,6 @@ export default function HomePage() {
 }
 
 function Layout({ children }) {
-  const [theme, setTheme] = useState('light');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
@@ -57,16 +56,6 @@ function Layout({ children }) {
       elementsToReveal.forEach((el) => observer.unobserve(el));
     };
   }, []);
-
-  useEffect(() => {
-    const currentHour = new Date().getHours();
-    const isDayTime = currentHour >= 7 && currentHour < 19; // 7 AM to 7 PM
-    setTheme(isDayTime ? 'light' : 'dark');
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
 
   useEffect(() => {
     const canvas = document.getElementById('background-canvas');
@@ -175,20 +164,31 @@ function Layout({ children }) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Camilo Gamba — Diseñador Industrial y Gestor de Proyectos</title>
         <meta name="description" content="Portafolio de Camilo Gamba, diseñador industrial con enfoque en arquitectura, innovación y estrategia." />
+        <meta property="og:title" content="Camilo Gamba — Diseñador Industrial y Gestor de Proyectos" />
+        <meta property="og:description" content="Portafolio de Camilo Gamba, diseñador industrial con enfoque en arquitectura, innovación y estrategia." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yekam97.github.io" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Camilo Gamba — Diseñador Industrial" />
+        <meta name="twitter:description" content="Portafolio de Camilo Gamba, diseñador industrial con enfoque en arquitectura, innovación y estrategia." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Bebas+Neue&family=Roboto+Slab:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />
 
       <div className="wrap">
         <header className="site-header visible">
           <div className="brand">
-            <div className="logo-mark">YG</div>
-            <div>
-              <h1>Camilo Gamba</h1>
-              <p className="tiny">Diseñador Industrial & Gestor de Proyectos</p>
-            </div>
+            <Link href="/" legacyBehavior>
+              <a style={{ display: 'flex', gap: '1rem', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                <div className="logo-mark">YG</div>
+                <div>
+                  <h1>Camilo Gamba</h1>
+                  <p className="tiny">Diseñador Industrial & Gestor de Proyectos</p>
+                </div>
+              </a>
+            </Link>
           </div>
           <button className="nav-toggle" onClick={toggleNav} aria-label="Toggle navigation">
             <span className="hamburger"></span>
@@ -202,9 +202,7 @@ function Layout({ children }) {
 
         </header>
         <main>{children}</main>
-
         <Sticker />
-
         <footer>Diseñado por Yeison Camilo Gamba González • © 2025</footer>
       </div>
     </>

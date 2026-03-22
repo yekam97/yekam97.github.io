@@ -34,7 +34,7 @@ const rolesData = {
       },
       {
         title: 'Interfaz web de portafolio Creat3d',
-        image: '/images/ux-interfaz-web-portafolio.png',
+        image: '/images/ux-interfaz-web-portafolio.jpg',
         link: '#'
       },
       {
@@ -51,18 +51,18 @@ const rolesData = {
       {
         title: 'Taller de creación de contenidos en realidad virtual',
         description: 'Taller para Sennova (2025).',
-        image: '/images/formador-taller-vr.png',
+        image: '/images/formador-taller-vr.jpg',
         link: '#'
       },
       {
         title: 'Curso de renderizado y modelado 3D para jóvenes',
-        image: '/images/formador-curso-3d.png',
+        image: '/images/formador-curso-3d.jpg',
         link: '#'
       },
       {
         title: 'Capacitaciones en innovación y emprendimiento',
         description: 'Formación para asociaciones rurales.',
-        image: '/images/formador-capacitaciones-innovacion.png',
+        image: '/images/gestor-consultorias-innovacion.jpg',
         link: '#'
       },
     ],
@@ -73,17 +73,17 @@ const rolesData = {
     projects: [
       {
         title: 'Modelo Bioeconómico para CORPOVALLE',
-        image: '/images/gestor-modelo-bioeconomico.png',
+        image: '/images/gestor-modelo-bioeconomico.jpg',
         link: '#'
       },
       {
         title: 'Consultorías de innovación y desarrollo territorial',
-        image: '/images/gestor-consultorias-innovacion.png',
+        image: '/images/gestor-consultorias-innovacion.jpg',
         link: '#'
       },
       {
         title: 'Planeación estratégica y ejecución de proyectos creativos',
-        image: '/images/gestor-planeacion-estrategica.png',
+        image: '/images/gestor-planeacion-estrategica.jpg',
         link: '#'
       },
     ],
@@ -158,9 +158,9 @@ export default function Roles() {
               transition={{ duration: 0.3 }}
               className="role-panel"
             >
-              <h3 style={{ 
-                fontSize: 'clamp(1rem, 3vw, 2rem)', 
-                fontWeight: 900, 
+              <h3 style={{
+                fontSize: 'clamp(1rem, 3vw, 2rem)',
+                fontWeight: 900,
                 color: '#3D36CC',
                 marginBottom: '1.5rem',
                 letterSpacing: '-0.02em'
@@ -176,9 +176,9 @@ export default function Roles() {
                 {currentRoleData.projects.map((project, index) => (
                   <div key={index} className="project-card-small tilt">
                     <div className="project-image-wrapper">
-                      <img 
-                        src={project.image} 
-                        alt={project.title || 'Proyecto'} 
+                      <img
+                        src={project.image}
+                        alt={project.title || 'Proyecto'}
                         loading="lazy"
                       />
                     </div>

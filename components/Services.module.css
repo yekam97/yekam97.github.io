@@ -22,24 +22,29 @@
   gap: var(--space-lg);
 }
 
+/* Título principal más bold y con gradiente */
 .title {
-  font-size: var(--step-7);
-  font-family: var(--ff-heading);
-  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #FFFFFF 0%, #8B7DFF 60%, #FF7849 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
   margin: 0 0 var(--space-sm) 0;
-  color: var(--color-primary);
   text-align: left;
-  letter-spacing: -0.02em;
 }
 
+/* Subtítulo mejorado */
 .subtitle {
-  font-size: var(--step-2);
-  color: #2D3748;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--muted);
+  opacity: 1;
+  font-weight: 400;
   text-align: left;
   margin: 0 0 var(--space-lg) 0;
   line-height: var(--lh-normal);
   max-width: 60ch;
-  font-weight: 600;
 }
 
 .listGrid {
@@ -48,19 +53,22 @@
   gap: var(--space-sm);
 }
 
+/* Tarjetas de servicio con gradiente y mejor elevación */
 .card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 252, 1) 100%);
-  border-radius: var(--radius);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-  border: 2px solid #6C63FF;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: calc(var(--radius, 12px) * 1.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(108, 99, 255, 0.2);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  transition: all var(--transition);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   min-height: 110px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .card::before {
@@ -70,15 +78,17 @@
   top: 0;
   width: 5px;
   height: 0;
-  background: linear-gradient(180deg, #6C63FF 0%, #4A3FD4 100%);
-  border-radius: 2px;
+  background: linear-gradient(180deg, #6C63FF 0%, #8B7DFF 100%);
+  border-radius: 2px 0 0 2px;
   transition: height var(--transition);
+  border-radius: calc(var(--radius, 12px) * 1.5) 0 0 calc(var(--radius, 12px) * 1.5);
 }
 
 .card:hover {
-  box-shadow: 0 12px 40px rgba(108, 99, 255, 0.2);
-  transform: translateY(-6px);
-  border-color: #4A3FD4;
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(108, 99, 255, 0.25);
+  border-color: rgba(108, 99, 255, 0.5);
+  background: rgba(108, 99, 255, 0.07);
 }
 
 .card:hover::before {
@@ -86,9 +96,12 @@
 }
 
 .card.selected {
-  background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(108, 99, 255, 0.15) 100%);
-  box-shadow: 0 12px 40px rgba(108, 99, 255, 0.35);
-  border-color: #4A3FD4;
+  position: relative;
+  background: rgba(108, 99, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(108, 99, 255, 0.6);
+  border-radius: calc(var(--radius, 12px) * 1.5);
+  box-shadow: 0 12px 40px rgba(108, 99, 255, 0.3);
   transform: scale(1.02);
 }
 
@@ -101,18 +114,19 @@
   outline-offset: 2px;
 }
 
+/* Nombre del servicio más prominente */
 .nombre {
-  font-size: var(--step-3);
-  color: #3D36CC;
-  margin: 0;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 800;
+  color: #C0BBFF;
+  margin: 0;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
 .descripcion {
   font-size: var(--step-1);
-  color: #1A1A1A;
+  color: var(--muted);
   opacity: 1;
   margin: 0;
   line-height: var(--lh-normal);
@@ -121,13 +135,15 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-weight: 500;
+  font-weight: 400;
 }
 
+/* Precio más destacado */
 .precio {
-  font-size: var(--step-2);
-  color: #3D36CC;
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
   font-weight: 800;
+  color: var(--color-secondary, #6C63FF);
+  padding: 0.5rem 0;
   margin-top: auto;
   text-align: left;
   letter-spacing: -0.01em;
@@ -144,13 +160,78 @@
   position: relative;
 }
 
+/* Detalles del servicio */
+.detailsWrapper {
+  background: #FFFFFF;
+  border-radius: calc(var(--radius, 12px) * 1.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(108, 99, 255, 0.15);
+}
+
+/* Botón de pago mejorado */
+.payBtn {
+  background: linear-gradient(135deg, #6C63FF 0%, #4A3FD4 100%);
+  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4);
+  border-radius: calc(var(--radius, 12px) * 1.2);
+  font-weight: 900;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pulseGlow 3s infinite;
+  color: #FFFFFF;
+}
+
+.payBtn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4);
+}
+
+/* Botón de cerrar mejorado */
+.closeBtn {
+  background: rgba(108, 99, 255, 0.08);
+  border-radius: 10px;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.closeBtn:hover {
+  background: rgba(108, 99, 255, 0.15);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Caja de precio en detalles */
+.precioBox {
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, rgba(108, 99, 255, 0.08) 100%);
+  border: 2px solid rgba(108, 99, 255, 0.2);
+  border-radius: calc(var(--radius, 12px) * 1.2);
+  padding: 1.25rem;
+}
+
+/* Links de contacto mejorados */
+.contactLink {
+  background: linear-gradient(135deg, #6C63FF 0%, #8B7DFF 100%);
+  border-radius: calc(var(--radius, 12px) * 1.2);
+  font-weight: 700;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+}
+
+.contactLink:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+}
+
+/* Imagen por defecto - ocultar cuando no existe */
 .imagenDefault {
   width: 100%;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-medium);
+  border-radius: calc(var(--radius, 12px) * 1.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   object-fit: cover;
   min-height: 420px;
   background: linear-gradient(135deg, var(--color-secondary), #FF7849);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imagenDefault:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 900px) {

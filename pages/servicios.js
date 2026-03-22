@@ -135,7 +135,13 @@ export default function Servicios() {
       <Head>
         <title>Servicios Profesionales | Camilo Gamba</title>
         <meta name="description" content="Servicios creativos: Diseño, branding, desarrollo web, contenido y más." />
-        <link rel="stylesheet" href="/fixes-servicios.css" />
+        <meta property="og:title" content="Servicios Profesionales | Camilo Gamba" />
+        <meta property="og:description" content="Servicios creativos: Renderizado arquitectónico, identidad visual, redes sociales, presentaciones y consultoría." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yekam97.github.io/servicios" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Bebas+Neue&family=Roboto+Slab:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
       <canvas id="background-canvas-servicios" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />
 

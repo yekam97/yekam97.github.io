@@ -57,13 +57,13 @@
 .profile-name {
   font-size: var(--step-6);
   margin: 0 0 var(--space-xs);
-  color: #0A0A0A;
+  color: var(--color-primary);
   font-weight: 900;
 }
 
 .profile-title {
   font-size: var(--step-2);
-  color: #3D36CC;
+  color: var(--color-secondary);
   margin: 0;
   font-weight: 700;
 }
@@ -74,17 +74,18 @@
   gap: var(--space-md);
 }
 
-.bio-text, .bio-focus {
+.bio-text,
+.bio-focus {
   font-size: var(--step-1);
   line-height: var(--lh-normal);
-  color: #1A1A1A;
+  color: var(--muted);
   opacity: 1;
   margin: 0;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .bio-focus strong {
-  color: #3D36CC;
+  color: var(--color-secondary);
   font-weight: 800;
 }
 
@@ -95,12 +96,13 @@
 }
 
 .education-card {
-  background: linear-gradient(135deg, rgba(240, 242, 247, 0.95) 0%, rgba(248, 249, 252, 1) 100%);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: var(--radius);
   padding: var(--space-lg);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(108, 99, 255, 0.25);
+  box-shadow: var(--shadow-medium);
   transition: all var(--transition);
+  backdrop-filter: blur(10px);
 }
 
 .education-card:hover {
@@ -111,7 +113,7 @@
 .card-title {
   font-size: var(--step-4);
   margin: 0 0 var(--space-lg) 0;
-  color: #0A0A0A;
+  color: var(--color-primary);
   font-weight: 800;
 }
 
@@ -126,16 +128,16 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-md);
-  background: #F5F3FF;
+  background: rgba(108, 99, 255, 0.08);
   border-radius: var(--radius);
-  border: 1.5px solid #6C63FF;
+  border: 1.5px solid rgba(108, 99, 255, 0.4);
   transition: all var(--transition);
   min-height: 80px;
 }
 
 .skill-card:hover {
   transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(108, 99, 255, 0.14);
   box-shadow: var(--shadow-medium);
   border-color: var(--color-secondary);
 }
