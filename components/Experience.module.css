@@ -51,10 +51,8 @@
 .xp-item {
   min-width: 340px;
   flex-shrink: 0;
-  background: #111111;
-  padding: var(--space-xl);
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
+  padding: var(--space-xl) 0;
   transition: all var(--transition);
   cursor: grab;
   scroll-snap-align: start;
@@ -68,8 +66,7 @@
 }
 
 .xp-item:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.2);
+  opacity: 0.8;
 }
 
 .xp-item:active {
@@ -133,8 +130,7 @@
 }
 
 .xp-item:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.3);
+  opacity: 0.8;
 }
 
 .xp-header {

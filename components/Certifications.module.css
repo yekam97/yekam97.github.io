@@ -40,13 +40,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  background: #1A1A1A;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.8rem 0.4rem 0;
   color: #888888;
   font-size: var(--step--1);
-  transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  transition: transform var(--transition), color var(--transition);
   cursor: default;
   font-weight: 400;
 }
@@ -57,9 +54,7 @@
 }
 
 .chip:hover {
-  transform: translateY(-2px);
-  background: #222222;
-  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(4px);
   color: #FFFFFF;
 }
 

@@ -136,8 +136,8 @@
 }
 
 .typewriter {
-  color: var(--color-secondary);
-  font-weight: 600;
+  color: #FFFFFF;
+  font-weight: 700;
 }
 
 .cursor {
@@ -164,7 +164,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  border-radius: calc(var(--radius) * 1.5);
+  border-radius: 4px;
   text-decoration: none;
   font-weight: 700;
   font-size: var(--step-1);
@@ -172,15 +172,11 @@
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  min-height: 48px;
-  position: relative;
-  overflow: hidden;
 }
 
 .ctaButton.primary {
   background: #FFFFFF;
   color: #000000;
-  font-weight: 600;
 }
 
 .ctaButton.primary:hover {
@@ -188,25 +184,16 @@
   transform: translateY(-2px);
 }
 
-.ctaButton.primary:active {
-  transform: translateY(0);
-}
-
 .ctaButton.secondary {
   background-color: transparent;
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  font-weight: 600;
 }
 
 .ctaButton.secondary:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.6);
   transform: translateY(-2px);
-}
-
-.ctaButton.secondary:active {
-  background-color: rgba(108, 99, 255, 0.2);
 }
 
 .ctaIcon {

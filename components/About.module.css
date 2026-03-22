@@ -38,8 +38,7 @@
   border-radius: 4px;
   overflow: hidden;
   position: relative;
-  background: #1A1A1A;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
   flex-shrink: 0;
 }
 
@@ -95,15 +94,12 @@
 }
 
 .education-card {
-  background: #111111;
-  border-radius: 4px;
-  padding: var(--space-lg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-lg) 0;
   transition: all var(--transition);
 }
 
 .education-card:hover {
-  border-color: rgba(255, 255, 255, 0.3);
+  opacity: 0.8;
 }
 
 .card-title {
@@ -123,17 +119,13 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-md);
-  padding: var(--space-md);
-  background: #1A1A1A;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: var(--space-md) 0;
   transition: all var(--transition);
   min-height: 80px;
 }
 
 .skill-card:hover {
-  background: #222222;
-  border-color: rgba(255, 255, 255, 0.2);
+  opacity: 0.8;
 }
 
 .skill-icon {
