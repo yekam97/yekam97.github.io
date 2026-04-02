@@ -6,19 +6,27 @@ const certifications = [
     name: 'CERTIFICACIÓN DISEÑO UX/UI',
     issuer: 'GOOGLE CAREER CERTIFICATES',
     date: '2024',
+    url: 'https://coursera.org/share/f2a7baa8b7079d330169a8c490fb749b',
     id: 'Credential ID: GX-9921'
   },
   {
+    name: 'INGLÉS B2',
+    issuer: 'EF SET certificate',
+    date: '2024',
+    url: 'https://cert.efset.org/es/exPUj4',
+    id: 'B2 Upper Intermediate'
+  },
+  {
     name: 'MODELADO 3D Y RENDER AVANZADO',
-    issuer: 'SKETCHUP & LUMION',
+    issuer: 'CERTIFICADO TÉCNICO',
     date: '2023',
     id: 'Credential ID: SL-4412'
   },
   {
-    name: 'CERTIFICADO METODOLOGÍAS ÁGILES',
-    issuer: 'SCRUM FUNDAMENTALS',
-    date: '2024',
-    id: 'Credential ID: SF-7712'
+    name: 'PRODUCCIÓN DE CONTENIDOS 360°',
+    issuer: 'REALIDAD VIRTUAL',
+    date: '2023',
+    id: 'Credential ID: RV-1122'
   },
   {
     name: 'EMPRENDIMIENTO E INNOVACIÓN',
@@ -27,10 +35,10 @@ const certifications = [
     id: 'Credential ID: MS-2212'
   },
   {
-    name: 'PRODUCCIÓN DE CONTENIDOS 360°',
-    issuer: 'REALIDAD VIRTUAL',
-    date: '2023',
-    id: 'Credential ID: RV-1122'
+    name: 'CERTIFICADO METODOLOGÍAS ÁGILES',
+    issuer: 'SCRUM FUNDAMENTALS',
+    date: '2024',
+    id: 'Credential ID: SF-7712'
   }
 ];
 
@@ -60,7 +68,15 @@ const Certifications = () => {
                 <span className={styles.issuer}>{cert.issuer}</span>
                 <span className={styles.date}>{cert.date}</span>
               </div>
-              <h3 className={styles.name}>{cert.name}</h3>
+
+              {cert.url ? (
+                <a href={cert.url} target="_blank" rel="noopener noreferrer" className={styles.certLink}>
+                  <h3 className={styles.name}>{cert.name} <span style={{ fontSize: '0.8rem', verticalAlign: 'middle' }}>↗</span></h3>
+                </a>
+              ) : (
+                <h3 className={styles.name}>{cert.name}</h3>
+              )}
+
               <p className={styles.credential}>{cert.id}</p>
             </motion.div>
           ))}
