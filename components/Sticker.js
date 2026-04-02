@@ -4,7 +4,7 @@ export default function Sticker() {
   const url = `https://wa.me/${number}?text=${text}`
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" style={{ position: 'fixed', right: 18, bottom: 18, width: 64, height: 64, borderRadius: 4, display: 'grid', placeItems: 'center', background: '#111', border: '1px solid rgba(255,255,255,0.1)', zIndex: 1400, transition: 'all 0.3s ease' }}>
-      <img src="/images/camilo-portrait.jpg" alt="Camilo" style={{ width: 56, height: 56, borderRadius: 2, objectFit: 'cover', filter: 'grayscale(100%) brightness(0.9)', transition: 'filter 0.3s ease' }}
+      <img src="/avatar-sticker.png" alt="Avatar" style={{ width: 52, height: 52, borderRadius: 2, filter: 'grayscale(100%) brightness(0.9)', transition: 'filter 0.3s ease' }}
         onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) brightness(1)'}
         onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) brightness(0.9)'} />
     </a>
