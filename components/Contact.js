@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import styles from './Contact.module.css';
+import ContactModal from './ContactModal';
 
 const Contact = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section id="contacto" className={styles.ctaSection}>
       <motion.div
@@ -12,10 +16,15 @@ const Contact = () => {
         transition={{ duration: 0.8 }}
       >
         <h2 className={styles.ctaTitle}>Construyamos precisión.</h2>
-        <a href="mailto:contato@studio.com" className={styles.blackBtn}>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className={styles.blackBtn}
+        >
           INICIAR UN PROYECTO
-        </a>
+        </button>
       </motion.div>
+
+      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <div className={styles.bottomBar}>
         <div className="container" style={{ display: 'flex', justifyContent: 'center', fontSize: '0.65rem' }}>
