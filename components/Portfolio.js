@@ -3,26 +3,26 @@ import styles from './Portfolio.module.css';
 
 const projects = [
     {
-        category: 'PROTOTYPING & RENDERING',
-        title: 'Axis-7 Modular Housing',
+        category: 'DISEÑO INDUSTRIAL',
+        title: 'Remodelación de departamento',
         year: '2023',
         image: '/images/industrial-remodelacion-departamento.png'
     },
     {
-        category: 'MATERIAL STUDY',
-        title: 'Titanium Lattice Structure',
+        category: 'ARQUITECTURA TEMÁTICA',
+        title: 'Diseño de cabaña en Mazamitla',
         year: '2024',
-        image: '/images/industrial-locales-creat3d.png'
-    },
-    {
-        category: 'FURNITURE DESIGN',
-        title: 'Mono-Block Seating',
-        year: '2022',
         image: '/images/industrial-cabaña-mazamitla.png'
     },
     {
-        category: 'COMPUTATIONAL DESIGN',
-        title: 'Nexus Control OS',
+        category: 'VISUALIZACIÓN 3D',
+        title: 'Locales comerciales Creat3d',
+        year: '2022',
+        image: '/images/industrial-locales-creat3d.png'
+    },
+    {
+        category: 'UX/UI DESIGN',
+        title: 'Dashboard de control de biofábricas',
         year: '2024',
         image: '/images/ux-dashboard-biofabricas.png'
     }
@@ -33,10 +33,10 @@ const Portfolio = () => {
         <section id="portfolio" className="container section-padding">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--spacing-12)' }}>
                 <div>
-                    <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>Selected Artifacts</h2>
-                    <p className="description" style={{ marginTop: '0.5rem' }}>A curation of projects defining industrial innovation.</p>
+                    <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>Artefactos Selectos</h2>
+                    <p className="description" style={{ marginTop: '0.5rem' }}>Una curaduría de proyectos que definen la innovación industrial.</p>
                 </div>
-                <a href="#" className={styles.viewMore}>VIEW ARCHIVE →</a>
+                <a href="#" className={styles.viewMore}>VER ARCHIVO →</a>
             </div>
 
             <div className={styles.projectGrid}>

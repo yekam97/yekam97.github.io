@@ -10,7 +10,7 @@ const Hero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <span className={styles.label}>INDUSTRIAL DESIGNER & PM</span>
+        <span className={styles.label}>DISEÑADOR INDUSTRIAL & GESTOR DE PROYECTOS</span>
 
         <h1 className={styles.title}>
           Donde las <br />
@@ -19,8 +19,9 @@ const Hero = () => {
         </h1>
 
         <p className={styles.description}>
-          Architecting physical experiences through a lens of technical
-          precision and project leadership. Precision in form. Integrity in management.
+          Diseñador industrial con pasión por la innovación, la estrategia
+          y la creación de experiencias de usuario memorables. Transformo ideas
+          en soluciones tangibles que combinan estética, funcionalidad e impacto real.
         </p>
 
         <div className={styles.ctaGroup}>
@@ -28,24 +29,23 @@ const Hero = () => {
             Enviar Mensaje
           </a>
           <a href="#" className="btn-outline">
-            Download CV
+            Descargar CV
           </a>
         </div>
       </motion.div>
 
       <motion.div
-        className={styles.photoColumn}
+        className={styles.imageColumn}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.2 }}
       >
-        <div className={styles.imageWrapper}>
+        <div className={styles.neonBox}>
           <img
             src="/avatar-sticker.png"
-            alt="Camilo Gamba Portrait"
+            alt="Camilo Gamba"
             className={styles.profileImage}
           />
-          <div className={styles.neonBox}>A</div>
         </div>
       </motion.div>
     </section>

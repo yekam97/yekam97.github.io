@@ -4,18 +4,18 @@ import styles from './Roles.module.css';
 const rolesData = [
   {
     category: 'ENFOQUE',
-    title: 'Industrial Designer',
-    description: 'Transforming complex requirements into elegant, functional, and manufacturing-ready physical products. Focus on ergonomics and sustainable materials.'
+    title: 'Diseñador Industrial',
+    description: 'Transformo requisitos complejos en productos físicos elegantes, funcionales y listos para fabricación. Enfoque en ergonomía y materiales sostenibles.'
   },
   {
     category: 'DIGITAL',
-    title: 'UX/UI Specialist',
-    description: 'Translating human-centric feedback into fluid, high-fidelity interfaces. Bridging the gap between software and user intent.'
+    title: 'Diseñador UX/UI',
+    description: 'Traduzco el feedback centrado en el humano en interfaces fluidas de alta fidelidad. Cerrando la brecha entre el software y la intención del usuario.'
   },
   {
     category: 'ESTRATEGIA',
-    title: 'Project Manager',
-    description: 'Orchestrating complex lifecycles from prototype to market. Ensuring precision at every milestone with meticulous management.'
+    title: 'Gestor de Proyectos',
+    description: 'Orquestando ciclos de vida complejos desde el prototipo hasta el mercado. Asegurando precisión en cada hito con una gestión meticulosa.'
   }
 ];
 
@@ -28,8 +28,8 @@ const Roles = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="label-md">Facets</span>
-        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>Core Facets</h2>
+        <span className="label-md">Facetas</span>
+        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>Mis Enfoques</h2>
 
         <div className={styles.facetsGrid}>
           {rolesData.map((role, idx) => (

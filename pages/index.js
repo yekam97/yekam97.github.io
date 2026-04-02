@@ -107,9 +107,9 @@ function Layout({ children }) {
       <header className="nav-glass">
         <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>STUDIO</div>
         <nav style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
-          <a href="#portfolio" className="nav-item" onClick={handleNavClick}>Portfolio</a>
-          <a href="#experiencia" className="nav-item" onClick={handleNavClick}>Experience</a>
-          <a href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }}>Contact</a>
+          <a href="#portfolio" className="nav-item" onClick={handleNavClick}>Portafolio</a>
+          <a href="#experiencia" className="nav-item" onClick={handleNavClick}>Trayectoria</a>
+          <a href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }}>Contacto</a>
         </nav>
       </header>
 

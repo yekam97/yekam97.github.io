@@ -3,22 +3,34 @@ import styles from './Certifications.module.css';
 
 const certifications = [
   {
-    name: 'CERTIFICACIÓN UX/UI',
+    name: 'CERTIFICACIÓN DISEÑO UX/UI',
     issuer: 'GOOGLE CAREER CERTIFICATES',
     date: '2024',
     id: 'Credential ID: GX-9921'
   },
   {
-    name: 'LIDERAZGO ESTRATÉGICO',
-    issuer: 'SENAI BRASIL',
+    name: 'MODELADO 3D Y RENDER AVANZADO',
+    issuer: 'SKETCHUP & LUMION',
     date: '2023',
-    id: 'Credential ID: SN-4412'
+    id: 'Credential ID: SL-4412'
   },
   {
-    name: 'MODELADO AVANZADO',
-    issuer: 'AUTODESK INC',
-    date: '2022',
-    id: 'Credential ID: AD-7712'
+    name: 'CERTIFICADO METODOLOGÍAS ÁGILES',
+    issuer: 'SCRUM FUNDAMENTALS',
+    date: '2024',
+    id: 'Credential ID: SF-7712'
+  },
+  {
+    name: 'EMPRENDIMIENTO E INNOVACIÓN',
+    issuer: 'MINCIENCIAS / SENNOVA',
+    date: '2023',
+    id: 'Credential ID: MS-2212'
+  },
+  {
+    name: 'PRODUCCIÓN DE CONTENIDOS 360°',
+    issuer: 'REALIDAD VIRTUAL',
+    date: '2023',
+    id: 'Credential ID: RV-1122'
   }
 ];
 
@@ -31,8 +43,8 @@ const Certifications = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="label-md">Accolades</span>
-        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>Major Benchmarks</h2>
+        <span className="label-md">Reconocimientos</span>
+        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>Hitos de Aprendizaje</h2>
 
         <div className={styles.certsGrid}>
           {certifications.map((cert, idx) => (
