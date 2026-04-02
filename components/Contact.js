@@ -1,164 +1,35 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Contact.module.css';
 
-export default function Contact() {
-  const [status, setStatus] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors] = useState({});
-
-  function validate(formData) {
-    const next = {};
-    const name = formData.get('name')?.trim();
-    const email = formData.get('email')?.trim();
-    const message = formData.get('message')?.trim();
-
-    if (!name || name.length < 2) next.name = 'Ingresa tu nombre (mínimo 2 caracteres)';
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRe.test(email)) next.email = 'Ingresa un correo válido';
-    if (!message || message.length < 10) next.message = 'Escribe un mensaje más detallado (mínimo 10 caracteres)';
-
-    return next;
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setStatus('');
-    setErrors({});
-    const form = event.target;
-    const data = new FormData(form);
-
-    const clientErrors = validate(data);
-    if (Object.keys(clientErrors).length) {
-      setErrors(clientErrors);
-      setStatus('Corrige los errores antes de enviar.');
-      // Focus on first error field
-      const firstErrorField = Object.keys(clientErrors)[0];
-      document.getElementById(firstErrorField)?.focus();
-      return;
-    }
-
-    setSubmitting(true);
-    setStatus('Enviando...');
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: data,
-        headers: { Accept: 'application/json' },
-      });
-
-      if (response.ok) {
-        setStatus('¡Mensaje enviado! Gracias.');
-        form.reset();
-      } else {
-        setStatus('Error al enviar el mensaje.');
-      }
-    } catch (err) {
-      setStatus('Error de red. Inténtalo de nuevo.');
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
+const Contact = () => {
   return (
-    <section id="contacto" aria-labelledby="contact-heading">
+    <section id="contacto" className={styles.ctaSection}>
       <motion.div
-        className="card"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        className={styles.ctaContent}
+        initial={{ opacity: 0, scale: 0.98 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.8 }}
       >
-        <h2 id="contact-heading">¿Tienes un proyecto en mente?</h2>
-        <p className={`${styles.description} muted`}>
-          Si tienes una idea, proyecto o colaboración en mente, estaré encantado de escucharte.
-          Envíame un mensaje y conversamos cómo puedo aportar a tu visión.
-        </p>
-        <motion.form
-          className={styles['contact-form']}
-          action="https://formspree.io/f/xvgwylkw"
-          method="POST"
-          onSubmit={handleSubmit}
-          noValidate
-          aria-describedby={status ? 'form-status' : undefined}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={{
-            initial: {},
-            animate: {
-              transition: {
-                staggerChildren: 0.1
-              }
-            }
-          }}
-        >
-          <label htmlFor="name" className="visually-hidden">Nombre</label>
-          <motion.div className={styles.field} variants={{ initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 } }}>
-            <input
-              id="name"
-              name="name"
-              className={styles.input}
-              placeholder="Tu nombre"
-              required
-              aria-invalid={errors.name ? 'true' : 'false'}
-              aria-describedby={errors.name ? 'name-error' : undefined}
-            />
-            {errors.name && (
-              <div id="name-error" className={`${styles['form-status']} ${styles['form-error']}`} role="alert">
-                {errors.name}
-              </div>
-            )}
-          </motion.div>
-          <label htmlFor="email" className="visually-hidden">Correo</label>
-          <motion.div className={styles.field} variants={{ initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 } }}>
-            <input
-              id="email"
-              name="email"
-              className={styles.input}
-              placeholder="Tu correo"
-              type="email"
-              required
-              aria-invalid={errors.email ? 'true' : 'false'}
-              aria-describedby={errors.email ? 'email-error' : undefined}
-            />
-            {errors.email && (
-              <div id="email-error" className={`${styles['form-status']} ${styles['form-error']}`} role="alert">
-                {errors.email}
-              </div>
-            )}
-          </motion.div>
-          <label htmlFor="message" className="visually-hidden">Mensaje</label>
-          <motion.div className={`${styles.field} ${styles['field-full']}`} variants={{ initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 } }}>
-            <textarea
-              id="message"
-              name="message"
-              className={styles.textarea}
-              rows={5}
-              placeholder="Escribe tu mensaje"
-              required
-              aria-invalid={errors.message ? 'true' : 'false'}
-              aria-describedby={errors.message ? 'message-error' : undefined}
-            />
-            {errors.message && (
-              <div id="message-error" className={`${styles['form-status']} ${styles['form-error']}`} role="alert">
-                {errors.message}
-              </div>
-            )}
-          </motion.div>
-          <motion.div className={styles.actions} variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}>
-            <button className={styles.send} type="submit" disabled={submitting} aria-disabled={submitting}>
-              {submitting ? 'Enviando...' : 'Enviar mensaje'}
-            </button>
-            {status && (
-              <div id="form-status" className={`${styles['form-status']}`} role="status" aria-live="polite" aria-atomic="true">
-                {status}
-              </div>
-            )}
-          </motion.div>
-        </motion.form>
+        <h2 className={styles.ctaTitle}>Let's build precision.</h2>
+        <a href="mailto:contato@studio.com" className={styles.blackBtn}>
+          START A PROJECT
+        </a>
       </motion.div>
+
+      <div className={styles.bottomBar}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem' }}>
+          <span>A DESIGN INDUSTRIALISM STUDIO - BUILT FOR PRECISION</span>
+          <div style={{ display: 'flex', gap: 'var(--spacing-4)' }}>
+            <a href="#">LINKEDIN</a>
+            <a href="#">INSTAGRAM</a>
+            <a href="#">BEHANCE</a>
+            <a href="#">DRIBBBLE</a>
+          </div>
+        </div>
+      </div>
     </section>
   );
-}
+};
+
+export default Contact;

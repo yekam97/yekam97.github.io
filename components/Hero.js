@@ -1,107 +1,52 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import styles from './Hero.module.css';
-
-const roles = ["Diseñador Industrial", "Diseñador UX/UI", "Gestor de Proyectos", "Formador", "Content Manager"];
-
-const Typewriter = () => {
-  const [index, setIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
-  const [reverse, setReverse] = useState(false);
-
-  useEffect(() => {
-    if (subIndex === roles[index].length + 1 && !reverse) {
-      setTimeout(() => setReverse(true), 1000); // Pausa antes de borrar
-      return;
-    }
-
-    if (subIndex === 0 && reverse) {
-      setReverse(false);
-      setIndex((prev) => (prev + 1) % roles.length);
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + (reverse ? -1 : 1));
-    }, reverse ? 75 : 150);
-
-    return () => clearTimeout(timeout);
-  }, [subIndex, index, reverse]);
-
-  return (
-    <span className={styles.typewriter}>
-      {`${roles[index].substring(0, subIndex)}`}
-      <span className={styles.cursor}>|</span>
-    </span>
-  );
-};
 
 const Hero = () => {
   return (
-    <section id="hero" className={styles.heroSection}>
+    <section id="hero" className={`container ${styles.heroSection}`}>
       <motion.div
         className={styles.textColumn}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className={styles.titleGroup}>
-          <h1 className={styles.title}>Camilo Gamba</h1>
-          <h2 className={styles.subtitle}>
-            <Typewriter />
-          </h2>
-        </div>
+        <span className={styles.label}>INDUSTRIAL DESIGNER & PM</span>
+
+        <h1 className={styles.title}>
+          Donde las <br />
+          <span className={styles.italic}>ideas</span> <br />
+          tomaron forma.
+        </h1>
 
         <p className={styles.description}>
-          Diseñador industrial con pasión por la innovación, la estrategia y la creación de experiencias de usuario memorables. Transformo ideas en soluciones tangibles que combinan estética, funcionalidad y impacto real.
+          Architecting physical experiences through a lens of technical
+          precision and project leadership. Precision in form. Integrity in management.
         </p>
 
-        <div className={styles.statsBar}>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>10+</span>
-            <span className={styles.statLabel}>Años de Experiencia</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>50+</span>
-            <span className={styles.statLabel}>Proyectos Completados</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>15+</span>
-            <span className={styles.statLabel}>Equipos Liderados</span>
-          </div>
-        </div>
-
         <div className={styles.ctaGroup}>
-          <a href="#roles" className={`${styles.ctaButton} ${styles.primary}`}>
-            Explorar Portafolio
-            <svg className={styles.ctaIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M12 5v14M19 12l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+          <a href="#contacto" className="btn-neon">
+            Enviar Mensaje
           </a>
-          <a href="#contact" className={`${styles.ctaButton} ${styles.secondary}`}>
-            Contactar
+          <a href="#" className="btn-outline">
+            Download CV
           </a>
         </div>
       </motion.div>
+
       <motion.div
         className={styles.photoColumn}
-        initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
       >
-        <motion.img
-          src="/avatar-sticker.png"
-          alt="Camilo Gamba"
-          className={styles.profileImage}
-          animate={{
-            y: [0, -15, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        <div className={styles.imageWrapper}>
+          <img
+            src="/avatar-sticker.png"
+            alt="Camilo Gamba Portrait"
+            className={styles.profileImage}
+          />
+          <div className={styles.neonBox}>A</div>
+        </div>
       </motion.div>
     </section>
   );
