@@ -33,7 +33,7 @@ const Portfolio = () => {
         <section id="portfolio" className="container section-padding">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--spacing-12)' }}>
                 <div>
-                    <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>Artefactos Selectos</h2>
+                    <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>Proyectos</h2>
                     <p className="description" style={{ marginTop: '0.5rem' }}>Una curaduría de proyectos que definen la innovación industrial.</p>
                 </div>
                 <a href="#" className={styles.viewMore}>VER ARCHIVO →</a>

@@ -28,8 +28,8 @@ const Roles = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="label-md">Facetas</span>
-        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>Mis Enfoques</h2>
+        <span className="label-md">Estudios</span>
+        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>Mis Estudios</h2>
 
         <div className={styles.facetsGrid}>
           {rolesData.map((role, idx) => (

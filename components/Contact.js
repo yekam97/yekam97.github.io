@@ -18,8 +18,7 @@ const Contact = () => {
       </motion.div>
 
       <div className={styles.bottomBar}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem' }}>
-          <span>UN ESTUDIO DE DISEÑO INDUSTRIAL - CONSTRUIDO PARA LA PRECISIÓN</span>
+        <div className="container" style={{ display: 'flex', justifyContent: 'flex-end', fontSize: '0.65rem' }}>
           <div style={{ display: 'flex', gap: 'var(--spacing-4)' }}>
             <a href="#">LINKEDIN</a>
             <a href="#">INSTAGRAM</a>
