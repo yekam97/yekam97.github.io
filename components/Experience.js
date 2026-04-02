@@ -100,8 +100,14 @@ export default function Experience() {
         <h2 className="reveal">Donde las ideas tomaron forma</h2>
         <p className="tiny reveal">Un resumen de mis roles, responsabilidades e impacto en los últimos años.</p>
         <div className={styles['xp-slider-container']}>
-          <div className={styles['timeline-line']}></div>
-          <div className={styles['xp-slider']} ref={sliderRef}>
+          <motion.div
+            className={styles['xp-slider']}
+            ref={sliderRef}
+            drag="x"
+            dragConstraints={{ right: 0, left: -((experienceData.length * 340) - 1000) }} // Estimated width check
+            dragElastic={0.1}
+            whileTap={{ cursor: 'grabbing' }}
+          >
             {experienceData.map((job, index) => (
               <motion.article
                 className={styles['xp-item']}
@@ -119,7 +125,7 @@ export default function Experience() {
                 <p className={styles['xp-description']}>{job.description}</p>
               </motion.article>
             ))}
-          </div>
+          </motion.div>
           <div className={styles['xp-dots-container']} ref={dotsRef}>
             {experienceData.map((_, index) => (
               <div

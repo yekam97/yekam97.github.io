@@ -711,19 +711,22 @@ nav.primary a:hover {
 }
 
 .skill-pill {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: var(--step--1);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  background: transparent;
+  border-radius: 2px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   transition: all var(--transition);
 }
 
 .skill-pill:hover {
   background: #FFFFFF;
   color: #000000;
+  border-color: #FFFFFF;
   transform: translateY(-2px);
 }
 
