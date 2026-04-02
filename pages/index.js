@@ -119,25 +119,6 @@ function Layout({ children }) {
 
       <Sticker />
 
-      <footer style={{
-        padding: 'var(--spacing-12) var(--spacing-6)',
-        borderTop: '1px solid var(--outline)',
-        marginTop: 'var(--spacing-16)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontSize: '0.65rem',
-        color: 'var(--muted)',
-        textTransform: 'uppercase',
-        letterSpacing: '0.15em'
-      }}>
-        <div>© 2025 INDUSTRIAL DESIGN STUDIO. ALL RIGHTS RESERVED.</div>
-        <div style={{ display: 'flex', gap: 'var(--spacing-6)' }}>
-          <a href="#" style={{ color: 'var(--muted)' }}>LinkedIn</a>
-          <a href="#" style={{ color: 'var(--muted)' }}>Behance</a>
-          <a href="#" style={{ color: 'var(--muted)' }}>Dribbble</a>
-        </div>
-      </footer>
-
       <style jsx>{`
         .nav-item {
           font-size: 0.7rem;
