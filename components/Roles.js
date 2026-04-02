@@ -39,12 +39,9 @@ const Roles = () => {
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className={styles.categoryWrap}>
-                <span className={styles.roleCategory}>{role.category}</span>
-                <div className={styles.categoryLine} />
-              </div>
-              <h3 className={styles.roleTitle}>{role.title}</h3>
-              <p className={styles.roleDescription}>{role.description}</p>
+              <span className={styles.facetLabel}>{role.category}</span>
+              <h3 className={styles.facetTitle}>{role.title}</h3>
+              <p className={styles.facetDescription}>{role.description}</p>
             </motion.div>
           ))}
         </div>
