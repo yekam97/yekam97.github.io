@@ -105,7 +105,7 @@ function Layout({ children }) {
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none', background: '#000000' }} />
 
       <header className="nav-glass">
-        <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>STUDIO</div>
+        <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>YG</div>
         <nav style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
           <a href="#portfolio" className="nav-item" onClick={handleNavClick}>Portafolio</a>
           <a href="#experiencia" className="nav-item" onClick={handleNavClick}>Trayectoria</a>
