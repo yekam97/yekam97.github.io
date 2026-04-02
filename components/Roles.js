@@ -3,19 +3,19 @@ import styles from './Roles.module.css';
 
 const rolesData = [
   {
-    category: 'ENFOQUE',
+    category: 'PREGRADO',
     title: 'Diseñador Industrial',
-    description: 'Transformo requisitos complejos en productos físicos elegantes, funcionales y listos para fabricación. Enfoque en ergonomía y materiales sostenibles.'
+    description: 'Universidad Pedagógica y Tecnológica de Colombia. Profesional orientado al desarrollo de productos, innovación y soluciones funcionales que integran creatividad, tecnología y sostenibilidad. Enfoque estratégico y prototipado.'
   },
   {
-    category: 'DIGITAL',
-    title: 'Diseñador UX/UI',
-    description: 'Traduzco el feedback centrado en el humano en interfaces fluidas de alta fidelidad. Cerrando la brecha entre el software y la intención del usuario.'
+    category: 'ESPECIALIZACIÓN',
+    title: 'Alta Gerencia en Mercadotecnia',
+    description: 'Universidad Pedagógica y Tecnológica de Colombia. Formación en diseño de estrategias de mercado, posicionamiento y modelos de negocio. Gestión estratégica del marketing y fortalecimiento de emprendimientos.'
   },
   {
-    category: 'ESTRATEGIA',
-    title: 'Gestor de Proyectos',
-    description: 'Orquestando ciclos de vida complejos desde el prototipo hasta el mercado. Asegurando precisión en cada hito con una gestión meticulosa.'
+    category: 'MAESTRÍA',
+    title: 'Proyectos de Desarrollo Sostenible',
+    description: 'Magíster con enfoque en la formulación, gestión y evaluación de proyectos territoriales e innovación social. Integración de impacto económico, ambiental y social para soluciones sostenibles.'
   }
 ];
 
@@ -36,14 +36,15 @@ const Roles = () => {
             <motion.div
               key={idx}
               className={styles.facetCard}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ y: -10 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <span className={styles.facetLabel}>{role.category}</span>
-              <h3 className={styles.facetTitle}>{role.title}</h3>
-              <p className={styles.facetDescription}>{role.description}</p>
+              <div className={styles.categoryWrap}>
+                <span className={styles.roleCategory}>{role.category}</span>
+                <div className={styles.categoryLine} />
+              </div>
+              <h3 className={styles.roleTitle}>{role.title}</h3>
+              <p className={styles.roleDescription}>{role.description}</p>
             </motion.div>
           ))}
         </div>
