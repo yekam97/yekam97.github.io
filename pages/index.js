@@ -98,7 +98,7 @@ function Layout({ children }) {
     <>
       <ScrollProgress />
       <Head>
-        <title>STUDIO — Precision & Design</title>
+        <title>Yeison Camilo Gamba | Diseñador</title>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </Head>
 
