@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import styles from './Experience.module.css';
 
 const experienceData = [
@@ -88,22 +89,35 @@ export default function Experience() {
   };
 
   return (
-    <section id="experiencia" className="reveal timeline">
-      <div className="card">
+    <section id="experiencia" className="timeline">
+      <motion.div
+        className="card"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <h2 className="reveal">Donde las ideas tomaron forma</h2>
         <p className="tiny reveal">Un resumen de mis roles, responsabilidades e impacto en los últimos años.</p>
         <div className={styles['xp-slider-container']}>
           <div className={styles['timeline-line']}></div>
           <div className={styles['xp-slider']} ref={sliderRef}>
             {experienceData.map((job, index) => (
-              <article className={styles['xp-item']} key={index}>
+              <motion.article
+                className={styles['xp-item']}
+                key={index}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
                 <div className={styles['xp-header']}>
                   <h3 className={styles['xp-title']}>{job.company}</h3>
                   <span className={styles['xp-period']}>{job.period}</span>
                 </div>
                 <h4 className={styles['xp-role']}>{job.role}</h4>
                 <p className={styles['xp-description']}>{job.description}</p>
-              </article>
+              </motion.article>
             ))}
           </div>
           <div className={styles['xp-dots-container']} ref={dotsRef}>
@@ -117,7 +131,7 @@ export default function Experience() {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

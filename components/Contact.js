@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './Contact.module.css';
 
 export default function Contact() {
@@ -61,23 +62,40 @@ export default function Contact() {
   }
 
   return (
-    <section id="contacto" className={`${styles.section} reveal`} aria-labelledby="contact-heading">
-      <div className="card">
+    <section id="contacto" aria-labelledby="contact-heading">
+      <motion.div
+        className="card"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <h2 id="contact-heading">¿Tienes un proyecto en mente?</h2>
         <p className={`${styles.description} muted`}>
           Si tienes una idea, proyecto o colaboración en mente, estaré encantado de escucharte.
           Envíame un mensaje y conversamos cómo puedo aportar a tu visión.
         </p>
-        <form
+        <motion.form
           className={styles['contact-form']}
           action="https://formspree.io/f/xvgwylkw"
           method="POST"
           onSubmit={handleSubmit}
           noValidate
           aria-describedby={status ? 'form-status' : undefined}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={{
+            initial: {},
+            animate: {
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
         >
           <label htmlFor="name" className="visually-hidden">Nombre</label>
-          <div className={styles.field}>
+          <motion.div className={styles.field} variants={{ initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 } }}>
             <input
               id="name"
               name="name"
@@ -92,9 +110,9 @@ export default function Contact() {
                 {errors.name}
               </div>
             )}
-          </div>
+          </motion.div>
           <label htmlFor="email" className="visually-hidden">Correo</label>
-          <div className={styles.field}>
+          <motion.div className={styles.field} variants={{ initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 } }}>
             <input
               id="email"
               name="email"
@@ -110,9 +128,9 @@ export default function Contact() {
                 {errors.email}
               </div>
             )}
-          </div>
+          </motion.div>
           <label htmlFor="message" className="visually-hidden">Mensaje</label>
-          <div className={`${styles.field} ${styles['field-full']}`}>
+          <motion.div className={`${styles.field} ${styles['field-full']}`} variants={{ initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 } }}>
             <textarea
               id="message"
               name="message"
@@ -128,8 +146,8 @@ export default function Contact() {
                 {errors.message}
               </div>
             )}
-          </div>
-          <div className={styles.actions}>
+          </motion.div>
+          <motion.div className={styles.actions} variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}>
             <button className={styles.send} type="submit" disabled={submitting} aria-disabled={submitting}>
               {submitting ? 'Enviando...' : 'Enviar mensaje'}
             </button>
@@ -138,9 +156,9 @@ export default function Contact() {
                 {status}
               </div>
             )}
-          </div>
-        </form>
-      </div>
+          </motion.div>
+        </motion.form>
+      </motion.div>
     </section>
   );
 }

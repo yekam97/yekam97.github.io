@@ -86,13 +86,16 @@ function Layout({ children }) {
         this.x += this.velocity.x;
         this.y += this.velocity.y;
 
-        // Reverse direction if hitting canvas edges
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-          this.velocity.x = -this.velocity.x;
-        }
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-          this.velocity.y = -this.velocity.y;
-        }
+        // Subtle opacity drift
+        const op = parseFloat(this.color.split(',')[3]);
+        const newOp = Math.max(0.02, Math.min(0.2, op + (Math.random() - 0.5) * 0.01));
+        this.color = `rgba(255, 255, 255, ${newOp})`;
+
+        // Wrap around edges instead of bouncing for a "limitless" feel
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
       }
     }
 

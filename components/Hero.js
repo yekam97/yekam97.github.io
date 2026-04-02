@@ -83,9 +83,26 @@ const Hero = () => {
           </a>
         </div>
       </motion.div>
-      <div className={styles.photoColumn}>
-        <img src="/avatar-sticker.png" alt="Camilo Gamba" className={styles.profileImage} />
-      </div>
+      <motion.div
+        className={styles.photoColumn}
+        initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+      >
+        <motion.img
+          src="/avatar-sticker.png"
+          alt="Camilo Gamba"
+          className={styles.profileImage}
+          animate={{
+            y: [0, -15, 0],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </motion.div>
     </section>
   );
 };

@@ -31,7 +31,28 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Dots removed - cleaner design */
+/* Navigation Dots */
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timeline-dot:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.timeline-dot.active {
+  background: #FFFFFF;
+  width: 25px;
+  border-radius: 5px;
+}
+
 
 
 .xp-slider {
@@ -173,7 +194,13 @@
   line-height: var(--lh-relaxed);
 }
 
-/* Timeline and dots removed for cleaner design */
+/* Dots container restore */
+.xp-dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 2rem;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

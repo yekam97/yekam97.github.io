@@ -126,18 +126,40 @@ export default function Roles() {
   return (
     <section id="roles" className="roles-section" style={{ background: 'transparent' }}>
       <div className="roles-content">
-        <h2 className="section-title" style={{ textAlign: 'center' }}>
+        <motion.h2
+          className="section-title"
+          style={{ textAlign: 'center' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           Mis facetas como diseñador
-        </h2>
-        <p className="section-description" style={{ textAlign: 'center' }}>
+        </motion.h2>
+        <motion.p
+          className="section-description"
+          style={{ textAlign: 'center' }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           Cada enfoque muestra proyectos destacados.
-        </p>
-        <nav className="roles-nav reveal" role="tablist" aria-label="Enfoques profesionales">
+        </motion.p>
+        <motion.nav
+          className="roles-nav"
+          role="tablist"
+          aria-label="Enfoques profesionales"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           {roleKeys.map(key => (
             <button
               key={key}
-              className={`role-tab ${activeRole === key ? 'active' : ''} ${isChanging ? 'changing' : ''}`}
-              onClick={() => handleRoleChange(key)}
+              className={`role-tab ${activeRole === key ? 'active' : ''}`}
+              onClick={() => setActiveRole(key)}
               role="tab"
               aria-selected={activeRole === key}
               aria-controls={`panel-${key}`}
@@ -147,15 +169,15 @@ export default function Roles() {
               {activeRole === key && <span className="active-indicator" />}
             </button>
           ))}
-        </nav>
-        <div className="roles-panels reveal">
+        </motion.nav>
+        <div className="roles-panels">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeRole}
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 15 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, x: -15 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
               className="role-panel"
             >
               <h3 style={{
@@ -175,13 +197,17 @@ export default function Roles() {
               <div className="projects-grid">
                 {currentRoleData.projects.map((project, index) => (
                   <div key={index} className="project-card-small tilt">
-                    <div className="project-image-wrapper">
+                    <motion.div
+                      className="project-image-wrapper"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.4 }}
+                    >
                       <img
                         src={project.image}
                         alt={project.title || 'Proyecto'}
                         loading="lazy"
                       />
-                    </div>
+                    </motion.div>
                     <div className="project-meta">
                       <h4>{project.title}</h4>
                       {project.description && (
