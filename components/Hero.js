@@ -42,7 +42,7 @@ const Hero = () => {
       >
         <div className={styles.neonBox}>
           <img
-            src="/avatar-sticker.png"
+            src="/images/camilo-portrait.jpg"
             alt="Camilo Gamba"
             className={styles.profileImage}
           />
