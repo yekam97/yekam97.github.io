@@ -1,7 +1,12 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/lib/translations';
 import styles from './Hero.module.css';
 
 const Hero = () => {
+  const { language } = useLanguage();
+  const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
+
   return (
     <section id="hero" className={`container ${styles.heroSection}`}>
       <motion.div
@@ -10,23 +15,35 @@ const Hero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <span className={styles.label}>DISEÑADOR INDUSTRIAL & GESTOR DE PROYECTOS</span>
+        <span className={styles.label}>{t('diseñador')}</span>
 
         <h1 className={styles.title}>
-          Donde las <br />
-          <span className={styles.italic}>ideas</span> <br />
-          tomaron forma.
+          {language === 'es' ? (
+            <>
+              Donde las <br />
+              <span className={styles.italic}>ideas</span> <br />
+              tomaron forma.
+            </>
+          ) : (
+            <>
+              Where <br />
+              <span className={styles.italic}>ideas</span> <br />
+              came to life.
+            </>
+          )}
         </h1>
 
         <p className={styles.description}>
-          Diseñador industrial con pasión por la innovación, la estrategia
-          y la creación de experiencias de usuario memorables. Transformo ideas
-          en soluciones tangibles que combinan estética, funcionalidad e impacto real.
+          {language === 'es' ? (
+            'Diseñador industrial con pasión por la innovación, la estrategia y la creación de experiencias de usuario memorables. Transformo ideas en soluciones tangibles que combinan estética, funcionalidad e impacto real.'
+          ) : (
+            'Industrial designer passionate about innovation, strategy, and creating memorable user experiences. I transform ideas into tangible solutions that combine aesthetics, functionality, and real impact.'
+          )}
         </p>
 
         <div className={styles.ctaGroup}>
           <a href="#contacto" className="btn-neon">
-            Enviar Mensaje
+            {language === 'es' ? 'Enviar Mensaje' : 'Send Message'}
           </a>
         </div>
       </motion.div>

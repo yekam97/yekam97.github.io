@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/lib/translations';
 import ScrollProgress from './ScrollProgress';
 import Sticker from './Sticker';
+import LanguageToggle from './LanguageToggle';
 
 export default function Layout({ children }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
 
   useEffect(() => {
     const canvas = document.getElementById('background-canvas');
@@ -90,9 +95,10 @@ export default function Layout({ children }) {
       <header className="nav-glass">
         <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>YG</div>
         <nav style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
-          <a href="#portfolio" className="nav-item" onClick={handleNavClick}>Portafolio</a>
-          <a href="#experiencia" className="nav-item" onClick={handleNavClick}>Trayectoria</a>
-          <a href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }}>Contacto</a>
+          <a href="#portfolio" className="nav-item" onClick={handleNavClick}>{t('portfolio')}</a>
+          <a href="#experiencia" className="nav-item" onClick={handleNavClick}>{t('trayectoria')}</a>
+          <a href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }}>{t('contacto')}</a>
+          <LanguageToggle />
         </nav>
       </header>
 

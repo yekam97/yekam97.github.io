@@ -2,11 +2,15 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/lib/translations';
 import styles from './Contact.module.css';
 import ContactModal from './ContactModal';
 
 const Contact = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
 
   return (
     <section id="contacto" className={styles.ctaSection}>
@@ -17,12 +21,12 @@ const Contact = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className={styles.ctaTitle}>Construyamos precisión.</h2>
+        <h2 className={styles.ctaTitle}>{t('construyamos')}</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className={styles.blackBtn}
         >
-          INICIAR UN PROYECTO
+          {language === 'es' ? 'INICIAR UN PROYECTO' : 'START A PROJECT'}
         </button>
       </motion.div>
 
