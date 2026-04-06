@@ -17,22 +17,22 @@ const certifications = [
     id: 'B2 Upper Intermediate'
   },
   {
-    name: 'MODELADO 3D Y RENDER AVANZADO',
-    issuer: 'CERTIFICADO TÉCNICO',
+    name: 'DISEÑO GRÁFICO',
+    issuer: 'LINKEDIN LEARNING',
     date: '2023',
     url: 'https://www.linkedin.com/learning/certificates/ce1e321bbee3b0af651a8321602d50b335ef11b980a9b6c4c0ce77621cfb069f?trk=backfilled_certificate',
     id: 'Credential ID: SL-4412'
   },
   {
     name: 'PRODUCCIÓN DE CONTENIDOS 360°',
-    issuer: 'REALIDAD VIRTUAL',
+    issuer: 'POLISURA',
     date: '2023',
     url: 'https://api-certificate.polisura.edu.co/certificate.php?data=LVYBQBxdGAReWCxrbXR2cFwNT14LbnZZEw5aAg4UGg9wZmdqIHNbCBIKR2h0WxEXSFAJBFJoITMsMywkBQ0XHENidghAFkMFWl0HBQ==',
     id: 'Credential ID: RV-1122'
   },
   {
     name: 'EMPRENDIMIENTO E INNOVACIÓN',
-    issuer: 'MINCIENCIAS / SENNOVA',
+    issuer: 'POLINTERCO',
     date: '2023',
     url: 'https://api-certificate.polinterco.edu.co/certificate.php?data=LVYBQBxdGAReWCxrPX92e1RZFA4LZ3EISw5aBw5IGlZ7MD1qdSFeXhVQFDl0CkESSFAJBFJoITMsMywkBQ0XHENidghAFkMFWV0FAA==',
     id: 'Credential ID: MS-2212'
