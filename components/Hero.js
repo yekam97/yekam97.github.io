@@ -28,9 +28,6 @@ const Hero = () => {
           <a href="#contacto" className="btn-neon">
             Enviar Mensaje
           </a>
-          <a href="#" className="btn-outline">
-            Descargar CV
-          </a>
         </div>
       </motion.div>
 
