@@ -13,6 +13,15 @@ export default function ProjectModal({ project, isOpen, onClose }) {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (isOpen && mounted) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [isOpen, mounted]);
+
   if (!project || !mounted) return null;
 
   const handlePrevImage = () => {

@@ -13,6 +13,15 @@ const ContactModal = ({ isOpen, onClose }) => {
         setMounted(true);
     }, []);
 
+    useEffect(() => {
+        if (isOpen && mounted) {
+            document.body.style.overflow = 'hidden';
+            return () => {
+                document.body.style.overflow = 'unset';
+            };
+        }
+    }, [isOpen, mounted]);
+
     if (!isOpen) return null;
 
     const handleSubmit = async (e) => {
