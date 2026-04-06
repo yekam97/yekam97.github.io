@@ -6,64 +6,68 @@ import styles from './Portfolio.module.css';
 
 const projects = [
     {
-        category: 'DISEÑO INDUSTRIAL',
-        title: 'Remodelación de departamento',
-        year: '2023',
+        category: 'DISEÑO INDUSTRIAL / DISEÑO DE INTERIORES',
+        title: 'Diseño y desarrollo de espacios y productos',
+        year: '2021 – 2025',
         image: '/images/industrial-remodelacion-departamento.png',
         images: ['/images/industrial-remodelacion-departamento.png'],
-        description: 'Proyecto de remodelación integral de departamento enfocado en maximizar espacios, funcionalidad e iluminación natural. Diseño moderno con acabados premium.',
+        description: 'Desarrollo de proyectos de diseño industrial y diseño interior enfocados en funcionalidad, estética y optimización de espacios. Creación de soluciones personalizadas para espacios comerciales, residenciales y mobiliario, integrando modelado 3D, visualización y desarrollo conceptual.',
         details: [
-            'Diseño completo de distribución espacial',
-            'Selección de materiales y acabados',
-            'Integración de soluciones de almacenamiento',
-            'Iluminación y mobiliario funcional'
+            'Diseño de mobiliario y elementos funcionales',
+            'Remodelación y distribución de espacios interiores',
+            'Desarrollo de conceptos de diseño para espacios comerciales',
+            'Modelado y visualización de proyectos para clientes',
+            'Prototipado y desarrollo de productos'
         ],
-        technologies: ['Diseño 3D', 'Visualización', 'CAD', 'Materiales']
+        technologies: ['Diseño 3D', 'Renderizado', 'CAD', 'Modelado paramétrico']
     },
     {
-        category: 'ARQUITECTURA TEMÁTICA',
-        title: 'Diseño de cabaña en Mazamitla',
-        year: '2024',
-        image: '/images/industrial-cabaña-mazamitla.png',
-        images: ['/images/industrial-cabaña-mazamitla.png'],
-        description: 'Proyecto de arquitectura temática para vivienda en entorno natural. Diseño que respeta el paisaje local manteniendo confort y modernidad.',
-        details: [
-            'Integración con el paisaje natural',
-            'Diseño bioclimático y sostenible',
-            'Espacios abiertos y fluidos',
-            'Materiales locales y sostenibles'
-        ],
-        technologies: ['Arquitectura', 'Diseño 3D', 'Sostenibilidad', 'Render']
-    },
-    {
-        category: 'VISUALIZACIÓN 3D',
-        title: 'Locales comerciales Creat3d',
-        year: '2022',
-        image: '/images/industrial-locales-creat3d.png',
-        images: ['/images/industrial-locales-creat3d.png'],
-        description: 'Visualización 3D de espacios comerciales con distribución moderna y atractiva. Renders de alta calidad para presentación a inversores.',
-        details: [
-            'Modelado 3D detallado',
-            'Renders fotorrealistas',
-            'Propuestas de distribución comercial',
-            'Materiales y acabados realistas'
-        ],
-        technologies: ['3D Studio Max', 'V-Ray', 'Render', 'Diseño comercial']
-    },
-    {
-        category: 'UX/UI DESIGN',
-        title: 'Dashboard de control de biofábricas',
-        year: '2024',
+        category: 'DISEÑO UX / UI Y DESARROLLO WEB',
+        title: 'Diseño y desarrollo de plataformas digitales',
+        year: '2022 – 2025',
         image: '/images/ux-dashboard-biofabricas.png',
         images: ['/images/ux-dashboard-biofabricas.png'],
-        description: 'Interfaz de usuario para gestión y monitoreo de procesos en biofábricas. Diseño intuitivo con visualización de datos en tiempo real.',
+        description: 'Diseño de interfaces y desarrollo de aplicaciones web enfocadas en experiencia de usuario, funcionalidad y accesibilidad. Participación en la conceptualización, diseño visual, arquitectura de información y desarrollo de plataformas digitales para empresas y proyectos tecnológicos.',
         details: [
-            'Investigación UX exhaustiva',
-            'Diseño de interfaz intuitiva',
-            'Visualización de datos complejos',
-            'Prototipado interactivo'
+            'Diseño de experiencia de usuario (UX)',
+            'Diseño de interfaces (UI) para aplicaciones web',
+            'Desarrollo y personalización de plataformas web',
+            'Diseño de paneles administrativos y sistemas multiusuario',
+            'Prototipado y pruebas de experiencia de usuario'
         ],
-        technologies: ['Figma', 'UX Research', 'UI Design', 'Prototipado']
+        technologies: ['Figma', 'Diseño de interfaces', 'Desarrollo web', 'Prototipado digital']
+    },
+    {
+        category: 'DISEÑO GRÁFICO Y BRANDING',
+        title: 'Desarrollo de identidad visual y comunicación gráfica',
+        year: '2021 – 2025',
+        image: '/images/industrial-locales-creat3d.png',
+        images: ['/images/industrial-locales-creat3d.png'],
+        description: 'Creación de identidades visuales y piezas gráficas para empresas, emprendimientos y proyectos institucionales. Desarrollo de manuales de marca, diseño de logotipos y producción de material gráfico para medios digitales e impresos.',
+        details: [
+            'Diseño de logotipos e identidad visual',
+            'Creación de manuales de marca',
+            'Diseño de piezas gráficas para redes sociales',
+            'Diseño de material publicitario e institucional',
+            'Adaptación de identidad visual a diferentes formatos'
+        ],
+        technologies: ['Illustrator', 'Photoshop', 'Diseño editorial', 'Branding']
+    },
+    {
+        category: 'MENTORÍAS, FORMACIÓN Y TALLERES',
+        title: 'Capacitación en emprendimiento, tecnología y creatividad',
+        year: '2022 – 2025',
+        image: '/images/industrial-cabaña-mazamitla.png',
+        images: ['/images/industrial-cabaña-mazamitla.png'],
+        description: 'Diseño y desarrollo de talleres y procesos de mentoría orientados a emprendimiento, innovación y herramientas digitales. Formación en metodologías de creación de proyectos, contenido digital, tecnologías inmersivas y desarrollo de ideas de negocio.',
+        details: [
+            'Mentorías para emprendedores y desarrollo de modelos de negocio',
+            'Talleres de creación de contenido digital y tecnología',
+            'Capacitación en metodologías de innovación y diseño',
+            'Formación en herramientas de diseño, video 360° y realidad virtual',
+            'Acompañamiento a proyectos en etapas tempranas'
+        ],
+        technologies: ['Metodologías de innovación', 'Herramientas de diseño digital', 'Producción audiovisual', 'Realidad virtual y contenido inmersivo']
     }
 ];
 
