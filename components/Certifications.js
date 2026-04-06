@@ -19,23 +19,23 @@ const certifications = [
   {
     name: 'DISEÑO GRÁFICO',
     issuer: 'LINKEDIN LEARNING',
-    date: '2023',
+    date: '2021',
     url: 'https://www.linkedin.com/learning/certificates/ce1e321bbee3b0af651a8321602d50b335ef11b980a9b6c4c0ce77621cfb069f?trk=backfilled_certificate',
-    id: 'Credential ID: SL-4412'
+    id: '40 h · 13 cursos'
   },
   {
-    name: 'PRODUCCIÓN DE CONTENIDOS 360°',
-    issuer: 'POLISURA',
-    date: '2023',
+    name: 'DOCENCIA UNIVERSITARIA',
+    issuer: 'POLITÉCNICO DE SURAMÉRICA',
+    date: '2025',
     url: 'https://api-certificate.polisura.edu.co/certificate.php?data=LVYBQBxdGAReWCxrbXR2cFwNT14LbnZZEw5aAg4UGg9wZmdqIHNbCBIKR2h0WxEXSFAJBFJoITMsMywkBQ0XHENidghAFkMFWl0HBQ==',
-    id: 'Credential ID: RV-1122'
+    id: '120 h · Diplomado'
   },
   {
-    name: 'EMPRENDIMIENTO E INNOVACIÓN',
-    issuer: 'POLINTERCO',
-    date: '2023',
+    name: 'PEDAGOGÍA PARA PROFESIONALES NO LICENCIADOS',
+    issuer: 'POLITÉCNICO INTERCONTINENTAL',
+    date: '2025',
     url: 'https://api-certificate.polinterco.edu.co/certificate.php?data=LVYBQBxdGAReWCxrPX92e1RZFA4LZ3EISw5aBw5IGlZ7MD1qdSFeXhVQFDl0CkESSFAJBFJoITMsMywkBQ0XHENidghAFkMFWV0FAA==',
-    id: 'Credential ID: MS-2212'
+    id: '120 h · Diplomado'
   },
   {
     name: 'CERTIFICADO METODOLOGÍAS ÁGILES',
