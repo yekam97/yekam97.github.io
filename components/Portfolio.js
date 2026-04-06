@@ -130,12 +130,9 @@ const Portfolio = () => {
 
     return (
         <section id="portfolio" className="container section-padding">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--spacing-12)' }}>
-                <div>
-                    <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>{t('proyectos')}</h2>
-                    <p className="description" style={{ marginTop: '0.5rem' }}>{t('descripcion_proyectos')}</p>
-                </div>
-                <a href="#" className={styles.viewMore}>{t('ver_archivo')} →</a>
+            <div style={{ marginBottom: 'var(--spacing-12)' }}>
+                <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>{t('proyectos')}</h2>
+                <p className="description" style={{ marginTop: '0.5rem' }}>{t('descripcion_proyectos')}</p>
             </div>
 
             <div className={styles.projectGrid}>

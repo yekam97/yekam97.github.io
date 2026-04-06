@@ -95,7 +95,6 @@ export default function Layout({ children }) {
       <header className="nav-glass">
         <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>YG</div>
         <nav style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
-          <a href="#portfolio" className="nav-item" onClick={handleNavClick}>{t('portfolio')}</a>
           <a href="#experiencia" className="nav-item" onClick={handleNavClick}>{t('trayectoria')}</a>
           <a href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }}>{t('contacto')}</a>
           <LanguageToggle />
