@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import styles from './ProjectModal.module.css';
 
 export default function ProjectModal({ project, isOpen, onClose }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  if (!project) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!project || !mounted) return null;
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1));
@@ -15,7 +21,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
     setCurrentImageIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
   };
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -32,6 +38,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <button className={styles.closeButton} onClick={onClose}>
               ✕
@@ -106,4 +113,6 @@ export default function ProjectModal({ project, isOpen, onClose }) {
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.getElementById('modal-root'));
 }

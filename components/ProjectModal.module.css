@@ -1,13 +1,17 @@
 .backdrop {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 3000;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   overflow-y: auto;
   padding: var(--spacing-8) var(--spacing-4);
+  max-height: 100vh;
 }
 
 .modalContainer {
@@ -19,8 +23,8 @@
   border-radius: 2px;
   position: relative;
   overflow-y: auto;
-  max-height: fit-content;
-  margin: var(--spacing-8) auto;
+  max-height: 90vh;
+  margin: auto;
 }
 
 .closeButton {
