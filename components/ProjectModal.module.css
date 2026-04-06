@@ -3,21 +3,25 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: var(--spacing-4);
 }
 
 .modalContainer {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background: var(--surface-high);
   border: 1px solid var(--outline);
   z-index: 3001;
   max-width: 1000px;
   max-height: 90vh;
-  overflow-y: auto;
-  width: 90%;
+  width: 100%;
   border-radius: 2px;
+  position: relative;
+  overflow-y: auto;
+  flex-shrink: 0;
+  margin: auto;
 }
 
 .closeButton {
