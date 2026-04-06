@@ -1,9 +1,17 @@
+'use client';
+
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './ContactModal.module.css';
 
 const ContactModal = ({ isOpen, onClose }) => {
     const [status, setStatus] = useState('IDLE'); // IDLE, SUBMITTING, SUCCESS, ERROR
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     if (!isOpen) return null;
 
@@ -38,10 +46,19 @@ const ContactModal = ({ isOpen, onClose }) => {
         }
     };
 
-    return (
+    if (!mounted) return null;
+
+    const modalContent = (
         <AnimatePresence>
             {isOpen && (
-                <div className={styles.overlay} onClick={onClose}>
+                <>
+                    <motion.div
+                        className={styles.overlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                    />
                     <motion.div
                         className={styles.modal}
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -113,10 +130,12 @@ const ContactModal = ({ isOpen, onClose }) => {
                             </>
                         )}
                     </motion.div>
-                </div>
+                </>
             )}
         </AnimatePresence>
     );
+
+    return createPortal(modalContent, document.getElementById('modal-root'));
 };
 
 export default ContactModal;
