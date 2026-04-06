@@ -14,6 +14,12 @@
     padding: var(--spacing-12) var(--spacing-8) var(--spacing-8);
     border: 1px solid var(--outline);
     z-index: 10000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .closeBtn {

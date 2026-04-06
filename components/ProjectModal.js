@@ -35,7 +35,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
   const modalContent = (
     <AnimatePresence mode="wait">
       {isOpen && (
-        <div style={{ position: 'fixed', inset: 0, pointerEvents: 'auto' }}>
+        <>
           <motion.div
             className={styles.backdrop}
             initial={{ opacity: 0 }}
@@ -51,7 +51,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3 }}
             onClick={(e) => e.stopPropagation()}
-            style={{ pointerEvents: 'auto', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxHeight: '90vh', overflow: 'auto' }}
+            style={{ pointerEvents: 'auto' }}
           >
             <button className={styles.closeButton} onClick={onClose}>
               ✕
@@ -122,7 +122,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
               </div>
             </div>
           </motion.div>
-        </div>
+        </>
       )}
     </AnimatePresence>
   );
