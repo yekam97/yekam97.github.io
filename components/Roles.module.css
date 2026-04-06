@@ -38,6 +38,21 @@
     font-size: 0.85rem;
     line-height: 1.6;
     color: var(--muted);
+    margin-bottom: var(--spacing-4);
+}
+
+.pdfLink {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+    padding-top: var(--spacing-4);
+}
+
+.pdfLink:hover {
+    color: #FFFFFF;
 }
 
 @media (max-width: 900px) {

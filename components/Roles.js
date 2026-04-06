@@ -5,12 +5,14 @@ const rolesData = [
   {
     category: 'PREGRADO',
     title: 'Diseñador Industrial',
-    description: 'Universidad Pedagógica y Tecnológica de Colombia. Profesional orientado al desarrollo de productos, innovación y soluciones funcionales que integran creatividad, tecnología y sostenibilidad. Enfoque estratégico y prototipado.'
+    description: 'Universidad Pedagógica y Tecnológica de Colombia. Profesional orientado al desarrollo de productos, innovación y soluciones funcionales que integran creatividad, tecnología y sostenibilidad. Enfoque estratégico y prototipado.',
+    pdfUrl: '/DIPLOMA PREGRADO.pdf'
   },
   {
     category: 'ESPECIALIZACIÓN',
     title: 'Alta Gerencia en Mercadotecnia',
-    description: 'Universidad Pedagógica y Tecnológica de Colombia. Formación en diseño de estrategias de mercado, posicionamiento y modelos de negocio. Gestión estratégica del marketing y fortalecimiento de emprendimientos.'
+    description: 'Universidad Pedagógica y Tecnológica de Colombia. Formación en diseño de estrategias de mercado, posicionamiento y modelos de negocio. Gestión estratégica del marketing y fortalecimiento de emprendimientos.',
+    pdfUrl: '/DIPLOMA DE GRADO ESPECIALIZACIÓN.pdf'
   },
   {
     category: 'MAESTRÍA',
@@ -42,6 +44,11 @@ const Roles = () => {
               <span className={styles.facetLabel}>{role.category}</span>
               <h3 className={styles.facetTitle}>{role.title}</h3>
               <p className={styles.facetDescription}>{role.description}</p>
+              {role.pdfUrl && (
+                <a href={role.pdfUrl} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
+                  Ver Diploma ↗
+                </a>
+              )}
             </motion.div>
           ))}
         </div>
