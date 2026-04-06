@@ -1,6 +1,5 @@
-'use client';
-
 import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import styles from './ContactModal.module.css';
 
 const ContactModal = ({ isOpen, onClose }) => {
