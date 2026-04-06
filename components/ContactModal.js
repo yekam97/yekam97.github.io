@@ -60,14 +60,13 @@ const ContactModal = ({ isOpen, onClose }) => {
     const modalContent = (
         <AnimatePresence mode="wait">
             {isOpen && (
-                <>
+                <div style={{ pointerEvents: isOpen ? 'auto' : 'none' }}>
                     <motion.div
                         className={styles.overlay}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        style={{ pointerEvents: 'auto' }}
                     />
                     <motion.div
                         className={styles.modal}
@@ -75,7 +74,6 @@ const ContactModal = ({ isOpen, onClose }) => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         onClick={(e) => e.stopPropagation()}
-                        style={{ pointerEvents: 'auto' }}
                     >
                         <button className={styles.closeBtn} onClick={onClose}>✕</button>
 
@@ -141,7 +139,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                             </>
                         )}
                     </motion.div>
-                </>
+                </div>
             )}
         </AnimatePresence>
     );
