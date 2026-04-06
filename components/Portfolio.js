@@ -25,8 +25,8 @@ const projects = [
         category: 'DISEÑO UX / UI Y DESARROLLO WEB',
         title: 'Diseño y desarrollo de plataformas digitales',
         year: '2022 – 2025',
-        image: '/images/ux-dashboard-biofabricas.png',
-        images: ['/images/ux-dashboard-biofabricas.png'],
+        image: '/images/Gemini_Generated_Image_3vovcz3vovcz3vov.png',
+        images: ['/images/Gemini_Generated_Image_3vovcz3vovcz3vov.png'],
         description: 'Diseño de interfaces y desarrollo de aplicaciones web enfocadas en experiencia de usuario, funcionalidad y accesibilidad. Participación en la conceptualización, diseño visual, arquitectura de información y desarrollo de plataformas digitales para empresas y proyectos tecnológicos.',
         details: [
             'Diseño de experiencia de usuario (UX)',
@@ -41,8 +41,8 @@ const projects = [
         category: 'DISEÑO GRÁFICO Y BRANDING',
         title: 'Desarrollo de identidad visual y comunicación gráfica',
         year: '2021 – 2025',
-        image: '/images/industrial-locales-creat3d.png',
-        images: ['/images/industrial-locales-creat3d.png'],
+        image: '/images/Gemini_Generated_Image_gpudthgpudthgpud.png',
+        images: ['/images/Gemini_Generated_Image_gpudthgpudthgpud.png'],
         description: 'Creación de identidades visuales y piezas gráficas para empresas, emprendimientos y proyectos institucionales. Desarrollo de manuales de marca, diseño de logotipos y producción de material gráfico para medios digitales e impresos.',
         details: [
             'Diseño de logotipos e identidad visual',
@@ -57,8 +57,8 @@ const projects = [
         category: 'MENTORÍAS, FORMACIÓN Y TALLERES',
         title: 'Capacitación en emprendimiento, tecnología y creatividad',
         year: '2022 – 2025',
-        image: '/images/industrial-cabaña-mazamitla.png',
-        images: ['/images/industrial-cabaña-mazamitla.png'],
+        image: '/images/pexels-pavel-danilyuk-6340630.png',
+        images: ['/images/pexels-pavel-danilyuk-6340630.png'],
         description: 'Diseño y desarrollo de talleres y procesos de mentoría orientados a emprendimiento, innovación y herramientas digitales. Formación en metodologías de creación de proyectos, contenido digital, tecnologías inmersivas y desarrollo de ideas de negocio.',
         details: [
             'Mentorías para emprendedores y desarrollo de modelos de negocio',
