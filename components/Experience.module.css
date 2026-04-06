@@ -107,3 +107,29 @@
     padding-left: var(--spacing-6);
   }
 }
+
+@media (max-width: 640px) {
+  .timeline {
+    gap: var(--spacing-8);
+  }
+
+  .timelineItem {
+    gap: var(--spacing-2);
+  }
+
+  .period {
+    font-size: 0.85rem;
+  }
+
+  .roleTitle {
+    font-size: 1rem;
+  }
+
+  .roleDescription {
+    font-size: 0.85rem;
+  }
+
+  .content {
+    padding-left: var(--spacing-4);
+  }
+}

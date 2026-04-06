@@ -67,3 +67,22 @@
         margin-top: 0;
     }
 }
+
+@media (max-width: 640px) {
+    .projectGrid {
+        gap: var(--spacing-8);
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .imageBox {
+        aspect-ratio: 16 / 12;
+    }
+
+    .meta {
+        flex-direction: column;
+        gap: var(--spacing-2);
+    }
+}

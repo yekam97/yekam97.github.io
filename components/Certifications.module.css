@@ -68,5 +68,30 @@
 @media (max-width: 600px) {
   .certsGrid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+  }
+
+  .certCard {
+    padding: var(--spacing-6);
+  }
+
+  .issuerLabel {
+    font-size: 0.6rem;
+  }
+
+  .certName {
+    font-size: 1rem;
+  }
+
+  .certDate {
+    font-size: 0.7rem;
+  }
+
+  .credential {
+    font-size: 0.7rem;
+  }
+
+  .certLink {
+    font-size: 0.75rem;
   }
 }

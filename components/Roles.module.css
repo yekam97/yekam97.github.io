@@ -60,3 +60,26 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 640px) {
+    .facetsGrid {
+        gap: var(--spacing-2);
+    }
+
+    .facetCard {
+        padding: var(--spacing-6);
+    }
+
+    .facetTitle {
+        font-size: 1.3rem;
+    }
+
+    .facetDescription {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+    .pdfLink {
+        font-size: 0.75rem;
+    }
+}

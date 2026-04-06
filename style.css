@@ -221,4 +221,58 @@ ul {
     top: 1rem;
     padding: 0 1rem;
   }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section-padding {
+    padding: var(--spacing-12) 0;
+  }
+
+  h1,
+  h2,
+  .newsreader {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --spacing-8: 2rem;
+    --spacing-12: 3rem;
+    --spacing-16: 4rem;
+  }
+
+  .nav-glass {
+    width: calc(100% - 1rem);
+    top: 0.5rem;
+    height: 56px;
+    padding: 0 0.75rem;
+  }
+
+  .btn-neon,
+  .btn-outline {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.75rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section-padding {
+    padding: var(--spacing-8) 0;
+  }
+
+  .label-md {
+    font-size: 0.6rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  .newsreader {
+    font-size: clamp(1.25rem, 4vw, 2.5rem);
+  }
 }

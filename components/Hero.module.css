@@ -104,3 +104,36 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 640px) {
+  .heroSection {
+    min-height: auto;
+    padding: var(--spacing-12) 0;
+    gap: var(--spacing-8);
+  }
+
+  .title {
+    font-size: clamp(2rem, 6vw, 4rem);
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .photoColumn {
+    min-height: 300px;
+  }
+
+  .imageWrapper {
+    aspect-ratio: 3 / 4;
+  }
+
+  .neonBoxOverlay {
+    display: none;
+  }
+}
