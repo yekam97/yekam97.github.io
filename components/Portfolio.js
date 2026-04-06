@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Portfolio.module.css';
-import ProjectModal from './ProjectModal';
 
 const projects = [
     {
@@ -70,6 +69,19 @@ const projects = [
 
 const Portfolio = () => {
     const [selectedProject, setSelectedProject] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const handlePrevImage = () => {
+        if (selectedProject) {
+            setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images.length - 1 : prev - 1));
+        }
+    };
+
+    const handleNextImage = () => {
+        if (selectedProject) {
+            setCurrentImageIndex((prev) => (prev === selectedProject.images.length - 1 ? 0 : prev + 1));
+        }
+    };
 
     return (
         <section id="portfolio" className="container section-padding">
@@ -90,7 +102,10 @@ const Portfolio = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: idx * 0.1 }}
-                        onClick={() => setSelectedProject(project)}
+                        onClick={() => {
+                            setSelectedProject(project);
+                            setCurrentImageIndex(0);
+                        }}
                         style={{ cursor: 'pointer' }}
                     >
                         <div className={`image-reveal ${styles.imageBox}`}>
@@ -107,11 +122,77 @@ const Portfolio = () => {
                 ))}
             </div>
 
-            <ProjectModal 
-                project={selectedProject} 
-                isOpen={!!selectedProject} 
-                onClose={() => setSelectedProject(null)} 
-            />
+            {/* Panel deslizable con información del proyecto */}
+            <AnimatePresence>
+                {selectedProject && (
+                    <motion.div
+                        className={styles.projectPanel}
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 100, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                    >
+                        <button 
+                            className={styles.closePanel}
+                            onClick={() => setSelectedProject(null)}
+                        >
+                            ✕ Cerrar
+                        </button>
+
+                        <div className={styles.panelContent}>
+                            {/* Galería de imágenes */}
+                            <div className={styles.imageGallery}>
+                                <div className={styles.mainImageContainer}>
+                                    <img 
+                                        src={selectedProject.images[currentImageIndex]} 
+                                        alt={selectedProject.title}
+                                    />
+                                </div>
+                                {selectedProject.images.length > 1 && (
+                                    <div className={styles.imageControls}>
+                                        <button onClick={handlePrevImage}>←</button>
+                                        <span>{currentImageIndex + 1} / {selectedProject.images.length}</span>
+                                        <button onClick={handleNextImage}>→</button>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Información del proyecto */}
+                            <div className={styles.projectInfo}>
+                                <span className={styles.category}>{selectedProject.category}</span>
+                                <h2 className={styles.title}>{selectedProject.title}</h2>
+                                <p className={styles.year}>{selectedProject.year}</p>
+
+                                <div className={styles.description}>
+                                    <p>{selectedProject.description}</p>
+                                </div>
+
+                                {selectedProject.details && (
+                                    <div className={styles.details}>
+                                        <h3>Detalles</h3>
+                                        <ul>
+                                            {selectedProject.details.map((detail, idx) => (
+                                                <li key={idx}>{detail}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {selectedProject.technologies && (
+                                    <div className={styles.technologies}>
+                                        <h3>Tecnologías</h3>
+                                        <div className={styles.techTags}>
+                                            {selectedProject.technologies.map((tech, idx) => (
+                                                <span key={idx} className={styles.tag}>{tech}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
