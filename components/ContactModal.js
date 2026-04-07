@@ -1,47 +1,51 @@
-'use client';
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './ContactModal.module.css';
 
 const ContactModal = ({ isOpen, onClose }) => {
-    const [status, setStatus] = useState('IDLE');
-    const [formData, setFormData] = useState({ nombre: '', email: '', tipo_proyecto: 'Diseño Industrial', mensaje: '' });
+    const [status, setStatus] = useState('IDLE'); // IDLE, SUBMITTING, SUCCESS, ERROR
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+        // Evitar scroll en el body cuando el modal está abierto
         if (isOpen) {
             document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'unset';
         }
+
         return () => {
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'unset';
         };
     }, [isOpen]);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
+    if (!mounted) return null;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('SUBMITTING');
 
+        const form = e.target;
+        const data = new FormData(form);
+
         try {
             const response = await fetch('https://formspree.io/f/xvgwylkw', {
                 method: 'POST',
-                body: JSON.stringify(formData),
-                headers: { 'Content-Type': 'application/json' }
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
             });
 
             if (response.ok) {
                 setStatus('SUCCESS');
-                setFormData({ nombre: '', email: '', tipo_proyecto: 'Diseño Industrial', mensaje: '' });
+                form.reset();
                 setTimeout(() => {
                     onClose();
                     setStatus('IDLE');
-                }, 3000);
+                }, 4000);
             } else {
                 setStatus('ERROR');
             }
@@ -50,83 +54,53 @@ const ContactModal = ({ isOpen, onClose }) => {
         }
     };
 
-    if (!isOpen) return null;
-
-    return (
+    const modalContent = (
         <AnimatePresence>
             {isOpen && (
-                <>
+                <div className={styles.overlay} onClick={onClose}>
                     <motion.div
-                        className={styles.overlay}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                    />
-                    <motion.div
-                        className={styles.modal}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 50 }}
+                        className={styles.modalBody}
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <button 
-                            type="button"
-                            className={styles.closeBtn} 
-                            onClick={onClose}
-                            aria-label="Cerrar modal"
-                        >
-                            ✕
-                        </button>
+                        <button className={styles.closeBtn} onClick={onClose}>✕</button>
 
                         {status === 'SUCCESS' ? (
                             <div className={styles.successView}>
-                                <div className={styles.successIcon}>✓</div>
-                                <h2>¡Gracias!</h2>
-                                <p>Tu propuesta ha sido enviada con éxito. Me pondré en contacto contigo pronto.</p>
+                                <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '1rem' }}
+                                >
+                                    ✓
+                                </motion.div>
+                                <h2 className="newsreader">¡Gracias!</h2>
+                                <p className={styles.subtitle}>Tu propuesta ha sido enviada con éxito. Me pondré en contacto contigo pronto.</p>
                             </div>
                         ) : (
                             <>
                                 <div className={styles.modalHeader}>
-                                    <span className={styles.label}>Contacto</span>
-                                    <h2>Iniciar un Proyecto</h2>
-                                    <p>Cuéntame sobre tu visión y construyamos algo con precisión.</p>
+                                    <span className="label-md">Contacto</span>
+                                    <h2 className="newsreader">Iniciar un Proyecto</h2>
+                                    <p className={styles.subtitle}>Cuéntame sobre tu visión y construyamos algo con precisión.</p>
                                 </div>
 
                                 <form className={styles.form} onSubmit={handleSubmit}>
                                     <div className={styles.inputGroup}>
-                                        <label className={styles.inputLabel}>Nombre completo</label>
-                                        <input 
-                                            type="text" 
-                                            name="nombre" 
-                                            value={formData.nombre}
-                                            onChange={handleInputChange}
-                                            className={styles.input} 
-                                            required 
-                                            placeholder="Camilo..." 
-                                        />
+                                        <label className={styles.label}>Nombre completo</label>
+                                        <input type="text" name="nombre" className={styles.input} required placeholder="Camilo..." />
                                     </div>
 
                                     <div className={styles.inputGroup}>
-                                        <label className={styles.inputLabel}>Correo electrónico</label>
-                                        <input 
-                                            type="email" 
-                                            name="email" 
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            className={styles.input} 
-                                            required 
-                                            placeholder="ejemplo@correo.com" 
-                                        />
+                                        <label className={styles.label}>Correo electrónico</label>
+                                        <input type="email" name="email" className={styles.input} required placeholder="ejemplo@correo.com" />
                                     </div>
 
                                     <div className={styles.inputGroup}>
-                                        <label className={styles.inputLabel}>Tipo de proyecto</label>
-                                        <select 
-                                            name="tipo_proyecto" 
-                                            value={formData.tipo_proyecto}
-                                            onChange={handleInputChange}
-                                            className={styles.select}
-                                        >
+                                        <label className={styles.label}>Tipo de proyecto</label>
+                                        <select name="tipo_proyecto" className={styles.select}>
                                             <option>Diseño Industrial</option>
                                             <option>Estrategia de Innovación</option>
                                             <option>Desarrollo Digital / UX</option>
@@ -135,25 +109,19 @@ const ContactModal = ({ isOpen, onClose }) => {
                                     </div>
 
                                     <div className={styles.inputGroup}>
-                                        <label className={styles.inputLabel}>Mensaje / Brief</label>
-                                        <textarea 
-                                            name="mensaje" 
-                                            value={formData.mensaje}
-                                            onChange={handleInputChange}
-                                            className={styles.textarea} 
-                                            required 
-                                            placeholder="Describe tu proyecto..." 
-                                        />
+                                        <label className={styles.label}>Mensaje / Brief</label>
+                                        <textarea name="mensaje" className={styles.textarea} required placeholder="Describe tu proyecto..." rows="4" />
                                     </div>
 
                                     {status === 'ERROR' && (
-                                        <div className={styles.error}>Hubo un error al enviar. Por favor intentalo de nuevo.</div>
+                                        <p style={{ color: '#ff4d4d', fontSize: '0.8rem' }}>Hubo un error al enviar. Por favor intentalo de nuevo.</p>
                                     )}
 
                                     <button
                                         type="submit"
+                                        className="btn-neon"
                                         disabled={status === 'SUBMITTING'}
-                                        className={styles.submitBtn}
+                                        style={{ width: '100%', marginTop: 'var(--spacing-4)', opacity: status === 'SUBMITTING' ? 0.7 : 1 }}
                                     >
                                         {status === 'SUBMITTING' ? 'ENVIANDO...' : 'ENVIAR PROPUESTA'}
                                     </button>
@@ -161,10 +129,12 @@ const ContactModal = ({ isOpen, onClose }) => {
                             </>
                         )}
                     </motion.div>
-                </>
+                </div>
             )}
         </AnimatePresence>
     );
+
+    return createPortal(modalContent, document.body);
 };
 
 export default ContactModal;
