@@ -9,7 +9,7 @@ const getRolesData = (language) => {
     {
       category: isEn ? 'UNDERGRADUATE' : 'PREGRADO',
       title: isEn ? 'Industrial Designer' : 'Diseñador Industrial',
-      description: isEn 
+      description: isEn
         ? 'Pedagogical and Technological University of Colombia. Professional oriented towards product development, innovation and functional solutions that integrate creativity, technology and sustainability. Strategic approach and prototyping.'
         : 'Universidad Pedagógica y Tecnológica de Colombia. Profesional orientado al desarrollo de productos, innovación y soluciones funcionales que integran creatividad, tecnología y sostenibilidad. Enfoque estratégico y prototipado.',
       pdfUrl: '/DIPLOMA PREGRADO.pdf'
@@ -27,7 +27,8 @@ const getRolesData = (language) => {
       title: isEn ? 'Sustainable Development Projects' : 'Proyectos de Desarrollo Sostenible',
       description: isEn
         ? 'Master\'s with focus on formulation, management and evaluation of territorial projects and social innovation. Integration of economic, environmental and social impact for sustainable solutions.'
-        : 'Magíster con enfoque en la formulación, gestión y evaluación de proyectos territoriales e innovación social. Integración de impacto económico, ambiental y social para soluciones sostenibles.'
+        : 'Magíster con enfoque en la formulación, gestión y evaluación de proyectos territoriales e innovación social. Integración de impacto económico, ambiental y social para soluciones sostenibles.',
+      pdfUrl: '/DIPLOMA DE MAESTRIA.pdf'
     }
   ];
 };
