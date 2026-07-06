@@ -140,12 +140,13 @@ const Experience = () => {
         </h2>
 
         <div className={styles.timelineContainer}>
+          <div className={styles.timelineLine} />
           {experienceData.map((exp, idx) => (
             <motion.div
               key={idx}
               className={styles.timelineItem}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
@@ -153,8 +154,11 @@ const Experience = () => {
                 <div className={styles.periodPill}>{exp.period}</div>
               </div>
 
-              <div className={styles.content}>
+              <div className={styles.nodeCol}>
                 <div className={styles.dot} />
+              </div>
+
+              <div className={styles.content}>
                 <h3 className={styles.role}>{exp.role}</h3>
                 <span className={styles.company}>{exp.company}</span>
                 <ul className={styles.respList}>
