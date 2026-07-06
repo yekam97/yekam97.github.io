@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './Certifications.module.css';
@@ -54,6 +55,7 @@ const certifications = [
 
 const Certifications = () => {
   const { language } = useLanguage();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <section id="certificaciones" className="container section-padding">
@@ -68,7 +70,7 @@ const Certifications = () => {
           {language === 'es' ? 'Hitos de Aprendizaje' : 'Learning Milestones'}
         </h2>
 
-        <div className={styles.certsGrid}>
+        <div className={`${styles.certsGrid} ${!isExpanded ? styles.collapsed : ''}`}>
           {certifications.map((cert, idx) => (
             <motion.div
               key={idx}
@@ -94,6 +96,18 @@ const Certifications = () => {
               <p className={styles.credential}>{cert.id}</p>
             </motion.div>
           ))}
+        </div>
+
+        <div className={styles.toggleContainer}>
+          <button 
+            className={styles.toggleBtn}
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded 
+              ? (language === 'es' ? 'VER MENOS ▴' : 'VIEW LESS ▴')
+              : (language === 'es' ? 'VER CERTIFICACIONES ▾' : 'VIEW CERTIFICATIONS ▾')
+            }
+          </button>
         </div>
       </motion.div>
     </section>

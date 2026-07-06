@@ -69,7 +69,52 @@
   letter-spacing: 0.05em;
 }
 
+.toggleContainer {
+  display: none;
+}
+
 @media (max-width: 600px) {
+  .certsGrid.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .certsGrid {
+    max-height: 2000px;
+    opacity: 1;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  }
+
+  .toggleContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-8);
+  }
+
+  .toggleBtn {
+    background: transparent;
+    border: 1px solid var(--outline);
+    color: var(--primary);
+    padding: 0.75rem 2rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+    transition: var(--transition);
+  }
+
+  .toggleBtn:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.2);
+  }
+
   .certsGrid {
     grid-template-columns: 1fr;
     gap: var(--spacing-6);
