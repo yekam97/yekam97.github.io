@@ -1,4 +1,4 @@
-﻿/* Editorial Industrialism - Design System
+/* Editorial Industrialism - Design System
    - North Star: The Architectural Curator
    - Foundation: Absolute Black (#000000)
    - Accent: Electric Neon (#9cff93)
@@ -7,17 +7,23 @@
 
 :root {
   /* Colors */
-  --bg: #000000;
-  --surface: #0e0e0e;
-  --surface-low: #131313;
-  --surface-high: #1f1f1f;
+  --bg: #050505;
+  --surface: #0c0c0c;
+  --surface-low: #121212;
+  --surface-high: #1c1c1c;
   --surface-highest: #262626;
 
-  --primary: #9cff93;
-  --on-primary: #004d0b;
+  --primary: #ff5500;
+  --on-primary: #ffffff;
   --secondary: #e2e2e2;
-  --muted: #888888;
-  --outline: rgba(255, 255, 255, 0.15);
+  --muted: #8a8a8a;
+  --outline: rgba(255, 255, 255, 0.08);
+
+  /* Border Radii */
+  --radius-lg: 32px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+  --radius-pill: 9999px;
 
   /* Typography */
   --ff-display: 'Newsreader', serif;
@@ -33,7 +39,7 @@
   --spacing-16: 6rem;
 
   /* Transitions */
-  --transition: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --glass: blur(20px);
 }
 
@@ -42,8 +48,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border-radius: 0 !important;
-  /* Strict 0px rule */
 }
 
 html,
@@ -126,14 +130,16 @@ ul {
   width: calc(100% - var(--spacing-12));
   max-width: 1000px;
   height: 64px;
-  background: rgba(14, 14, 14, 0.6);
+  background: rgba(10, 10, 10, 0.75);
   backdrop-filter: var(--glass);
   border: 1px solid var(--outline);
+  border-radius: var(--radius-pill);
   z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--spacing-6);
+  padding: 0 var(--spacing-8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* Primary Button */
@@ -141,37 +147,46 @@ ul {
   background: var(--primary);
   color: var(--on-primary);
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 2rem;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
   cursor: pointer;
+  border-radius: var(--radius-pill);
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
 }
 
 .btn-neon:hover {
   background: #FFFFFF;
-  transform: scale(0.98);
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
 .btn-outline {
   border: 1px solid var(--outline);
   background: transparent;
   color: #FFFFFF;
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 2rem;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
   cursor: pointer;
+  border-radius: var(--radius-pill);
   transition: var(--transition);
 }
 
 .btn-outline:hover {
   border-color: var(--primary);
   color: var(--primary);
+  box-shadow: 0 0 15px rgba(255, 85, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Image Reveal Effect */

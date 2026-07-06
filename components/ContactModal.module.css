@@ -4,8 +4,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.96);
-    /* Removed blur for massive performance boost, made darker */
+    background-color: rgba(5, 5, 5, 0.75);
+    backdrop-filter: blur(15px);
     z-index: 999999;
     padding: 2rem 1rem;
     overflow-y: auto;
@@ -14,30 +14,40 @@
 }
 
 .modalBody {
-    background-color: #000000;
+    background-color: #0d0d0d;
     width: 100%;
     max-width: 500px;
     margin: auto;
-    padding: 3rem 2rem;
+    padding: 3rem 2.5rem;
     position: relative;
-    border: 1px solid rgba(156, 255, 147, 0.15);
+    border: 1px solid rgba(255, 85, 0, 0.15);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
 }
 
 .closeBtn {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--outline);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
     color: var(--muted);
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: var(--transition);
     z-index: 10;
 }
 
 .closeBtn:hover {
     color: var(--primary);
+    border-color: var(--primary);
+    background: rgba(255, 85, 0, 0.05);
 }
 
 .modalHeader {
@@ -75,12 +85,12 @@
 .textarea {
     background: var(--surface-low);
     border: 1px solid var(--outline);
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1.1rem;
     color: #FFFFFF;
     font-family: var(--ff-body);
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    border-radius: 0;
+    border-radius: var(--radius-sm);
     width: 100%;
 }
 
@@ -90,6 +100,7 @@
     outline: none;
     border-color: var(--primary);
     background: var(--surface-high);
+    box-shadow: 0 0 15px rgba(255, 85, 0, 0.15);
 }
 
 .textarea {
@@ -100,9 +111,9 @@
 .select {
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239cff93' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ff5500' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 1rem center;
+    background-position: right 1.2rem center;
     padding-right: 2.5rem;
 }
 

@@ -44,11 +44,11 @@ export default function Layout({ children }) {
     const initParticles = () => {
       particles = [];
       for (let i = 0; i < particleCount; i++) {
-        const radius = Math.random() * 1;
+        const radius = Math.random() * 1.5;
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
-        const color = `rgba(156, 255, 147, ${Math.random() * 0.1})`;
-        const velocity = { x: (Math.random() - 0.5) * 0.2, y: (Math.random() - 0.5) * 0.2 };
+        const color = `rgba(255, 85, 0, ${Math.random() * 0.15})`;
+        const velocity = { x: (Math.random() - 0.5) * 0.25, y: (Math.random() - 0.5) * 0.25 };
         particles.push(new Particle(x, y, radius, color, velocity));
       }
     };
@@ -90,7 +90,7 @@ export default function Layout({ children }) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </Head>
 
-      <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none', background: '#000000' }} />
+      <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none', background: '#050505' }} />
 
       <header className="nav-glass">
         <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>YG</div>

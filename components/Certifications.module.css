@@ -7,17 +7,21 @@
 .certCard {
   background: var(--surface-low);
   padding: var(--spacing-8);
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 }
 
 .certCard:hover {
   background: var(--surface-high);
-  border-color: var(--primary);
-  transform: translateY(-4px);
+  border-color: rgba(255, 85, 0, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(255, 85, 0, 0.08);
 }
 
 .header {

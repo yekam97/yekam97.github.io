@@ -9,6 +9,7 @@ const Hero = () => {
 
   return (
     <section id="hero" className={`container ${styles.heroSection}`}>
+      <div className={styles.radialGlow} />
       <motion.div
         className={styles.textColumn}
         initial={{ opacity: 0, x: -30 }}
@@ -55,12 +56,12 @@ const Hero = () => {
         transition={{ duration: 1, delay: 0.2 }}
       >
         <div className={styles.imageWrapper}>
+          <div className={styles.photoGlow} />
           <img
             src="/images/camilo-portrait.jpg"
             alt="Camilo Gamba"
             className={styles.profileImage}
           />
-          <div className={styles.neonBoxOverlay} />
         </div>
       </motion.div>
     </section>

@@ -1,5 +1,5 @@
 .ctaSection {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, #ff5500 0%, #aa2a00 100%);
   width: 100%;
   padding: var(--spacing-16) var(--spacing-6);
   display: flex;
@@ -7,51 +7,70 @@
   align-items: center;
   justify-content: center;
   margin-top: var(--spacing-16);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -10px 40px rgba(255, 85, 0, 0.05);
 }
 
 .ctaContent {
   text-align: center;
   padding: var(--spacing-8);
+  position: relative;
+  z-index: 2;
 }
 
 .ctaTitle {
   font-family: var(--ff-display);
   font-size: clamp(3rem, 10vw, 7.5rem);
-  color: #000000;
+  color: #FFFFFF;
   font-weight: 700;
   font-style: italic;
   margin-bottom: var(--spacing-8);
   line-height: 0.9;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .blackBtn {
   background: #000000;
   color: #FFFFFF;
-  padding: 1.25rem 3rem;
-  font-weight: 900;
-  font-size: 1rem;
+  padding: 1.25rem 3.5rem;
+  font-weight: 800;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   display: inline-block;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 .blackBtn:hover {
-  background: #1a1a1a;
-  transform: translateY(-2px);
+  background: #111111;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 
 .bottomBar {
   width: 100%;
   margin-top: var(--spacing-16);
   padding-top: var(--spacing-6);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  color: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
   font-weight: 700;
   letter-spacing: 0.1em;
+  position: relative;
+  z-index: 2;
 }
 
 .bottomBar a {
-  color: #000000;
+  color: rgba(255, 255, 255, 0.8);
+  transition: var(--transition);
+}
+
+.bottomBar a:hover {
+  color: #FFFFFF;
 }
 
 @media (max-width: 768px) {

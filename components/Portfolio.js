@@ -167,72 +167,75 @@ const Portfolio = () => {
             {/* Panel deslizable con información del proyecto */}
             <AnimatePresence>
                 {selectedProject && (
-                    <motion.div
-                        className={styles.projectPanel}
-                        initial={{ y: 100, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: 100, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: 'easeOut' }}
-                    >
-                        <button 
-                            className={styles.closePanel}
-                            onClick={() => setSelectedProject(null)}
+                    <div className={styles.panelOverlay} onClick={() => setSelectedProject(null)}>
+                        <motion.div
+                            className={styles.projectPanel}
+                            initial={{ y: 50, opacity: 0, scale: 0.98 }}
+                            animate={{ y: 0, opacity: 1, scale: 1 }}
+                            exit={{ y: 50, opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                            onClick={(e) => e.stopPropagation()}
                         >
-                            ✕ {t('cerrar')}
-                        </button>
+                            <button 
+                                className={styles.closePanel}
+                                onClick={() => setSelectedProject(null)}
+                            >
+                                ✕ {t('cerrar')}
+                            </button>
 
-                        <div className={styles.panelContent}>
-                            {/* Galería de imágenes */}
-                            <div className={styles.imageGallery}>
-                                <div className={styles.mainImageContainer}>
-                                    <img 
-                                        src={selectedProject.images[currentImageIndex]} 
-                                        alt={selectedProject.title}
-                                    />
-                                </div>
-                                {selectedProject.images.length > 1 && (
-                                    <div className={styles.imageControls}>
-                                        <button onClick={handlePrevImage}>←</button>
-                                        <span>{currentImageIndex + 1} / {selectedProject.images.length}</span>
-                                        <button onClick={handleNextImage}>→</button>
+                            <div className={styles.panelContent}>
+                                {/* Galería de imágenes */}
+                                <div className={styles.imageGallery}>
+                                    <div className={styles.mainImageContainer}>
+                                        <img 
+                                            src={selectedProject.images[currentImageIndex]} 
+                                            alt={selectedProject.title}
+                                        />
                                     </div>
-                                )}
-                            </div>
-
-                            {/* Información del proyecto */}
-                            <div className={styles.projectInfo}>
-                                <span className={styles.category}>{selectedProject.category}</span>
-                                <h2 className={styles.title}>{selectedProject.title}</h2>
-                                <p className={styles.year}>{selectedProject.year}</p>
-
-                                <div className={styles.description}>
-                                    <p>{selectedProject.description}</p>
-                                </div>
-
-                                {selectedProject.details && (
-                                    <div className={styles.details}>
-                                        <h3>{t('detalles')}</h3>
-                                        <ul>
-                                            {selectedProject.details.map((detail, idx) => (
-                                                <li key={idx}>{detail}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {selectedProject.technologies && (
-                                    <div className={styles.technologies}>
-                                        <h3>{t('tecnologias')}</h3>
-                                        <div className={styles.techTags}>
-                                            {selectedProject.technologies.map((tech, idx) => (
-                                                <span key={idx} className={styles.tag}>{tech}</span>
-                                            ))}
+                                    {selectedProject.images.length > 1 && (
+                                        <div className={styles.imageControls}>
+                                            <button onClick={handlePrevImage}>←</button>
+                                            <span>{currentImageIndex + 1} / {selectedProject.images.length}</span>
+                                            <button onClick={handleNextImage}>→</button>
                                         </div>
+                                    )}
+                                </div>
+
+                                {/* Información del proyecto */}
+                                <div className={styles.projectInfo}>
+                                    <span className={styles.category}>{selectedProject.category}</span>
+                                    <h2 className={styles.title}>{selectedProject.title}</h2>
+                                    <p className={styles.year}>{selectedProject.year}</p>
+
+                                    <div className={styles.description}>
+                                        <p>{selectedProject.description}</p>
                                     </div>
-                                )}
+
+                                    {selectedProject.details && (
+                                        <div className={styles.details}>
+                                            <h3>{t('detalles')}</h3>
+                                            <ul>
+                                                {selectedProject.details.map((detail, idx) => (
+                                                    <li key={idx}>{detail}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {selectedProject.technologies && (
+                                        <div className={styles.technologies}>
+                                            <h3>{t('tecnologias')}</h3>
+                                            <div className={styles.techTags}>
+                                                {selectedProject.technologies.map((tech, idx) => (
+                                                    <span key={idx} className={styles.tag}>{tech}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
         </section>
