@@ -58,7 +58,7 @@ const Roles = () => {
   const rolesData = getRolesData(language);
 
   return (
-    <section id="roles" className="container section-padding">
+    <div id="roles">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -97,7 +97,7 @@ const Roles = () => {
           ))}
         </motion.div>
       </motion.div>
-    </section>
+    </div>
   );
 };
 

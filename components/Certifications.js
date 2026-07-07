@@ -79,7 +79,7 @@ const Certifications = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section id="certificaciones" className="container section-padding">
+    <div id="certificaciones">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -134,7 +134,7 @@ const Certifications = () => {
           </button>
         </div>
       </motion.div>
-    </section>
+    </div>
   );
 };
 

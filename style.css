@@ -291,3 +291,17 @@ ul {
     font-size: clamp(1.25rem, 4vw, 2.5rem);
   }
 }
+
+.education-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--spacing-16);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .education-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-12);
+  }
+}

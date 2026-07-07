@@ -15,8 +15,10 @@ export default function HomePage() {
       <Hero />
       <Portfolio />
       <Experience />
-      <Roles />
-      <Certifications />
+      <div className="education-grid container section-padding">
+        <Roles />
+        <Certifications />
+      </div>
       <Contact />
     </Layout>
   );

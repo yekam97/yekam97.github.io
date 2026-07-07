@@ -114,7 +114,7 @@ export default function Layout({ children }) {
           width: '600px',
           height: '600px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255, 85, 0, 0.12) 0%, rgba(255, 85, 0, 0.02) 50%, rgba(0, 0, 0, 0) 70%)',
+          background: 'radial-gradient(circle, rgba(255, 85, 0, 0.18) 0%, rgba(255, 85, 0, 0.04) 50%, rgba(0, 0, 0, 0) 70%)',
           filter: 'blur(30px)',
           pointerEvents: 'none',
           zIndex: 0,
