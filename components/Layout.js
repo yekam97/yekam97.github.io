@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import ScrollProgress from './ScrollProgress';
@@ -82,9 +83,45 @@ export default function Layout({ children }) {
     }
   };
 
+  const { scrollY } = useScroll();
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 55, stiffness: 90 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  // Translate glow slightly downwards as scroll depth increases
+  const yScrollOffset = useTransform(scrollY, [0, 4000], [0, 800]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX - 300);
+      mouseY.set(e.clientY - 300);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <>
       <ScrollProgress />
+      <motion.div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '600px',
+          height: '600px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255, 85, 0, 0.12) 0%, rgba(255, 85, 0, 0.02) 50%, rgba(0, 0, 0, 0) 70%)',
+          filter: 'blur(30px)',
+          pointerEvents: 'none',
+          zIndex: 0,
+          x: smoothX,
+          y: useTransform([smoothY, yScrollOffset], ([my, sy]) => my + sy)
+        }}
+      />
       <Head>
         <title>Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI</title>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -97,14 +134,14 @@ export default function Layout({ children }) {
         <meta property="og:url" content="https://yekam97.github.io/" />
         <meta property="og:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
         <meta property="og:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta property="og:image" content="https://yekam97.github.io/images/camilo-portrait.png" />
+        <meta property="og:image" content="https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://yekam97.github.io/" />
         <meta property="twitter:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
         <meta property="twitter:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta property="twitter:image" content="https://yekam97.github.io/images/camilo-portrait.png" />
+        <meta property="twitter:image" content="https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png" />
         
         <link rel="canonical" href="https://yekam97.github.io/" />
       </Head>
