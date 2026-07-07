@@ -86,8 +86,27 @@ export default function Layout({ children }) {
     <>
       <ScrollProgress />
       <Head>
-        <title>Yeison Camilo Gamba | Diseñador</title>
+        <title>Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI</title>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
+        <meta name="keywords" content="Diseño Industrial, UX, UI, Renderizado 3D, Innovación, Desarrollo Web, Diseño de Productos, Colombia, UPTC" />
+        <meta name="author" content="Yeison Camilo Gamba" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yekam97.github.io/" />
+        <meta property="og:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
+        <meta property="og:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
+        <meta property="og:image" content="https://yekam97.github.io/images/camilo-portrait.jpg" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://yekam97.github.io/" />
+        <meta property="twitter:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
+        <meta property="twitter:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
+        <meta property="twitter:image" content="https://yekam97.github.io/images/camilo-portrait.jpg" />
+        
+        <link rel="canonical" href="https://yekam97.github.io/" />
       </Head>
 
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none', background: '#050505' }} />

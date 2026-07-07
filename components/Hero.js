@@ -59,7 +59,7 @@ const Hero = () => {
           <div className={styles.photoGlow} />
           <img
             src="/images/camilo-portrait.jpg"
-            alt="Camilo Gamba"
+            alt="Yeison Camilo Gamba Gonzalez — Diseñador Industrial y Gestor de Proyectos de Innovación"
             className={styles.profileImage}
           />
         </div>

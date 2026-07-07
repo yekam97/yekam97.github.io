@@ -81,7 +81,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                           className={`${styles.thumbnail} ${idx === currentImageIndex ? styles.activeThumbnail : ''}`}
                           onClick={() => setCurrentImageIndex(idx)}
                         >
-                          <img src={img} alt={`Thumbnail ${idx + 1}`} />
+                          <img src={img} alt={`Miniatura ${idx + 1} del proyecto ${project.title}`} />
                         </button>
                       ))}
                     </div>

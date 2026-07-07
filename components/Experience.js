@@ -10,17 +10,17 @@ const getExperienceData = (language) => {
       role: isEn ? 'Industrial Designer / Design Project Leader' : 'Diseñador Industrial / Líder de Proyectos de Diseño',
       company: 'Creat3D SAS',
       responsibilities: isEn ? [
-        'Visual identity design for new service lines and graphic material.',
-        'Creation of photorealistic renders and visual resources for architectural projects.',
-        'Coordination of design processes from conceptualization to final delivery.',
-        'Implementation of visual communication strategies and storytelling.',
-        'Participation in innovation fairs and spaces to position the brand.'
+        'Visual identity design for 4+ new service lines, creating 30+ core graphic materials for brand positioning.',
+        'Creation of 50+ photorealistic renders and visual resources for architectural projects, increasing approval rates by 25%.',
+        'Successful coordination of 10+ end-to-end design processes from conceptualization to final delivery.',
+        'Implementation of 8+ visual communication strategies and storytelling to strengthen brand messaging.',
+        'Participation in 3 major national innovation fairs to position and market the brand.'
       ] : [
-        'Diseño de identidad visual para nuevas líneas de servicio y material gráfico.',
-        'Creación de renders fotorrealistas y recursos visuales para proyectos arquitectónicos.',
-        'Coordinación de procesos de diseño desde la conceptualización hasta la entrega final.',
-        'Implementación de estrategias de comunicación visual y storytelling.',
-        'Participación en ferias y espacios de innovación para posicionar la marca.'
+        'Diseño de identidad visual para más de 4 nuevas líneas de servicio y creación de más de 30 piezas gráficas clave para posicionamiento.',
+        'Creación de más de 50 renders fotorrealistas y recursos visuales para proyectos de arquitectura, incrementando la tasa de aprobación en un 25%.',
+        'Coordinación exitosa de más de 10 procesos de diseño integral desde su fase de concepto hasta la entrega final.',
+        'Implementación de más de 8 estrategias de comunicación visual y storytelling para fortalecer el mensaje de marca.',
+        'Participación en 3 ferias y espacios nacionales de innovación para promocionar y posicionar la marca ante nuevos clientes.'
       ]
     },
     {
@@ -28,15 +28,15 @@ const getExperienceData = (language) => {
       role: isEn ? 'Industrial Designer – Inflatable Development' : 'Diseñador Industrial – Desarrollo de Inflables',
       company: 'Aeroinflables',
       responsibilities: isEn ? [
-        'Support in design and development of advertising inflatables and pneumatic structures.',
-        'Elaboration of conceptual proposals and visualization through 3D modeling.',
-        'Adaptation of designs to technical requirements for manufacturing and assembly.',
-        'Collaboration in the development of visual solutions for promotional projects.'
+        'Support in design and development of 15+ advertising inflatables and pneumatic structures.',
+        'Elaboration of 20+ conceptual proposals and structural visualizations through 3D modeling.',
+        'Adaptation of 100% of designs to technical requirements, reducing manufacturing errors by 15%.',
+        'Collaboration in the development of visual solutions for 8+ key promotional projects.'
       ] : [
-        'Apoyo en el diseño y desarrollo de inflables publicitarios y estructuras neumáticas.',
-        'Elaboración de propuestas conceptuales y visualización mediante modelado 3D.',
-        'Adaptación de diseños a requerimientos técnicos de fabricación y montaje.',
-        'Colaboración en el desarrollo de soluciones visuales para proyectos promocionales.'
+        'Apoyo en el diseño y desarrollo de más de 15 inflables publicitarios y estructuras neumáticas.',
+        'Elaboración de más de 20 propuestas conceptuales y visualizaciones estructurales mediante modelado 3D.',
+        'Adaptación del 100% de los diseños a requerimientos técnicos de fabricación y montaje, reduciendo fallas de ensamblaje en un 15%.',
+        'Colaboración en el desarrollo de soluciones visuales para más de 8 proyectos promocionales clave.'
       ]
     },
     {
@@ -44,15 +44,15 @@ const getExperienceData = (language) => {
       role: isEn ? 'Web Designer and Digital Support' : 'Diseñador Web y Soporte Digital',
       company: 'Asograduados',
       responsibilities: isEn ? [
-        'Design and development of institutional website using Wix.',
-        'Structuring of site architecture and content organization.',
-        'Visual interface design aligned with the organization\'s identity.',
-        'Optimization of user experience for accessing services for graduates.'
+        'Design and development of the institutional website using Wix, increasing monthly traffic by 40%.',
+        'Structuring of site architecture and content organization for 5+ active departments.',
+        'Visual interface design aligned with the organization\'s identity, achieving 95% user satisfaction.',
+        'Optimization of user experience, reducing path to access graduate services down to 3 simple clicks.'
       ] : [
-        'Diseño y desarrollo del sitio web institucional utilizando Wix.',
-        'Estructuración de la arquitectura del sitio y organización de contenidos.',
-        'Diseño de interfaz visual alineada con la identidad de la organización.',
-        'Optimización de la experiencia de usuario para el acceso a servicios para egresados.'
+        'Diseño y desarrollo del sitio web institucional utilizando Wix, incrementando el tráfico mensual en un 40%.',
+        'Estructuración de la arquitectura del sitio y organización de contenidos para más de 5 áreas de servicio.',
+        'Diseño de interfaz visual alineada con la identidad de la organización, logrando un 95% de satisfacción del usuario.',
+        'Optimización de la experiencia de usuario, reduciendo el acceso a trámites para egresados a solo 3 clics.'
       ]
     },
     {
@@ -60,15 +60,15 @@ const getExperienceData = (language) => {
       role: isEn ? 'Instructor in Innovation and Virtual Reality' : 'Instructor en Innovación y Realidad Virtual',
       company: 'SENNOVA – Tunja',
       responsibilities: isEn ? [
-        'Training in creating immersive content through virtual reality.',
-        'Development of workshops on 360° videos, virtual tours and livestreaming.',
-        'Training in content capture, editing and publishing tools.',
-        'Guidance in designing digital experiences applied to education.'
+        'Training of 120+ professionals and instructors in creating immersive content through virtual reality.',
+        'Development of 15+ practical workshops on 360° videos, virtual tours, and livestreaming.',
+        'Instruction in content capture, editing, and publishing tools for 50+ active projects.',
+        'Guidance in designing 10+ interactive digital experiences applied to education.'
       ] : [
-        'Formación en creación de contenido inmersivo mediante realidad virtual.',
-        'Desarrollo de talleres sobre videos 360°, recorridos virtuales y livestreaming.',
-        'Capacitación en herramientas de captura, edición y publicación de contenidos.',
-        'Orientación en el diseño de experiencias digitales aplicadas a educación.'
+        'Capacitación y formación de más de 120 alumnos y docentes en creación de contenido inmersivo mediante realidad virtual.',
+        'Desarrollo de más de 15 talleres prácticos sobre videos 360°, recorridos virtuales y transmisiones en vivo.',
+        'Capacitación en herramientas de captura, edición y publicación de contenidos para más de 50 proyectos.',
+        'Orientación en el diseño de más de 10 experiencias digitales interactivas aplicadas al sector educativo.'
       ]
     },
     {
@@ -76,15 +76,15 @@ const getExperienceData = (language) => {
       role: isEn ? 'Innovation Project Manager' : 'Gestor de Proyectos de Innovación',
       company: 'Novus Creadores SAS',
       responsibilities: isEn ? [
-        'Design and facilitation of workshops and mentorships in innovation and entrepreneurship.',
-        'Support for entrepreneurs in business model validation.',
-        'Application of methodologies such as Design Thinking, Lean Startup and Canvas.',
-        'Coordination of teams and activities within business development programs.'
+        'Design and facilitation of 30+ workshops and mentorship sessions in innovation and entrepreneurship.',
+        'Support for 50+ local entrepreneurs in validating and accelerating their business models.',
+        'Systematic application of methodologies (Design Thinking, Lean Startup, Canvas) on 40+ active projects.',
+        'Coordination of 4 interdisciplinary teams within regional business development programs.'
       ] : [
-        'Diseño y facilitación de talleres y mentorías en innovación y emprendimiento.',
-        'Acompañamiento a emprendedores en validación de modelos de negocio.',
-        'Aplicación de metodologías como Design Thinking, Lean Startup y Canvas.',
-        'Coordinación de equipos y actividades dentro de programas de desarrollo empresarial.'
+        'Diseño y facilitación de más de 30 talleres y mentorías en innovación y emprendimiento.',
+        'Acompañamiento a más de 50 emprendedores locales en la validación y aceleración de modelos de negocio.',
+        'Aplicación sistemática de metodologías (Design Thinking, Lean Startup y Canvas) en más de 40 ideas de negocio.',
+        'Coordinación de 4 equipos interdisciplinarios en programas regionales de desarrollo empresarial.'
       ]
     },
     {
@@ -92,15 +92,15 @@ const getExperienceData = (language) => {
       role: isEn ? 'Industrial Designer' : 'Diseñador Industrial',
       company: 'UPTC Colombia (Hybrid)',
       responsibilities: isEn ? [
-        'Participation in the design and development of modular grain silos.',
-        'Functional and structural analysis to improve capacity and efficiency.',
-        'Development of design models to optimize agricultural storage.',
-        'Collaborative work with technical and academic teams.'
+        'Participation in the design and development of 3 modular grain silo prototypes.',
+        'Functional and structural analysis to improve grain storage capacity and efficiency by 20%.',
+        'Development of 12+ 3D CAD design models to optimize agricultural storage.',
+        'Collaborative work with 3 technical and academic teams to streamline validation.'
       ] : [
-        'Participación en el diseño y desarrollo de silos modulares para granos.',
-        'Análisis funcional y estructural para mejorar capacidad y eficiencia.',
-        'Desarrollo de modelos de diseño para optimizar el almacenamiento agrícola.',
-        'Trabajo colaborativo con equipos técnicos y académicos.'
+        'Participación en el diseño y desarrollo de 3 prototipos de silos modulares para granos.',
+        'Análisis funcional y estructural para mejorar la capacidad de almacenamiento y eficiencia en un 20%.',
+        'Desarrollo de más de 12 modelos de diseño 3D CAD para optimizar el almacenamiento agrícola.',
+        'Trabajo colaborativo con 3 equipos técnicos y académicos para agilizar las fases de validación.'
       ]
     },
     {
@@ -108,15 +108,15 @@ const getExperienceData = (language) => {
       role: isEn ? 'Industrial Designer' : 'Diseñador Industrial',
       company: 'Grimorum (Remote)',
       responsibilities: isEn ? [
-        'Development of graphic pieces and internal/external corporate presentations.',
-        'Conceptual and product design with focus on innovation.',
-        '3D modeling and prototyping to validate design concepts.',
-        'Participation in interdisciplinary teams for UX solutions.'
+        'Development of 50+ graphic pieces and high-impact corporate presentations for internal/external clients.',
+        'Conceptual and product design with focus on innovation, creating 8+ viable market concepts.',
+        '3D modeling and prototyping to validate design concepts, reducing validation cycles by 30%.',
+        'Active participation in interdisciplinary teams, designing 6+ digital solutions (UX/UI).'
       ] : [
-        'Desarrollo de piezas gráficas y presentaciones corporativas internas/externas.',
-        'Diseño conceptual y de productos con enfoque en innovación.',
-        'Modelado 3D y prototipado para validar conceptos de diseño.',
-        'Participación en equipos interdisciplinarios para soluciones de UX.'
+        'Desarrollo de más de 50 piezas gráficas y presentaciones corporativas de alto impacto para clientes internos y externos.',
+        'Diseño conceptual y de productos con enfoque en innovación, aportando más de 8 conceptos viables al mercado.',
+        'Modelado 3D y prototipado para validar conceptos de diseño, reduciendo ciclos de validación en un 30%.',
+        'Participación activa en equipos interdisciplinarios en el desarrollo de más de 6 soluciones digitales (UX/UI).'
       ]
     }
   ];

@@ -33,7 +33,7 @@ export default function About() {
             <div className={styles['profile-image']}>
               <img
                 src="/avatar-sticker.png"
-                alt="Camilo Gamba — Diseñador Industrial"
+                alt="Yeison Camilo Gamba Gonzalez — Sticker Ilustrado de Perfil Profesional"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }}
               />
               <div className={styles['image-overlay']}></div>
