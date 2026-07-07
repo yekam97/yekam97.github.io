@@ -101,9 +101,9 @@ ul {
 
 /* Layout Helpers */
 .container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 var(--spacing-6);
+  padding: 0 var(--spacing-8);
 }
 
 .section-padding {
@@ -128,7 +128,7 @@ ul {
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - var(--spacing-12));
-  max-width: 1000px;
+  max-width: 1400px;
   height: 64px;
   background: rgba(10, 10, 10, 0.75);
   backdrop-filter: var(--glass);
