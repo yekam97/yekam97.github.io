@@ -13,9 +13,9 @@ export default function HomePage() {
   return (
     <Layout>
       <Hero />
-      <Roles />
       <Portfolio />
       <Experience />
+      <Roles />
       <Certifications />
       <Contact />
     </Layout>
