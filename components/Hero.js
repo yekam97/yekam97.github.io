@@ -1,4 +1,5 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect } from 'react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import styles from './Hero.module.css';
@@ -31,9 +32,34 @@ const Hero = () => {
   const yParallax = useTransform(scrollY, [0, 600], [0, 100]);
   const scaleParallax = useTransform(scrollY, [0, 600], [1, 0.94]);
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 50, stiffness: 100 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  const yScroll = useTransform(scrollY, [0, 800], [0, -120]);
+  const combinedY = useTransform([yScroll, smoothY], ([s, m]) => s + m);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const xOffset = (e.clientX - window.innerWidth / 2) * 0.06;
+      const yOffset = (e.clientY - window.innerHeight / 2) * 0.06;
+      mouseX.set(xOffset);
+      mouseY.set(yOffset);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <section id="hero" className={`container ${styles.heroSection}`}>
-      <div className={styles.radialGlow} />
+      <motion.div 
+        className={styles.radialGlow} 
+        style={{ x: smoothX, y: combinedY }}
+      />
       <motion.div
         className={styles.textColumn}
         variants={containerVariants}
