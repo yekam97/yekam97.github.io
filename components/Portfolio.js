@@ -108,6 +108,26 @@ const getProjects = (language) => {
     ];
 };
 
+const gridVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.18,
+            delayChildren: 0.1
+        }
+    }
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+    }
+};
+
 const Portfolio = () => {
     const { language } = useLanguage();
     const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
@@ -135,15 +155,18 @@ const Portfolio = () => {
                 <p className="description" style={{ marginTop: '0.5rem' }}>{t('descripcion_proyectos')}</p>
             </div>
 
-            <div className={styles.projectGrid}>
+            <motion.div 
+                className={styles.projectGrid}
+                variants={gridVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
+            >
                 {projects.map((project, idx) => (
                     <motion.div
                         key={idx}
                         className={styles.projectCard}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: idx * 0.1 }}
+                        variants={cardVariants}
                         onClick={() => {
                             setSelectedProject(project);
                             setCurrentImageIndex(0);
@@ -162,7 +185,7 @@ const Portfolio = () => {
                         </div>
                     </motion.div>
                 ))}
-            </div>
+            </motion.div>
 
             {/* Panel deslizable con información del proyecto */}
             <AnimatePresence>

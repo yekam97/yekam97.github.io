@@ -53,6 +53,27 @@ const certifications = [
   }
 ];
 
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
 const Certifications = () => {
   const { language } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -70,15 +91,18 @@ const Certifications = () => {
           {language === 'es' ? 'Hitos de Aprendizaje' : 'Learning Milestones'}
         </h2>
 
-        <div className={`${styles.certsGrid} ${!isExpanded ? styles.collapsed : ''}`}>
+        <motion.div 
+          className={`${styles.certsGrid} ${!isExpanded ? styles.collapsed : ''}`}
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {certifications.map((cert, idx) => (
             <motion.div
               key={idx}
               className={styles.certCard}
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
+              variants={cardVariants}
             >
               <div className={styles.header}>
                 <span className={styles.issuer}>{cert.issuer}</span>
@@ -96,7 +120,7 @@ const Certifications = () => {
               <p className={styles.credential}>{cert.id}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className={styles.toggleContainer}>
           <button 

@@ -122,6 +122,26 @@ const getExperienceData = (language) => {
   ];
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
 const Experience = () => {
   const { language } = useLanguage();
   const experienceData = getExperienceData(language);
@@ -139,16 +159,26 @@ const Experience = () => {
           {language === 'es' ? 'Trayectoria Profesional' : 'Professional Trajectory'}
         </h2>
 
-        <div className={styles.timelineContainer}>
-          <div className={styles.timelineLine} />
+        <motion.div 
+          className={styles.timelineContainer}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <motion.div 
+            className={styles.timelineLine} 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            style={{ originX: 0 }}
+          />
           {experienceData.map((exp, idx) => (
             <motion.div
               key={idx}
               className={styles.timelineItem}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              variants={itemVariants}
             >
               <div className={styles.periodCol}>
                 <div className={styles.periodPill}>{exp.period}</div>
@@ -169,7 +199,7 @@ const Experience = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

@@ -33,6 +33,25 @@ const getRolesData = (language) => {
   ];
 };
 
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
 const Roles = () => {
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
@@ -51,11 +70,18 @@ const Roles = () => {
           {language === 'es' ? 'Mis Estudios' : 'My Education'}
         </h2>
 
-        <div className={styles.facetsGrid}>
+        <motion.div 
+          className={styles.facetsGrid}
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+        >
           {rolesData.map((role, idx) => (
             <motion.div
               key={idx}
               className={styles.facetCard}
+              variants={cardVariants}
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -69,7 +95,7 @@ const Roles = () => {
               )}
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

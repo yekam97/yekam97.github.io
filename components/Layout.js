@@ -97,14 +97,14 @@ export default function Layout({ children }) {
         <meta property="og:url" content="https://yekam97.github.io/" />
         <meta property="og:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
         <meta property="og:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta property="og:image" content="https://yekam97.github.io/images/camilo-portrait.jpg" />
+        <meta property="og:image" content="https://yekam97.github.io/images/camilo-portrait.png" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://yekam97.github.io/" />
         <meta property="twitter:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
         <meta property="twitter:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta property="twitter:image" content="https://yekam97.github.io/images/camilo-portrait.jpg" />
+        <meta property="twitter:image" content="https://yekam97.github.io/images/camilo-portrait.png" />
         
         <link rel="canonical" href="https://yekam97.github.io/" />
       </Head>
