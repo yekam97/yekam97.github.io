@@ -6,6 +6,22 @@ const getExperienceData = (language) => {
   const isEn = language === 'en';
   return [
     {
+      period: isEn ? 'January 2026 – Present' : 'Enero 2026 – Presente',
+      role: isEn ? 'Design Lead' : 'Líder de Diseño',
+      company: 'Imporelec',
+      responsibilities: isEn ? [
+        'Development in HTML and JavaScript of a comprehensive web platform with automatic quoting tool, user system, and real-time price list (replacing updates every 2-3 months) for 1,600+ references, optimizing server costs on Vercel/Firestore.',
+        'Structuring of technical data sheets and commercial parameters for luminaires, reducing quoting, production, and dispatch errors by more than 50%.',
+        'Design of packaging structure and graphics, lowering material costs and speeding up assembly and logistics times.',
+        'Connection of workflows between design, production, and marketing, accelerating the launch cycle of new products to market.'
+      ] : [
+        'Desarrollo en HTML y JavaScript de una plataforma web integral con cotizador automático, sistema de usuarios y lista de precios en tiempo real (en lugar de actualizaciones cada 2-3 meses) para más de 1.600 referencias, optimizando costos de servidor en Vercel/Firestore.',
+        'Estructuración de fichas técnicas y parámetros comerciales de luminarias, reduciendo en más de un 50% los errores en cotizaciones, producción y despachos.',
+        'Diseño de la estructura y gráfica de empaques, disminuyendo costos de material y agilizando los tiempos de ensamble y logística.',
+        'Conexión de los flujos de trabajo entre diseño, producción y marketing, acelerando el ciclo de lanzamiento de nuevos productos al mercado.'
+      ]
+    },
+    {
       period: isEn ? 'March 2024 – March 2025' : 'Marzo 2024 – Marzo 2025',
       role: isEn ? 'Industrial Designer / Design Project Leader' : 'Diseñador Industrial / Líder de Proyectos de Diseño',
       company: 'Creat3D SAS',
