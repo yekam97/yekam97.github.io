@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import styles from './Portfolio.module.css';
@@ -128,6 +128,65 @@ const cardVariants = {
     }
 };
 
+// Interactive card: a soft cursor-tracked spotlight plus a gentle 3D tilt.
+// Position, tilt and spotlight are all driven through Framer Motion values
+// (rather than raw CSS transforms) so they compose cleanly with the
+// entrance animation instead of fighting over the `transform` property.
+const ProjectCard = ({ project, onClick }) => {
+    const cardRef = useRef(null);
+    const mouseX = useMotionValue(0.5);
+    const mouseY = useMotionValue(0.5);
+
+    const tiltSpring = { stiffness: 220, damping: 22, mass: 0.4 };
+    const rotateX = useSpring(useTransform(mouseY, [0, 1], [6, -6]), tiltSpring);
+    const rotateY = useSpring(useTransform(mouseX, [0, 1], [-6, 6]), tiltSpring);
+    const spotX = useTransform(mouseX, (v) => `${v * 100}%`);
+    const spotY = useTransform(mouseY, (v) => `${v * 100}%`);
+
+    const handleMouseMove = (e) => {
+        const rect = cardRef.current.getBoundingClientRect();
+        mouseX.set((e.clientX - rect.left) / rect.width);
+        mouseY.set((e.clientY - rect.top) / rect.height);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0.5);
+        mouseY.set(0.5);
+    };
+
+    return (
+        <motion.div
+            ref={cardRef}
+            className={styles.projectCard}
+            variants={cardVariants}
+            onClick={onClick}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            whileHover={{ y: -6 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+            style={{
+                cursor: 'pointer',
+                rotateX,
+                rotateY,
+                transformPerspective: 1000,
+                '--spot-x': spotX,
+                '--spot-y': spotY
+            }}
+        >
+            <div className={`image-reveal ${styles.imageBox}`}>
+                <img src={project.image} alt={project.title} />
+            </div>
+            <div className={styles.meta}>
+                <div>
+                    <span className={styles.category}>{project.category}</span>
+                    <h3 className={styles.title}>{project.title}</h3>
+                </div>
+                <span className={styles.year}>{project.year}</span>
+            </div>
+        </motion.div>
+    );
+};
+
 const Portfolio = () => {
     const { language } = useLanguage();
     const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
@@ -163,27 +222,14 @@ const Portfolio = () => {
                 viewport={{ once: true, amount: 0.15 }}
             >
                 {projects.map((project, idx) => (
-                    <motion.div
+                    <ProjectCard
                         key={idx}
-                        className={styles.projectCard}
-                        variants={cardVariants}
+                        project={project}
                         onClick={() => {
                             setSelectedProject(project);
                             setCurrentImageIndex(0);
                         }}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <div className={`image-reveal ${styles.imageBox}`}>
-                            <img src={project.image} alt={project.title} />
-                        </div>
-                        <div className={styles.meta}>
-                            <div>
-                                <span className={styles.category}>{project.category}</span>
-                                <h3 className={styles.title}>{project.title}</h3>
-                            </div>
-                            <span className={styles.year}>{project.year}</span>
-                        </div>
-                    </motion.div>
+                    />
                 ))}
             </motion.div>
 

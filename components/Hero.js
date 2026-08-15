@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
+import MagneticButton from './MagneticButton';
 import styles from './Hero.module.css';
 
 const containerVariants = {
@@ -66,9 +67,9 @@ const Hero = () => {
         </motion.p>
 
         <motion.div variants={itemVariants} className={styles.ctaGroup}>
-          <a href="#contacto" className="btn-neon">
+          <MagneticButton href="#contacto" className="btn-neon">
             {language === 'es' ? 'Enviar Mensaje' : 'Send Message'}
-          </a>
+          </MagneticButton>
         </motion.div>
       </motion.div>
 

@@ -5,6 +5,7 @@
 }
 
 .projectCard {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-6);
@@ -12,7 +13,7 @@
     border: 1px solid var(--outline);
     border-radius: var(--radius-lg);
     padding: var(--spacing-6);
-    transition: var(--transition);
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .projectCard:nth-child(even) {
@@ -23,7 +24,28 @@
     background-color: var(--surface-high);
     border-color: rgba(255, 85, 0, 0.3);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    transform: translateY(-4px);
+}
+
+/* Cursor-tracked spotlight — position comes from the --spot-x/--spot-y
+   custom properties driven by ProjectCard's mouse-move handler. */
+.projectCard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255, 85, 0, 0.14), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.projectCard:hover::before {
+    opacity: 1;
+}
+
+.projectCard > * {
+    position: relative;
+    z-index: 1;
 }
 
 .imageBox {

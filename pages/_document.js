@@ -4,6 +4,10 @@ export default function Document() {
     return (
         <Html lang="es">
             <Head>
+                <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+                <link rel="alternate icon" href="/favicon.svg" />
+                <link rel="apple-touch-icon" href="/favicon.svg" />
+                <meta name="theme-color" content="#050505" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet" />

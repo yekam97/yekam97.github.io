@@ -8,6 +8,7 @@ import { translations } from '@/lib/translations';
 import ScrollProgress from './ScrollProgress';
 import Sticker from './Sticker';
 import LanguageToggle from './LanguageToggle';
+import MagneticButton from './MagneticButton';
 
 export default function Layout({ children }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -54,8 +55,9 @@ export default function Layout({ children }) {
       }
     };
 
+    let rafId;
     const animate = () => {
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((particle) => particle.update());
     };
@@ -66,12 +68,27 @@ export default function Layout({ children }) {
       initParticles();
     };
 
+    // Pause the canvas loop when the tab isn't visible — saves CPU/battery
+    // instead of animating an invisible background.
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId);
+      } else {
+        animate();
+      }
+    };
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     initParticles();
     animate();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   const handleNavClick = (e) => {
@@ -88,18 +105,26 @@ export default function Layout({ children }) {
   const mouseY = useMotionValue(0);
 
   const springConfig = { damping: 55, stiffness: 90 };
+  // The glow is `position: fixed`, so it already sits in viewport
+  // coordinates — it must track raw clientX/clientY only. Adding a
+  // scroll-based offset on top of that (as before) made it drift away
+  // from the actual cursor the deeper the page was scrolled, which read
+  // as the "jumpy"/erratic tracking. Position now follows the mouse only.
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  // Translate glow slightly downwards as scroll depth increases
-  const yScrollOffset = useTransform(scrollY, [0, 4000], [0, 800]);
+  // Scroll depth instead drives a subtle "breathing" of the glow itself
+  // (scale + intensity) so the page still feels alive while scrolling,
+  // without ever detaching the glow from the cursor.
+  const scrollScale = useTransform(scrollY, [0, 2400], [1, 1.35], { clamp: true });
+  const scrollOpacity = useTransform(scrollY, [0, 2400], [1, 0.6], { clamp: true });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       mouseX.set(e.clientX - 300);
       mouseY.set(e.clientY - 300);
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
@@ -119,7 +144,9 @@ export default function Layout({ children }) {
           pointerEvents: 'none',
           zIndex: 0,
           x: smoothX,
-          y: useTransform([smoothY, yScrollOffset], ([my, sy]) => my + sy)
+          y: smoothY,
+          scale: scrollScale,
+          opacity: scrollOpacity
         }}
       />
       <Head>
@@ -149,10 +176,22 @@ export default function Layout({ children }) {
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none', background: '#050505' }} />
 
       <header className="nav-glass">
-        <div className="brand-logo" style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF' }}>YG</div>
+        <motion.a
+          href="#hero"
+          onClick={handleNavClick}
+          className="brand-logo"
+          style={{ fontStyle: 'italic', fontWeight: 900, fontSize: '1.2rem', color: '#FFF', cursor: 'pointer' }}
+          whileHover={{ scale: 1.08, color: '#ff5500' }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        >
+          YG
+        </motion.a>
         <nav style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
           <a href="#experiencia" className="nav-item" onClick={handleNavClick}>{t('trayectoria')}</a>
-          <a href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }}>{t('contacto')}</a>
+          <MagneticButton href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }} strength={0.4}>
+            {t('contacto')}
+          </MagneticButton>
           <LanguageToggle />
         </nav>
       </header>
