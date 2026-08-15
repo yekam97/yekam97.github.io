@@ -40,6 +40,11 @@ const Hero = () => {
         initial="hidden"
         animate="visible"
       >
+        <motion.div variants={itemVariants} className={styles.availabilityBadge}>
+          <span className={styles.pulseDot} />
+          {language === 'es' ? 'Abierto a nuevas oportunidades' : 'Open to new opportunities'}
+        </motion.div>
+
         <motion.span variants={itemVariants} className={styles.label}>{t('diseñador')}</motion.span>
 
         <motion.h1 variants={itemVariants} className={styles.title}>
@@ -69,6 +74,14 @@ const Hero = () => {
         <motion.div variants={itemVariants} className={styles.ctaGroup}>
           <MagneticButton href="#contacto" className="btn-neon">
             {language === 'es' ? 'Enviar Mensaje' : 'Send Message'}
+          </MagneticButton>
+          <MagneticButton
+            href="/cv-yeison-camilo-gamba.pdf"
+            download
+            className="btn-outline"
+            strength={0.25}
+          >
+            {language === 'es' ? 'Descargar CV ↓' : 'Download CV ↓'}
           </MagneticButton>
         </motion.div>
       </motion.div>

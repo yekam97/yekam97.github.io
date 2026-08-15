@@ -26,7 +26,7 @@ const Contact = () => {
           onClick={() => setIsModalOpen(true)}
           className={styles.blackBtn}
         >
-          {language === 'es' ? 'INICIAR UN PROYECTO' : 'START A PROJECT'}
+          {language === 'es' ? 'PONTE EN CONTACTO' : 'GET IN TOUCH'}
         </button>
       </motion.div>
 

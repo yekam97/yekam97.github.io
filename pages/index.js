@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Hero from '../components/Hero';
+import Stats from '../components/Stats';
+import Skills from '../components/Skills';
 import Roles from '../components/Roles';
 import Portfolio from '../components/Portfolio';
 import Experience from '../components/Experience';
@@ -13,6 +15,8 @@ export default function HomePage() {
   return (
     <Layout>
       <Hero />
+      <Stats />
+      <Skills />
       <Portfolio />
       <Experience />
       <div className="education-grid container section-padding">

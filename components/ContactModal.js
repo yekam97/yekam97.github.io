@@ -77,14 +77,14 @@ const ContactModal = ({ isOpen, onClose }) => {
                                     ✓
                                 </motion.div>
                                 <h2 className="newsreader">¡Gracias!</h2>
-                                <p className={styles.subtitle}>Tu propuesta ha sido enviada con éxito. Me pondré en contacto contigo pronto.</p>
+                                <p className={styles.subtitle}>Tu mensaje ha sido enviado con éxito. Me pondré en contacto contigo pronto.</p>
                             </div>
                         ) : (
                             <>
                                 <div className={styles.modalHeader}>
                                     <span className="label-md">Contacto</span>
-                                    <h2 className="newsreader">Iniciar un Proyecto</h2>
-                                    <p className={styles.subtitle}>Cuéntame sobre tu visión y construyamos algo con precisión.</p>
+                                    <h2 className="newsreader">Hablemos</h2>
+                                    <p className={styles.subtitle}>Ya sea una oportunidad laboral, un proyecto o una colaboración — cuéntame de qué se trata.</p>
                                 </div>
 
                                 <form className={styles.form} onSubmit={handleSubmit}>
@@ -99,8 +99,9 @@ const ContactModal = ({ isOpen, onClose }) => {
                                     </div>
 
                                     <div className={styles.inputGroup}>
-                                        <label className={styles.label}>Tipo de proyecto</label>
+                                        <label className={styles.label}>Motivo de contacto</label>
                                         <select name="tipo_proyecto" className={styles.select}>
+                                            <option>Oportunidad Laboral / Empleo</option>
                                             <option>Diseño Industrial</option>
                                             <option>Estrategia de Innovación</option>
                                             <option>Desarrollo Digital / UX</option>
@@ -109,8 +110,8 @@ const ContactModal = ({ isOpen, onClose }) => {
                                     </div>
 
                                     <div className={styles.inputGroup}>
-                                        <label className={styles.label}>Mensaje / Brief</label>
-                                        <textarea name="mensaje" className={styles.textarea} required placeholder="Describe tu proyecto..." rows="4" />
+                                        <label className={styles.label}>Mensaje</label>
+                                        <textarea name="mensaje" className={styles.textarea} required placeholder="Cuéntame en qué puedo ayudarte..." rows="4" />
                                     </div>
 
                                     {status === 'ERROR' && (
@@ -123,7 +124,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                                         disabled={status === 'SUBMITTING'}
                                         style={{ width: '100%', marginTop: 'var(--spacing-4)', opacity: status === 'SUBMITTING' ? 0.7 : 1 }}
                                     >
-                                        {status === 'SUBMITTING' ? 'ENVIANDO...' : 'ENVIAR PROPUESTA'}
+                                        {status === 'SUBMITTING' ? 'ENVIANDO...' : 'ENVIAR MENSAJE'}
                                     </button>
                                 </form>
                             </>

@@ -171,6 +171,38 @@ export default function Layout({ children }) {
         <meta property="twitter:image" content="https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png" />
         
         <link rel="canonical" href="https://yekam97.github.io/" />
+
+        {/* Structured data — helps recruiters/search engines resolve this
+            page to a Person profile instead of a generic website. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Yeison Camilo Gamba Gonzalez',
+              alternateName: 'Camilo Gamba',
+              jobTitle: 'Diseñador Industrial & Líder de Diseño',
+              url: 'https://yekam97.github.io/',
+              image: 'https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png',
+              email: 'mailto:yeisongamba97@gmail.com',
+              worksFor: {
+                '@type': 'Organization',
+                name: 'Imporelec'
+              },
+              alumniOf: {
+                '@type': 'CollegeOrUniversity',
+                name: 'Universidad Pedagógica y Tecnológica de Colombia'
+              },
+              sameAs: [
+                'https://www.linkedin.com/in/yeison-camilo-gamba-gonzalez-10776268/',
+                'https://www.instagram.com/creat3di/',
+                'https://www.behance.net/yeisongamba97',
+                'https://dribbble.com/camilog97'
+              ]
+            })
+          }}
+        />
       </Head>
 
       <canvas id="background-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none', background: '#050505' }} />
