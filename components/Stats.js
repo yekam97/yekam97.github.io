@@ -38,12 +38,10 @@ const CountUp = ({ target, suffix = '', locale, duration = 1.4 }) => {
 
 const getStats = (language) => {
   const isEn = language === 'en';
-  const locale = isEn ? 'en-US' : 'es-CO';
   return [
     { target: 3, suffix: '+', locale: null, label: isEn ? 'Years of professional experience' : 'Años de experiencia profesional' },
     { target: 4, suffix: '', locale: null, label: isEn ? 'Specialization areas' : 'Áreas de especialización' },
-    { target: 9, suffix: '', locale: null, label: isEn ? 'Degrees & certifications' : 'Títulos y certificaciones' },
-    { target: 1600, suffix: '+', locale, label: isEn ? 'References digitized at Imporelec' : 'Referencias digitalizadas en Imporelec' }
+    { target: 9, suffix: '', locale: null, label: isEn ? 'Degrees & certifications' : 'Títulos y certificaciones' }
   ];
 };
 
