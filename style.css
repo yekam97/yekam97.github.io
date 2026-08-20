@@ -55,6 +55,11 @@
   --spacing-12: 4rem;
   --spacing-16: 6rem;
 
+  /* Section rhythm — the vertical "air" between major blocks.
+     Desktop: 120-160px · Tablet: transitional · Mobile: 64-80px */
+  --section-pad-y: 150px;
+  --strip-pad-y: 84px;
+
   /* Transitions */
   --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --glass: blur(20px);
@@ -124,7 +129,7 @@ ul {
 }
 
 .section-padding {
-  padding: var(--spacing-16) 0;
+  padding: var(--section-pad-y) 0;
 }
 
 /* Semantic UI Components */
@@ -247,8 +252,13 @@ ul {
     padding: 0 1rem;
   }
 
+  :root {
+    --section-pad-y: 104px;
+    --strip-pad-y: 64px;
+  }
+
   .section-padding {
-    padding: var(--spacing-12) 0;
+    padding: var(--section-pad-y) 0;
   }
 
   h1,
@@ -263,6 +273,8 @@ ul {
     --spacing-8: 2rem;
     --spacing-12: 3rem;
     --spacing-16: 4rem;
+    --section-pad-y: 72px;
+    --strip-pad-y: 56px;
   }
 
   .nav-glass {
@@ -281,7 +293,7 @@ ul {
   }
 
   .section-padding {
-    padding: var(--spacing-8) 0;
+    padding: var(--section-pad-y) 0;
   }
 
   .label-md {

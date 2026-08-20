@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Hero from '../components/Hero';
+import CategoryMarquee from '../components/CategoryMarquee';
 import Stats from '../components/Stats';
 import Skills from '../components/Skills';
 import Roles from '../components/Roles';
@@ -16,11 +17,12 @@ export default function HomePage() {
   return (
     <Layout>
       <Hero />
+      <CategoryMarquee />
       <Stats />
       <Skills />
       <ProductMotif figureNumber="01" />
       <Portfolio />
-      <ProductMotif figureNumber="02" />
+      <ProductMotif figureNumber="05" />
       <Experience />
       <div className="education-grid container section-padding">
         <Roles />

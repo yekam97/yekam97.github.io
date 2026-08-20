@@ -34,6 +34,9 @@ const Hero = () => {
 
   return (
     <section id="hero" className={`container ${styles.heroSection}`}>
+      {/* Decorative — a real word, purposely not announced twice */}
+      <span className={styles.ghostWord} aria-hidden="true">INDUSTRIAL</span>
+
       <motion.div
         className={styles.textColumn}
         variants={containerVariants}
@@ -95,11 +98,13 @@ const Hero = () => {
       >
         <div className={styles.imageWrapper}>
           <div className={styles.photoGlow} />
-          <img
-            src="/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png"
-            alt="Yeison Camilo Gamba Gonzalez — Diseñador Industrial y Gestor de Proyectos de Innovación"
-            className={styles.profileImage}
-          />
+          <div className={styles.duotoneFrame}>
+            <img
+              src="/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png"
+              alt="Yeison Camilo Gamba Gonzalez — Diseñador Industrial y Gestor de Proyectos de Innovación"
+              className={styles.profileImage}
+            />
+          </div>
         </div>
       </motion.div>
     </section>

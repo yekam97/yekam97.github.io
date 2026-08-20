@@ -7,7 +7,7 @@
 
 .storyBlock {
     width: 100%;
-    padding: var(--spacing-16) 0;
+    padding: var(--section-pad-y) 0;
 }
 
 .storyGrid {
@@ -126,10 +126,6 @@
     .storyGrid.reversed .storyImage,
     .storyGrid.reversed .storyContent {
         order: initial;
-    }
-
-    .storyBlock {
-        padding: var(--spacing-12) 0;
     }
 
     .storyContent {

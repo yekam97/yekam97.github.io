@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
+import ProductMotif from './ProductMotif';
 import styles from './Portfolio.module.css';
 
 // Each project's `title` is written as the real problem/result it solved,
@@ -204,16 +205,23 @@ const Portfolio = () => {
 
             <div className={styles.storyList}>
                 {projects.map((project, idx) => (
-                    <StoryBlock
-                        key={idx}
-                        project={project}
-                        index={idx}
-                        language={language}
-                        onOpen={(p) => {
-                            setSelectedProject(p);
-                            setCurrentImageIndex(0);
-                        }}
-                    />
+                    <div key={idx}>
+                        <StoryBlock
+                            project={project}
+                            index={idx}
+                            language={language}
+                            onOpen={(p) => {
+                                setSelectedProject(p);
+                                setCurrentImageIndex(0);
+                            }}
+                        />
+                        {/* A neutral transition strip ALWAYS separates one
+                            project's color from the next — consistent
+                            everywhere, not just at the section edges. */}
+                        {idx < projects.length - 1 && (
+                            <ProductMotif figureNumber={String(idx + 2).padStart(2, '0')} />
+                        )}
+                    </div>
                 ))}
             </div>
 

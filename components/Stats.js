@@ -8,7 +8,9 @@ import styles from './Stats.module.css';
 // Counts up from 0 to `target` once the number scrolls into view, easing
 // out toward the end. Runs on a plain rAF loop (not a spring) so the value
 // lands exactly on the target instead of overshooting/settling visually.
-const CountUp = ({ target, suffix = '', locale, duration = 1.4 }) => {
+// Slower duration + a lower viewport trigger threshold + a small "pop" on
+// start make the count clearly noticeable rather than a quick blip.
+const CountUp = ({ target, suffix = '', locale, duration = 2.2 }) => {
   const [value, setValue] = useState(0);
   const [started, setStarted] = useState(false);
 
@@ -30,7 +32,13 @@ const CountUp = ({ target, suffix = '', locale, duration = 1.4 }) => {
   const display = locale ? value.toLocaleString(locale) : value;
 
   return (
-    <motion.span onViewportEnter={start} viewport={{ once: true, amount: 0.6 }}>
+    <motion.span
+      onViewportEnter={start}
+      viewport={{ once: true, amount: 0.4 }}
+      animate={started ? { scale: [1.25, 1] } : {}}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      style={{ display: 'inline-block' }}
+    >
       {display}{suffix}
     </motion.span>
   );
@@ -60,23 +68,26 @@ const Stats = () => {
   const stats = getStats(language);
 
   return (
-    <div className="container">
-      <motion.div
-        className={styles.statsBar}
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        {stats.map((stat, idx) => (
-          <motion.div key={idx} className={styles.statItem} variants={itemVariants}>
-            <span className={styles.statNumber}>
-              <CountUp target={stat.target} suffix={stat.suffix} locale={stat.locale} />
-            </span>
-            <span className={styles.statLabel}>{stat.label}</span>
-          </motion.div>
-        ))}
-      </motion.div>
+    <div className={styles.sectionWrap}>
+      <div className={styles.divider} aria-hidden="true" />
+      <div className="container">
+        <motion.div
+          className={styles.statsBar}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {stats.map((stat, idx) => (
+            <motion.div key={idx} className={styles.statItem} variants={itemVariants}>
+              <span className={styles.statNumber}>
+                <CountUp target={stat.target} suffix={stat.suffix} locale={stat.locale} />
+              </span>
+              <span className={styles.statLabel}>{stat.label}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };
