@@ -9,6 +9,7 @@ import ScrollProgress from './ScrollProgress';
 import Sticker from './Sticker';
 import LanguageToggle from './LanguageToggle';
 import MagneticButton from './MagneticButton';
+import LivingBackground from './LivingBackground';
 
 export default function Layout({ children }) {
   const { language } = useLanguage();
@@ -26,6 +27,7 @@ export default function Layout({ children }) {
   return (
     <>
       <ScrollProgress />
+      <LivingBackground />
 
       {/* Quiet paper-grain texture — replaces the old neon cursor glow /
           particle canvas with something that fits a warm, editorial page

@@ -1,0 +1,75 @@
+.wash {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Each blob is an organic (not circular) blurred stain. Opacity stays
+   low and blend-mode is "multiply" so it reads as pigment soaking into
+   the cream paper rather than a flat colored panel — and where two
+   blobs overlap mid-transition, multiply naturally mixes their colors
+   into a third hue, like wet watercolor bleeding together. */
+.blob {
+    position: absolute;
+    mix-blend-mode: multiply;
+    filter: blur(110px);
+    will-change: background-color;
+}
+
+.blobA {
+    top: -18%;
+    left: -12%;
+    width: 55vw;
+    height: 55vw;
+    opacity: 0.16;
+    border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
+    transition: background-color 2.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.blobB {
+    top: 8%;
+    right: -15%;
+    width: 46vw;
+    height: 46vw;
+    opacity: 0.12;
+    border-radius: 58% 42% 38% 62% / 55% 62% 38% 45%;
+    transition: background-color 3.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+
+.blobC {
+    bottom: -12%;
+    left: 18%;
+    width: 50vw;
+    height: 50vw;
+    opacity: 0.14;
+    border-radius: 65% 35% 45% 55% / 40% 55% 45% 60%;
+    transition: background-color 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+.blobD {
+    bottom: 4%;
+    right: 6%;
+    width: 38vw;
+    height: 38vw;
+    opacity: 0.1;
+    border-radius: 38% 62% 55% 45% / 60% 45% 55% 40%;
+    transition: background-color 3.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .blob {
+        transition-duration: 0.4s;
+    }
+}
+
+@media (max-width: 768px) {
+    .blobA,
+    .blobB,
+    .blobC,
+    .blobD {
+        width: 80vw;
+        height: 80vw;
+    }
+}
