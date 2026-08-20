@@ -98,13 +98,11 @@ const Hero = () => {
       >
         <div className={styles.imageWrapper}>
           <div className={styles.photoGlow} />
-          <div className={styles.duotoneFrame}>
-            <img
-              src="/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png"
-              alt="Yeison Camilo Gamba Gonzalez — Diseñador Industrial y Gestor de Proyectos de Innovación"
-              className={styles.profileImage}
-            />
-          </div>
+          <img
+            src="/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png"
+            alt="Yeison Camilo Gamba Gonzalez — Diseñador Industrial y Gestor de Proyectos de Innovación"
+            className={styles.profileImage}
+          />
         </div>
       </motion.div>
     </section>

@@ -134,65 +134,46 @@
   z-index: 2;
 }
 
+/* No card here on purpose: the source photo is a transparent-background
+   PNG cutout, so there is no background/border/box-shadow to draw a
+   rectangle around it — that "frame" was what made it read as a photo
+   glued onto a card instead of a person standing in the page. The
+   silhouette's own alpha edge is the only edge. */
 .imageWrapper {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  background: var(--surface-low);
+  aspect-ratio: 1684 / 2528;
   position: relative;
-  overflow: visible;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--outline);
-  box-shadow: 0 20px 50px rgba(31, 27, 22, 0.14);
   transition: var(--transition);
 }
 
 .imageWrapper:hover {
   transform: translateY(-6px);
-  border-color: rgba(154, 68, 41, 0.35);
-  box-shadow: 0 30px 60px rgba(154, 68, 41, 0.15);
-}
-
-/* Duotone frame — clips to the rounded corners and holds the color
-   overlay, kept separate from .imageWrapper (which stays overflow:
-   visible so .photoGlow can still bleed outside it). */
-.duotoneFrame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: inherit;
-}
-
-.duotoneFrame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(155deg, var(--primary) 0%, var(--bg-alt) 100%);
-  mix-blend-mode: color;
-  opacity: 0.85;
-  pointer-events: none;
-  transition: var(--transition);
-}
-
-.imageWrapper:hover .duotoneFrame::after {
-  opacity: 0.18;
 }
 
 .profileImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: bottom center;
   display: block;
-  filter: grayscale(1) contrast(1.05) brightness(1.03);
-  border-radius: var(--radius-lg);
+  /* CSS-only duotone (grayscale pushed toward the terracotta accent)
+     applied straight to the element, so it respects the PNG's alpha
+     channel instead of an overlay div painting a rectangle behind it.
+     A soft drop-shadow (not a box-shadow) hugs the actual silhouette. */
+  filter:
+    grayscale(1) sepia(0.55) saturate(2.1) hue-rotate(-22deg)
+    brightness(0.97) contrast(1.04)
+    drop-shadow(0 24px 30px rgba(31, 27, 22, 0.16));
   transition: var(--transition);
 }
 
 .imageWrapper:hover .profileImage {
-  filter: grayscale(0) contrast(1) brightness(1);
-  transform: scale(1.02);
+  filter:
+    grayscale(0) sepia(0) saturate(1) hue-rotate(0deg)
+    brightness(1) contrast(1)
+    drop-shadow(0 24px 30px rgba(31, 27, 22, 0.16));
+  transform: scale(1.015);
 }
-
 
 .photoGlow {
   position: absolute;
@@ -250,13 +231,5 @@
 
   .photoColumn {
     min-height: 300px;
-  }
-
-  .imageWrapper {
-    aspect-ratio: 3 / 4;
-  }
-
-  .neonBoxOverlay {
-    display: none;
   }
 }
