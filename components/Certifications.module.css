@@ -19,9 +19,9 @@
 
 .certCard:hover {
   background: var(--surface-high);
-  border-color: rgba(255, 85, 0, 0.4);
+  border-color: rgba(154, 68, 41, 0.35);
   transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(255, 85, 0, 0.08);
+  box-shadow: 0 12px 30px rgba(154, 68, 41, 0.1);
 }
 
 .header {
@@ -48,7 +48,7 @@
   font-family: var(--ff-display);
   font-size: 1.4rem;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--ink);
   margin-bottom: var(--spacing-4);
   line-height: 1.2;
 }
@@ -112,7 +112,7 @@
     background: var(--primary);
     color: var(--on-primary);
     border-color: var(--primary);
-    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(154, 68, 41, 0.2);
   }
 
   .certsGrid {

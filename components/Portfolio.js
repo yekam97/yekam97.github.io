@@ -1,21 +1,29 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import styles from './Portfolio.module.css';
 
+// Each project's `title` is written as the real problem/result it solved,
+// drawing only on figures already published elsewhere on this site (see
+// components/Experience.js) — nothing invented. Everything else
+// (description, details, technologies, image, year, category) is the
+// original, untouched content.
 const getProjects = (language) => {
     const isEn = language === 'en';
     return [
         {
+            accent: 'industrial',
             category: isEn ? 'INDUSTRIAL DESIGN / INTERIOR DESIGN' : 'DISEÑO INDUSTRIAL / DISEÑO DE INTERIORES',
-            title: isEn ? 'Design and development of spaces and products' : 'Diseño y desarrollo de espacios y productos',
+            title: isEn
+                ? 'How do you gain 20% more storage capacity without making the structure bigger?'
+                : '¿Cómo se gana un 20% más de capacidad de almacenamiento sin agrandar la estructura?',
             year: '2021 – 2025',
             image: '/images/industrial-remodelacion-departamento.png',
             images: ['/images/industrial-remodelacion-departamento.png'],
-            description: isEn 
+            description: isEn
                 ? 'Development of industrial design and interior design projects focused on functionality, aesthetics and space optimization. Creation of customized solutions for commercial, residential spaces and furniture, integrating 3D modeling, visualization and conceptual development.'
                 : 'Desarrollo de proyectos de diseño industrial y diseño interior enfocados en funcionalidad, estética y optimización de espacios. Creación de soluciones personalizadas para espacios comerciales, residenciales y mobiliario, integrando modelado 3D, visualización y desarrollo conceptual.',
             details: isEn ? [
@@ -34,8 +42,11 @@ const getProjects = (language) => {
             technologies: ['Diseño 3D', 'Renderizado', 'CAD', 'Modelado paramétrico']
         },
         {
+            accent: 'uxui',
             category: isEn ? 'UX/UI DESIGN AND WEB DEVELOPMENT' : 'DISEÑO UX / UI Y DESARROLLO WEB',
-            title: isEn ? 'Design and development of digital platforms' : 'Diseño y desarrollo de plataformas digitales',
+            title: isEn
+                ? 'From a price list that went stale every 2–3 months to a real-time quoting tool'
+                : 'De una lista de precios que envejecía cada 2-3 meses a un cotizador en tiempo real',
             year: '2022 – 2025',
             image: '/images/Gemini_Generated_Image_3vovcz3vovcz3vov.png',
             images: ['/images/Gemini_Generated_Image_3vovcz3vovcz3vov.png'],
@@ -58,8 +69,11 @@ const getProjects = (language) => {
             technologies: ['Figma', 'Diseño de interfaces', 'Desarrollo web', 'Prototipado digital']
         },
         {
+            accent: 'branding',
             category: isEn ? 'GRAPHIC DESIGN AND BRANDING' : 'DISEÑO GRÁFICO Y BRANDING',
-            title: isEn ? 'Development of visual identity and graphic communication' : 'Desarrollo de identidad visual y comunicación gráfica',
+            title: isEn
+                ? 'A new visual identity, 25% more projects approved on the first try'
+                : 'Una identidad visual nueva, 25% más proyectos aprobados a la primera',
             year: '2021 – 2025',
             image: '/images/Gemini_Generated_Image_gpudthgpudthgpud.png',
             images: ['/images/Gemini_Generated_Image_gpudthgpudthgpud.png'],
@@ -82,8 +96,11 @@ const getProjects = (language) => {
             technologies: ['Illustrator', 'Photoshop', 'Diseño editorial', 'Branding']
         },
         {
+            accent: 'mentoring',
             category: isEn ? 'MENTORING, TRAINING AND WORKSHOPS' : 'MENTORÍAS, FORMACIÓN Y TALLERES',
-            title: isEn ? 'Training in entrepreneurship, technology and creativity' : 'Capacitación en emprendimiento, tecnología y creatividad',
+            title: isEn
+                ? 'Guiding 50+ entrepreneurs from a raw idea to a validated business model'
+                : 'Acompañar a 50+ emprendedores de una idea suelta a un modelo de negocio validado',
             year: '2022 – 2025',
             image: '/images/pexels-pavel-danilyuk-6340630.png',
             images: ['/images/pexels-pavel-danilyuk-6340630.png'],
@@ -108,82 +125,53 @@ const getProjects = (language) => {
     ];
 };
 
-const gridVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.18,
-            delayChildren: 0.1
-        }
-    }
+// First sentence of the (untouched) description — used as the 1-2 line
+// context under the headline, without introducing new copy.
+const firstSentence = (text) => {
+    const idx = text.indexOf('. ');
+    return idx === -1 ? text : text.slice(0, idx + 1);
 };
 
-const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
-    }
-};
-
-// Interactive card: a soft cursor-tracked spotlight plus a gentle 3D tilt.
-// Position, tilt and spotlight are all driven through Framer Motion values
-// (rather than raw CSS transforms) so they compose cleanly with the
-// entrance animation instead of fighting over the `transform` property.
-const ProjectCard = ({ project, onClick }) => {
-    const cardRef = useRef(null);
-    const mouseX = useMotionValue(0.5);
-    const mouseY = useMotionValue(0.5);
-
-    const tiltSpring = { stiffness: 220, damping: 22, mass: 0.4 };
-    const rotateX = useSpring(useTransform(mouseY, [0, 1], [6, -6]), tiltSpring);
-    const rotateY = useSpring(useTransform(mouseX, [0, 1], [-6, 6]), tiltSpring);
-    const spotX = useTransform(mouseX, (v) => `${v * 100}%`);
-    const spotY = useTransform(mouseY, (v) => `${v * 100}%`);
-
-    const handleMouseMove = (e) => {
-        const rect = cardRef.current.getBoundingClientRect();
-        mouseX.set((e.clientX - rect.left) / rect.width);
-        mouseY.set((e.clientY - rect.top) / rect.height);
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(0.5);
-        mouseY.set(0.5);
-    };
+const StoryBlock = ({ project, index, onOpen, language }) => {
+    const reversed = index % 2 === 1;
 
     return (
-        <motion.div
-            ref={cardRef}
-            className={styles.projectCard}
-            variants={cardVariants}
-            onClick={onClick}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            whileHover={{ y: -6 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-            style={{
-                cursor: 'pointer',
-                rotateX,
-                rotateY,
-                transformPerspective: 1000,
-                '--spot-x': spotX,
-                '--spot-y': spotY
-            }}
+        <motion.article
+            className={styles.storyBlock}
+            style={{ background: `var(--accent-${project.accent}-tint)` }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-            <div className={`image-reveal ${styles.imageBox}`}>
-                <img src={project.image} alt={project.title} />
-            </div>
-            <div className={styles.meta}>
-                <div>
-                    <span className={styles.category}>{project.category}</span>
-                    <h3 className={styles.title}>{project.title}</h3>
+            <div className={`container ${styles.storyGrid} ${reversed ? styles.reversed : ''}`}>
+                <div className={`image-reveal ${styles.storyImage}`}>
+                    <img src={project.image} alt={project.title} />
                 </div>
-                <span className={styles.year}>{project.year}</span>
+
+                <div className={styles.storyContent}>
+                    <span className={styles.storyCategory} style={{ color: `var(--accent-${project.accent})` }}>
+                        <span className={styles.dot} style={{ background: `var(--accent-${project.accent})` }} />
+                        {project.category}
+                    </span>
+
+                    <h3 className={styles.storyTitle}>{project.title}</h3>
+
+                    <p className={styles.storyContext}>{firstSentence(project.description)}</p>
+
+                    <div className={styles.storyFooter}>
+                        <span className={styles.storyYear}>{project.year}</span>
+                        <button
+                            className={styles.storyCta}
+                            style={{ color: `var(--accent-${project.accent})` }}
+                            onClick={() => onOpen(project)}
+                        >
+                            {language === 'es' ? 'Ver caso de estudio' : 'View case study'} →
+                        </button>
+                    </div>
+                </div>
             </div>
-        </motion.div>
+        </motion.article>
     );
 };
 
@@ -191,7 +179,7 @@ const Portfolio = () => {
     const { language } = useLanguage();
     const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
     const projects = getProjects(language);
-    
+
     const [selectedProject, setSelectedProject] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -208,30 +196,26 @@ const Portfolio = () => {
     };
 
     return (
-        <section id="portfolio" className="container section-padding">
-            <div style={{ marginBottom: 'var(--spacing-12)' }}>
+        <section id="portfolio">
+            <div className="container" style={{ marginBottom: 'var(--spacing-12)' }}>
                 <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>{t('proyectos')}</h2>
                 <p className="description" style={{ marginTop: '0.5rem' }}>{t('descripcion_proyectos')}</p>
             </div>
 
-            <motion.div 
-                className={styles.projectGrid}
-                variants={gridVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.15 }}
-            >
+            <div className={styles.storyList}>
                 {projects.map((project, idx) => (
-                    <ProjectCard
+                    <StoryBlock
                         key={idx}
                         project={project}
-                        onClick={() => {
-                            setSelectedProject(project);
+                        index={idx}
+                        language={language}
+                        onOpen={(p) => {
+                            setSelectedProject(p);
                             setCurrentImageIndex(0);
                         }}
                     />
                 ))}
-            </motion.div>
+            </div>
 
             {/* Panel deslizable con información del proyecto */}
             <AnimatePresence>
@@ -245,7 +229,7 @@ const Portfolio = () => {
                             transition={{ duration: 0.3, ease: 'easeOut' }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <button 
+                            <button
                                 className={styles.closePanel}
                                 onClick={() => setSelectedProject(null)}
                             >
@@ -256,8 +240,8 @@ const Portfolio = () => {
                                 {/* Galería de imágenes */}
                                 <div className={styles.imageGallery}>
                                     <div className={styles.mainImageContainer}>
-                                        <img 
-                                            src={selectedProject.images[currentImageIndex]} 
+                                        <img
+                                            src={selectedProject.images[currentImageIndex]}
                                             alt={selectedProject.title}
                                         />
                                     </div>
@@ -272,7 +256,7 @@ const Portfolio = () => {
 
                                 {/* Información del proyecto */}
                                 <div className={styles.projectInfo}>
-                                    <span className={styles.category}>{selectedProject.category}</span>
+                                    <span className={styles.category} style={{ color: `var(--accent-${selectedProject.accent})` }}>{selectedProject.category}</span>
                                     <h2 className={styles.title}>{selectedProject.title}</h2>
                                     <p className={styles.year}>{selectedProject.year}</p>
 

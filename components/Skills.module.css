@@ -14,8 +14,8 @@
 
 .skillCard:hover {
     background-color: var(--surface-high);
-    border-color: rgba(255, 85, 0, 0.3);
-    box-shadow: 0 15px 30px rgba(255, 85, 0, 0.08);
+    border-color: rgba(154, 68, 41, 0.3);
+    box-shadow: 0 15px 30px rgba(154, 68, 41, 0.1);
 }
 
 .skillLabel {

@@ -1,33 +1,50 @@
-/* Editorial Industrialism - Design System
-   - North Star: The Architectural Curator
-   - Foundation: Absolute Black (#000000)
-   - Accent: Electric Neon (#9cff93)
-   - Typography: Newsreader (Serif) & Manrope (Sans)
+/* Editorial Curator — Design System
+   - North Star: warm, paper-toned editorial portfolio (not a dark SaaS template)
+   - Foundation: warm bone/cream paper (#F7F1E7), warm near-black ink
+   - Accent: muted terracotta, with a distinct earthy accent per project category
+   - Typography: Fraunces (display serif) & Inter (body sans)
 */
 
 :root {
-  /* Colors */
-  --bg: #050505;
-  --surface: #0c0c0c;
-  --surface-low: #121212;
-  --surface-high: #1c1c1c;
-  --surface-highest: #262626;
+  /* Surfaces */
+  --bg: #F7F1E7;
+  --bg-alt: #EFE6D4;
+  --surface: #FFFFFF;
+  --surface-low: #FBF7EF;
+  --surface-high: #FFFFFF;
+  --surface-highest: #F1E9DA;
 
-  --primary: #ff5500;
-  --on-primary: #ffffff;
-  --secondary: #e2e2e2;
-  --muted: #8a8a8a;
-  --outline: rgba(255, 255, 255, 0.08);
+  /* Ink */
+  --ink: #1F1B16;
+  --secondary: #4A423A;
+  --muted: #6B6152;
+  --outline: rgba(31, 27, 22, 0.14);
+  --outline-strong: rgba(31, 27, 22, 0.26);
 
-  /* Border Radii */
-  --radius-lg: 32px;
-  --radius-md: 16px;
-  --radius-sm: 8px;
-  --radius-pill: 9999px;
+  /* Primary accent (terracotta) */
+  --primary: #9A4429;
+  --primary-soft: #F3E4DC;
+  --on-primary: #FFFFFF;
+
+  /* Category accents — one per project discipline */
+  --accent-industrial: #9A4429;
+  --accent-industrial-tint: #F3E4DC;
+  --accent-uxui: #285C56;
+  --accent-uxui-tint: #DEEAE8;
+  --accent-branding: #8C5A14;
+  --accent-branding-tint: #F1E6D0;
+  --accent-mentoring: #556140;
+  --accent-mentoring-tint: #E6E9DA;
+
+  /* Border Radii — restrained, editorial (not pill-heavy) */
+  --radius-lg: 6px;
+  --radius-md: 4px;
+  --radius-sm: 3px;
+  --radius-pill: 999px;
 
   /* Typography */
-  --ff-display: 'Newsreader', serif;
-  --ff-body: 'Manrope', sans-serif;
+  --ff-display: 'Fraunces', serif;
+  --ff-body: 'Inter', sans-serif;
 
   /* Spacing */
   --spacing-1: 0.25rem;
@@ -67,7 +84,7 @@ h3,
   font-family: var(--ff-display);
   font-weight: 600;
   line-height: 1.1;
-  color: #FFFFFF;
+  color: var(--ink);
 }
 
 button,
@@ -121,78 +138,78 @@ ul {
   display: block;
 }
 
-/* Navigation - Floating Glass Bar */
+/* Navigation — plain top bar, not a floating glass pill */
 .nav-glass {
-  position: fixed;
-  top: var(--spacing-6);
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - var(--spacing-12));
-  max-width: 1400px;
-  height: 64px;
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: var(--glass);
-  border: 1px solid var(--outline);
-  border-radius: var(--radius-pill);
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  height: 76px;
+  background: rgba(247, 241, 231, 0.92);
+  backdrop-filter: saturate(140%) blur(8px);
+  border: none;
+  border-bottom: 1px solid var(--outline);
+  border-radius: 0;
   z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--spacing-8);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
 }
 
-/* Primary Button */
+/* Primary Button — restrained rectangle, no neon glow */
 .btn-neon {
   background: var(--primary);
   color: var(--on-primary);
-  border: none;
+  border: 1px solid var(--primary);
   padding: 0.85rem 2rem;
-  font-weight: 800;
+  font-weight: 600;
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+  box-shadow: none;
 }
 
 .btn-neon:hover {
-  background: #FFFFFF;
-  color: #000000;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
 .btn-outline {
-  border: 1px solid var(--outline);
+  border: 1px solid var(--outline-strong);
   background: transparent;
-  color: #FFFFFF;
+  color: var(--ink);
   padding: 0.85rem 2rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   transition: var(--transition);
 }
 
 .btn-outline:hover {
   border-color: var(--primary);
   color: var(--primary);
-  box-shadow: 0 0 15px rgba(255, 85, 0, 0.15);
   transform: translateY(-2px);
 }
 
-/* Image Reveal Effect */
+/* Image treatment — no dark scrim, just a quiet desaturation-to-color reveal */
 .image-reveal {
   position: relative;
   overflow: hidden;
+  background: var(--surface-low);
 }
 
 .image-reveal img {
@@ -200,22 +217,12 @@ ul {
   height: auto;
   display: block;
   transition: var(--transition);
-}
-
-.image-reveal::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-  transition: var(--transition);
-}
-
-.image-reveal:hover::after {
-  background: rgba(0, 0, 0, 0);
+  filter: saturate(0.85);
 }
 
 .image-reveal:hover img {
-  transform: scale(1.02);
+  transform: scale(1.015);
+  filter: saturate(1);
 }
 
 .visually-hidden {
@@ -232,9 +239,8 @@ ul {
 
 @media (max-width: 768px) {
   .nav-glass {
-    width: calc(100% - 2rem);
-    top: 1rem;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
+    height: 64px;
   }
 
   .container {
@@ -260,10 +266,8 @@ ul {
   }
 
   .nav-glass {
-    width: calc(100% - 1rem);
-    top: 0.5rem;
-    height: 56px;
-    padding: 0 0.75rem;
+    height: 58px;
+    padding: 0 0.85rem;
   }
 
   .btn-neon,

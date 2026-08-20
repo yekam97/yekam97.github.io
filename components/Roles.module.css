@@ -18,8 +18,8 @@
 
 .facetCard:hover {
     background-color: var(--surface-high);
-    border-color: rgba(255, 85, 0, 0.4);
-    box-shadow: 0 15px 30px rgba(255, 85, 0, 0.08);
+    border-color: rgba(154, 68, 41, 0.35);
+    box-shadow: 0 15px 30px rgba(154, 68, 41, 0.1);
 }
 
 .facetLabel {
@@ -37,7 +37,7 @@
     font-size: 1.6rem;
     font-weight: 600;
     margin-bottom: var(--spacing-4);
-    color: #FFFFFF;
+    color: var(--ink);
     line-height: 1.2;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .pdfLink:hover {
-    color: #FFFFFF;
+    color: var(--ink);
     transform: translateX(4px);
 }
 

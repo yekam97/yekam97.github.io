@@ -1,118 +1,152 @@
-.projectGrid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: var(--spacing-12);
-}
+/* ---------- Editorial story blocks ---------- */
 
-.projectCard {
-    position: relative;
+.storyList {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-6);
-    background-color: var(--surface-low);
-    border: 1px solid var(--outline);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-6);
-    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
-.projectCard:nth-child(even) {
-    margin-top: var(--spacing-12);
-}
-
-.projectCard:hover {
-    background-color: var(--surface-high);
-    border-color: rgba(255, 85, 0, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-/* Cursor-tracked spotlight — position comes from the --spot-x/--spot-y
-   custom properties driven by ProjectCard's mouse-move handler. */
-.projectCard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: var(--radius-lg);
-    background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255, 85, 0, 0.14), transparent 55%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.projectCard:hover::before {
-    opacity: 1;
-}
-
-.projectCard > * {
-    position: relative;
-    z-index: 1;
-}
-
-.imageBox {
+.storyBlock {
     width: 100%;
-    aspect-ratio: 16 / 10;
-    background-color: var(--surface-low);
+    padding: var(--spacing-16) 0;
+}
+
+.storyGrid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--spacing-12);
+    align-items: center;
+}
+
+.storyGrid.reversed {
+    grid-template-columns: 0.95fr 1.05fr;
+}
+
+.storyGrid.reversed .storyImage {
+    order: 2;
+}
+
+.storyGrid.reversed .storyContent {
+    order: 1;
+}
+
+.storyImage {
+    width: 100%;
+    aspect-ratio: 4 / 3;
     border-radius: var(--radius-md);
     overflow: hidden;
-    border: 1px solid var(--outline);
+    box-shadow: 0 24px 50px rgba(31, 27, 22, 0.12);
 }
 
-.imageBox img {
+.storyImage img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: var(--transition);
 }
 
-.projectCard:hover .imageBox img {
-    transform: scale(1.03);
-}
-
-.meta {
+.storyContent {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0 var(--spacing-2);
+    flex-direction: column;
+    gap: var(--spacing-6);
+    max-width: 560px;
 }
 
-.category {
-    font-size: 0.65rem;
-    font-weight: 800;
-    color: var(--primary);
-    letter-spacing: 0.15em;
-    display: block;
-    margin-bottom: var(--spacing-2);
+.storyCategory {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
 }
 
-.title {
-    font-family: var(--ff-display);
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #FFFFFF;
-    line-height: 1.25;
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
-.year {
+.storyTitle {
+    font-family: var(--ff-display);
+    font-optical-sizing: auto;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+}
+
+.storyContext {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--secondary);
+}
+
+.storyFooter {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-6);
+    margin-top: var(--spacing-2);
+}
+
+.storyYear {
     font-size: 0.8rem;
     color: var(--muted);
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--outline);
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-pill);
 }
 
-/* Modal Overlay & Panel */
+.storyCta {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--ff-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: var(--transition);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+}
+
+.storyCta:hover {
+    gap: 0.6rem;
+}
+
+@media (max-width: 900px) {
+    .storyGrid,
+    .storyGrid.reversed {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-6);
+    }
+
+    .storyGrid.reversed .storyImage,
+    .storyGrid.reversed .storyContent {
+        order: initial;
+    }
+
+    .storyBlock {
+        padding: var(--spacing-12) 0;
+    }
+
+    .storyContent {
+        max-width: none;
+    }
+}
+
+/* ---------- Modal / panel (case study detail) ---------- */
+
 .panelOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(5, 5, 5, 0.85);
-    backdrop-filter: blur(20px);
+    background: rgba(31, 27, 22, 0.45);
+    backdrop-filter: blur(12px);
     z-index: 2200;
     display: flex;
     align-items: center;
@@ -121,14 +155,14 @@
 }
 
 .projectPanel {
-    background: #0d0d0d;
+    background: var(--surface);
     border: 1px solid var(--outline);
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 1050px;
     max-height: 85vh;
     overflow-y: auto;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 30px 60px rgba(31, 27, 22, 0.25);
     position: relative;
 }
 
@@ -137,7 +171,7 @@
     top: var(--spacing-6);
     right: var(--spacing-6);
     padding: var(--spacing-2) var(--spacing-4);
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--surface-low);
     border: 1px solid var(--outline);
     border-radius: var(--radius-pill);
     color: var(--secondary);
@@ -153,7 +187,6 @@
     background: var(--primary);
     color: var(--on-primary);
     border-color: var(--primary);
-    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
 }
 
 .panelContent {
@@ -195,7 +228,7 @@
 .imageControls button {
     width: 44px;
     height: 44px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface-low);
     border: 1px solid var(--outline);
     border-radius: var(--radius-pill);
     color: var(--secondary);
@@ -231,7 +264,6 @@
 .projectInfo .category {
     font-size: 0.7rem;
     font-weight: 800;
-    color: var(--primary);
     letter-spacing: 0.15em;
     text-transform: uppercase;
 }
@@ -239,8 +271,8 @@
 .projectInfo .title {
     font-family: var(--ff-display);
     font-size: 2.2rem;
-    font-weight: 700;
-    color: #FFFFFF;
+    font-weight: 600;
+    color: var(--ink);
     line-height: 1.15;
 }
 
@@ -278,7 +310,7 @@
     font-family: var(--ff-display);
     font-size: 1.2rem;
     font-weight: 600;
-    color: #FFFFFF;
+    color: var(--ink);
 }
 
 .details ul {
@@ -312,8 +344,8 @@
 
 .tag {
     display: inline-block;
-    background: rgba(255, 85, 0, 0.05);
-    border: 1px solid rgba(255, 85, 0, 0.15);
+    background: var(--surface-low);
+    border: 1px solid var(--outline);
     color: var(--secondary);
     padding: 0.5rem 1.1rem;
     font-size: 0.75rem;
@@ -327,19 +359,9 @@
     border-color: var(--primary);
     background: var(--primary);
     color: var(--on-primary);
-    box-shadow: 0 4px 12px rgba(255, 85, 0, 0.2);
 }
 
 @media (max-width: 900px) {
-    .projectGrid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-8);
-    }
-
-    .projectCard:nth-child(even) {
-        margin-top: 0;
-    }
-
     .panelContent {
         grid-template-columns: 1fr;
         padding: var(--spacing-8);
@@ -357,28 +379,6 @@
 }
 
 @media (max-width: 640px) {
-    .projectGrid {
-        gap: var(--spacing-6);
-    }
-
-    .projectCard {
-        padding: var(--spacing-4);
-    }
-
-    .title {
-        font-size: 1.2rem;
-    }
-
-    .imageBox {
-        aspect-ratio: 16 / 11;
-    }
-
-    .meta {
-        flex-direction: column;
-        gap: var(--spacing-2);
-        padding: 0;
-    }
-
     .panelOverlay {
         padding: var(--spacing-2);
     }

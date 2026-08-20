@@ -1,7 +1,13 @@
+'use client';
+
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './Experience.module.css';
 
+// Full, untouched experience data — identical figures/dates/companies as
+// before. Only the layout changed: a short "milestones" summary is shown
+// by default, and this full list is revealed on demand.
 const getExperienceData = (language) => {
   const isEn = language === 'en';
   return [
@@ -138,84 +144,110 @@ const getExperienceData = (language) => {
   ];
 };
 
-const containerVariants = {
+// The default "milestones" summary highlights the 6 roles with the
+// clearest headline result — all 8 remain fully visible (with full
+// detail) once expanded. Each headline below is a one-line compression
+// of that same role's own (unedited) bullet list above.
+const getMilestones = (language) => {
+  const isEn = language === 'en';
+  return [
+    { idx: 0, headline: isEn ? 'Real-time quoting platform for 1,600+ references' : 'Cotizador en tiempo real para 1.600+ referencias' },
+    { idx: 1, headline: isEn ? '+25% project approval rate with a new visual identity' : '+25% en aprobación de proyectos con una nueva identidad visual' },
+    { idx: 5, headline: isEn ? '50+ entrepreneurs guided to a validated business model' : '50+ emprendedores acompañados a un modelo de negocio validado' },
+    { idx: 4, headline: isEn ? '120+ people trained in immersive/VR content' : '120+ personas capacitadas en contenido inmersivo y RV' },
+    { idx: 6, headline: isEn ? '+20% storage efficiency on a modular silo redesign' : '+20% de eficiencia rediseñando un silo modular de almacenamiento' },
+    { idx: 7, headline: isEn ? '50+ graphic pieces and 8+ viable product concepts' : '50+ piezas gráficas y 8+ conceptos de producto viables' }
+  ];
+};
+
+const listVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.3
-    }
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
   }
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
+const rowVariants = {
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
   }
 };
 
 const Experience = () => {
   const { language } = useLanguage();
   const experienceData = getExperienceData(language);
+  const milestones = getMilestones(language);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <section id="experiencia" className="container section-padding">
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
+      <span className="label-md">{language === 'es' ? 'Cronología' : 'Timeline'}</span>
+      <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-10)' }}>
+        {language === 'es' ? 'Trayectoria Profesional' : 'Professional Trajectory'}
+      </h2>
+
+      {/* Milestones — one line each, quiet index-page rhythm */}
+      <motion.ol
+        className={styles.milestoneList}
+        variants={listVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
-        <span className="label-md">{language === 'es' ? 'Cronología' : 'Timeline'}</span>
-        <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)', textAlign: 'center' }}>
-          {language === 'es' ? 'Trayectoria Profesional' : 'Professional Trajectory'}
-        </h2>
+        {milestones.map((m) => {
+          const exp = experienceData[m.idx];
+          return (
+            <motion.li key={m.idx} className={styles.milestoneRow} variants={rowVariants}>
+              <span className={styles.milestonePeriod}>{exp.period}</span>
+              <span className={styles.milestoneRole}>
+                {exp.role} <span className={styles.milestoneCompany}>· {exp.company}</span>
+              </span>
+              <span className={styles.milestoneHeadline}>{m.headline}</span>
+            </motion.li>
+          );
+        })}
+      </motion.ol>
 
-        <motion.div 
-          className={styles.timelineContainer}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          <motion.div 
-            className={styles.timelineLine} 
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            style={{ originX: 0 }}
-          />
+      <button
+        className={styles.expandToggle}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+      >
+        {expanded
+          ? (language === 'es' ? 'Ocultar detalle completo ▴' : 'Hide full detail ▴')
+          : (language === 'es' ? 'Ver trayectoria completa (8) ▾' : 'View full trajectory (8) ▾')}
+      </button>
+
+      {/* Full detail — every role, every original bullet, unchanged */}
+      <motion.div
+        className={styles.fullDetail}
+        initial={false}
+        animate={{ height: expanded ? 'auto' : 0, opacity: expanded ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{ overflow: 'hidden' }}
+      >
+        <div className={styles.fullDetailInner}>
           {experienceData.map((exp, idx) => (
-            <motion.div
-              key={idx}
-              className={styles.timelineItem}
-              variants={itemVariants}
-            >
-              <div className={styles.periodCol}>
-                <div className={styles.periodPill}>{exp.period}</div>
+            <div key={idx} className={styles.detailItem}>
+              <div className={styles.detailHeader}>
+                <span className={styles.detailPeriod}>{exp.period}</span>
+                <div>
+                  <h3 className={styles.detailRole}>{exp.role}</h3>
+                  <span className={styles.detailCompany}>{exp.company}</span>
+                </div>
               </div>
-
-              <div className={styles.nodeCol}>
-                <div className={styles.dot} />
-              </div>
-
-              <div className={styles.content}>
-                <h3 className={styles.role}>{exp.role}</h3>
-                <span className={styles.company}>{exp.company}</span>
-                <ul className={styles.respList}>
-                  {exp.responsibilities.map((resp, i) => (
-                    <li key={i} className={styles.respItem}>{resp}</li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
+              <ul className={styles.respList}>
+                {exp.responsibilities.map((resp, i) => (
+                  <li key={i} className={styles.respItem}>{resp}</li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

@@ -1,135 +1,130 @@
-.timelineContainer {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacing-6);
-  overflow-x: auto;
-  padding: var(--spacing-12) var(--spacing-6) var(--spacing-8);
-  position: relative;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
+/* ---------- Milestone summary (default view) ---------- */
 
-/* Barra de desplazamiento personalizada */
-.timelineContainer::-webkit-scrollbar {
-  height: 6px;
-}
-
-.timelineContainer::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: var(--radius-pill);
-  margin: 0 var(--spacing-6);
-}
-
-.timelineContainer::-webkit-scrollbar-thumb {
-  background: rgba(255, 85, 0, 0.25);
-  border-radius: var(--radius-pill);
-  transition: var(--transition);
-}
-
-.timelineContainer::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
-.timelineLine {
-  position: absolute;
-  top: 76px; /* Posicionada exactamente al nivel de los nodos */
-  left: var(--spacing-12);
-  right: var(--spacing-12);
-  height: 1px;
-  border-top: 1px dashed var(--outline);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.timelineItem {
+.milestoneList {
   display: flex;
   flex-direction: column;
+}
+
+.milestoneRow {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--spacing-2) var(--spacing-6);
+  padding: var(--spacing-4) 0;
+  border-top: 1px solid var(--outline);
+}
+
+.milestoneRow:last-child {
+  border-bottom: 1px solid var(--outline);
+}
+
+.milestonePeriod {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  padding-top: 0.2rem;
+}
+
+.milestoneRole {
+  font-family: var(--ff-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  grid-column: 2;
+}
+
+.milestoneCompany {
+  font-family: var(--ff-body);
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+.milestoneHeadline {
+  grid-column: 2;
+  font-size: 0.9rem;
+  color: var(--secondary);
+  line-height: 1.5;
+}
+
+/* ---------- Expand toggle ---------- */
+
+.expandToggle {
+  display: inline-flex;
   align-items: center;
-  min-width: 320px;
-  max-width: 360px;
-  flex-shrink: 0;
-  gap: 0;
-}
-
-.periodCol {
-  display: flex;
-  justify-content: center;
-  margin-bottom: var(--spacing-2);
-  height: 32px;
-}
-
-.periodPill {
-  background-color: var(--surface-high);
-  color: #FFFFFF;
-  padding: 0.4rem 1.1rem;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-align: center;
-  align-self: center;
+  gap: 0.4rem;
+  margin-top: var(--spacing-8);
+  background: transparent;
+  border: 1px solid var(--outline-strong);
+  color: var(--ink);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
-  border: 1px solid var(--outline);
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-}
-
-.nodeCol {
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  background-color: var(--primary);
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--primary);
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
   transition: var(--transition);
 }
 
-.timelineItem:hover .dot {
-  transform: scale(1.3);
-  box-shadow: 0 0 18px var(--primary);
+.expandToggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
-.content {
-  background-color: var(--surface-low);
-  border: 1px solid var(--outline);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-6);
+/* ---------- Full detail (expanded view) ---------- */
+
+.fullDetail {
   width: 100%;
-  min-height: 280px;
+}
+
+.fullDetailInner {
   display: flex;
   flex-direction: column;
-  transition: var(--transition);
+  gap: var(--spacing-8);
+  padding-top: var(--spacing-10);
 }
 
-.timelineItem:hover .content {
-  background-color: var(--surface-high);
-  border-color: rgba(255, 85, 0, 0.3);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
+.detailItem {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--spacing-6);
+  padding-bottom: var(--spacing-8);
+  border-bottom: 1px solid var(--outline);
 }
 
-.role {
+.detailItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detailHeader {
+  display: contents;
+}
+
+.detailPeriod {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  padding-top: 0.2rem;
+}
+
+.detailRole {
   font-family: var(--ff-display);
   font-size: 1.3rem;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--ink);
   line-height: 1.25;
   margin-bottom: var(--spacing-1);
 }
 
-.company {
-  font-size: 0.65rem;
-  font-weight: 800;
+.detailCompany {
+  font-size: 0.7rem;
+  font-weight: 700;
   color: var(--primary);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   display: block;
   margin-bottom: var(--spacing-4);
 }
@@ -141,48 +136,39 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
+  grid-column: 2;
 }
 
 .respItem {
-  font-size: 0.8rem;
-  line-height: 1.4;
-  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--secondary);
   position: relative;
-  padding-left: 1rem;
+  padding-left: 1.1rem;
 }
 
 .respItem::before {
-  content: '→';
+  content: '—';
   position: absolute;
   left: 0;
   color: var(--primary);
-  font-family: var(--ff-body);
-  font-weight: 900;
-  font-size: 0.75rem;
 }
 
 @media (max-width: 768px) {
-  .timelineContainer {
-    gap: var(--spacing-4);
-    padding: var(--spacing-10) var(--spacing-4) var(--spacing-6);
+  .milestoneRow,
+  .detailItem {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-1);
   }
 
-  .timelineLine {
-    left: var(--spacing-6);
-    right: var(--spacing-6);
+  .milestoneRole,
+  .milestoneHeadline,
+  .respList {
+    grid-column: 1;
   }
 
-  .timelineItem {
-    min-width: 280px;
-    max-width: 300px;
-  }
-
-  .content {
-    padding: var(--spacing-4);
-    min-height: 250px;
-  }
-
-  .role {
-    font-size: 1.15rem;
+  .milestonePeriod,
+  .detailPeriod {
+    padding-top: 0;
   }
 }

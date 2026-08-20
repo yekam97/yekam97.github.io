@@ -5,6 +5,7 @@ import Stats from '../components/Stats';
 import Skills from '../components/Skills';
 import Roles from '../components/Roles';
 import Portfolio from '../components/Portfolio';
+import ProductMotif from '../components/ProductMotif';
 import Experience from '../components/Experience';
 import Certifications from '../components/Certifications';
 import Contact from '../components/Contact';
@@ -17,7 +18,9 @@ export default function HomePage() {
       <Hero />
       <Stats />
       <Skills />
+      <ProductMotif figureNumber="01" />
       <Portfolio />
+      <ProductMotif figureNumber="02" />
       <Experience />
       <div className="education-grid container section-padding">
         <Roles />
