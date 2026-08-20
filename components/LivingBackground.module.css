@@ -12,16 +12,29 @@
     pointer-events: none;
 }
 
-/* Each blob is an organic (not circular) blurred stain. Opacity stays
-   low and blend-mode is "multiply" so it reads as pigment soaking into
-   the cream paper rather than a flat colored panel — and where two
-   blobs overlap mid-transition, multiply naturally mixes their colors
-   into a third hue, like wet watercolor bleeding together. */
+/* One color "generation" — a full set of 4 blobs. Stacked exactly on
+   top of each other (inset:0) so the outgoing and incoming layer
+   occupy the same space and genuinely overlap while they cross-fade. */
+.layer {
+    position: absolute;
+    inset: 0;
+}
+
+/* Each blob is an organic (not circular) blurred stain. Blend-mode is
+   "normal" (plain alpha compositing) rather than multiply — multiply
+   always darkens the result relative to the backdrop, so it can never
+   actually reach the exact `-tint` color used elsewhere on the page;
+   normal blend at high opacity lets it converge on that literal
+   color. The crossfade between an outgoing and incoming color layer
+   still blends naturally, since alpha-compositing two overlapping
+   semi-transparent layers over time passes through real in-between
+   mixes. Opacity is animated by Framer Motion (see
+   LivingBackground.js), not CSS, since it needs to be staggered
+   per-blob and cross-fade between color generations. */
 .blob {
     position: absolute;
-    mix-blend-mode: multiply;
+    mix-blend-mode: normal;
     filter: blur(90px);
-    will-change: background-color;
 }
 
 .blobA {
@@ -29,9 +42,7 @@
     left: -12%;
     width: 55vw;
     height: 55vw;
-    opacity: 0.5;
     border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
-    transition: background-color 2.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .blobB {
@@ -39,9 +50,7 @@
     right: -15%;
     width: 46vw;
     height: 46vw;
-    opacity: 0.38;
     border-radius: 58% 42% 38% 62% / 55% 62% 38% 45%;
-    transition: background-color 3.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
 }
 
 .blobC {
@@ -49,9 +58,7 @@
     left: 18%;
     width: 50vw;
     height: 50vw;
-    opacity: 0.42;
     border-radius: 65% 35% 45% 55% / 40% 55% 45% 60%;
-    transition: background-color 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
 }
 
 .blobD {
@@ -59,43 +66,16 @@
     right: 6%;
     width: 38vw;
     height: 38vw;
-    opacity: 0.3;
     border-radius: 38% 62% 55% 45% / 60% 45% 55% 40%;
-    transition: background-color 3.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .blob {
-        transition-duration: 0.4s;
-    }
-}
-
-/* Mobile: the same blob sizes/opacities used on desktop compound (4
-   overlapping multiply layers) into a near-solid wash on a screen
-   this narrow, burying the copy entirely. Smaller, much lower-opacity
-   blobs keep the effect present as a quiet tint instead. */
 @media (max-width: 768px) {
+
     .blobA,
     .blobB,
     .blobC,
     .blobD {
         width: 60vw;
         height: 60vw;
-    }
-
-    .blobA {
-        opacity: 0.2;
-    }
-
-    .blobB {
-        opacity: 0.15;
-    }
-
-    .blobC {
-        opacity: 0.17;
-    }
-
-    .blobD {
-        opacity: 0.12;
     }
 }
