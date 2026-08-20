@@ -1,21 +1,41 @@
 .skillsGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-6);
+    gap: var(--spacing-8) var(--spacing-6);
 }
 
 .skillCard {
-    background-color: var(--surface-low);
+    background-color: var(--surface);
     border: 1px solid var(--outline);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     padding: var(--spacing-6);
-    transition: var(--transition);
+    cursor: default;
+    /* A soft, slightly oversized shadow reads as the card being lifted
+       off the page — the "floating card" look — independent of the
+       rotate/scale/y that Framer Motion drives on hover/tap. */
+    box-shadow: 0 14px 28px rgba(31, 27, 22, 0.08);
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .skillCard:hover {
-    background-color: var(--surface-high);
-    border-color: rgba(154, 68, 41, 0.3);
-    box-shadow: 0 15px 30px rgba(154, 68, 41, 0.1);
+    background-color: var(--surface);
+    border-color: var(--outline-strong);
+    box-shadow: 0 26px 42px rgba(31, 27, 22, 0.16);
+}
+
+.skillIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-4);
+}
+
+.skillIcon svg {
+    width: 20px;
+    height: 20px;
 }
 
 .skillLabel {
@@ -36,7 +56,7 @@
 
 .chip {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface-low);
     border: 1px solid var(--outline);
     color: var(--secondary);
     padding: 0.4rem 0.85rem;
@@ -62,7 +82,7 @@
 @media (max-width: 640px) {
     .skillsGrid {
         grid-template-columns: 1fr;
-        gap: var(--spacing-4);
+        gap: var(--spacing-6);
     }
 
     .skillCard {
