@@ -1,17 +1,68 @@
-/* ---------- Editorial story blocks ---------- */
+/* ---------- Carousel: one project at a time ---------- */
 
-.storyList {
-    display: flex;
-    flex-direction: column;
-}
-
-.storyBlock {
-    width: 100%;
+.carouselBand {
     padding: var(--section-pad-y) 0;
+    transition: background-color 0.6s ease;
 }
 
-.storyBlock:not(:first-child) {
-    border-top: 1px solid var(--outline);
+.carouselViewport {
+    position: relative;
+}
+
+.navArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--outline-strong);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: var(--transition);
+    box-shadow: 0 10px 24px rgba(31, 27, 22, 0.1);
+}
+
+.navArrow:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+}
+
+.navArrowPrev {
+    left: -22px;
+}
+
+.navArrowNext {
+    right: -22px;
+}
+
+.dotRow {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: var(--spacing-10);
+}
+
+.dot2 {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--outline-strong);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dotActive {
+    width: 26px;
+    border-radius: 4px;
 }
 
 .storyGrid {
@@ -19,18 +70,6 @@
     grid-template-columns: 1.05fr 0.95fr;
     gap: var(--spacing-12);
     align-items: center;
-}
-
-.storyGrid.reversed {
-    grid-template-columns: 0.95fr 1.05fr;
-}
-
-.storyGrid.reversed .storyImage {
-    order: 2;
-}
-
-.storyGrid.reversed .storyContent {
-    order: 1;
 }
 
 .storyImage {
@@ -121,19 +160,30 @@
 }
 
 @media (max-width: 900px) {
-    .storyGrid,
-    .storyGrid.reversed {
+    .storyGrid {
         grid-template-columns: 1fr;
         gap: var(--spacing-6);
     }
 
-    .storyGrid.reversed .storyImage,
-    .storyGrid.reversed .storyContent {
-        order: initial;
-    }
-
     .storyContent {
         max-width: none;
+    }
+
+    .navArrow {
+        width: 38px;
+        height: 38px;
+        /* Content stacks image-then-text on mobile — align the arrows
+           with the image's vertical center rather than the whole
+           (much taller) stacked slide. */
+        top: 130px;
+    }
+
+    .navArrowPrev {
+        left: 4px;
+    }
+
+    .navArrowNext {
+        right: 4px;
     }
 }
 

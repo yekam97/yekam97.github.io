@@ -127,52 +127,63 @@ const firstSentence = (text) => {
     return idx === -1 ? text : text.slice(0, idx + 1);
 };
 
-const StoryBlock = ({ project, index, onOpen, language }) => {
-    const reversed = index % 2 === 1;
+const ArrowIcon = ({ direction }) => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        {direction === 'prev' ? <path d="M15 5 L8 12 L15 19" /> : <path d="M9 5 L16 12 L9 19" />}
+    </svg>
+);
 
-    return (
-        <motion.article
-            className={styles.storyBlock}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-            <div className={`container ${styles.storyGrid} ${reversed ? styles.reversed : ''}`}>
-                <div className={`image-reveal ${styles.storyImage}`}>
-                    <img src={project.image} alt={project.title} />
-                </div>
-
-                <div className={styles.storyContent}>
-                    <span className={styles.storyCategory} style={{ color: `var(--accent-${project.accent})` }}>
-                        <span className={styles.dot} style={{ background: `var(--accent-${project.accent})` }} />
-                        {project.category}
-                    </span>
-
-                    <h3 className={styles.storyTitle}>{project.title}</h3>
-
-                    <p className={styles.storyContext}>{firstSentence(project.description)}</p>
-
-                    <div className={styles.storyFooter}>
-                        <span className={styles.storyYear}>{project.year}</span>
-                        <button
-                            className={styles.storyCta}
-                            style={{ color: `var(--accent-${project.accent})` }}
-                            onClick={() => onOpen(project)}
-                        >
-                            {language === 'es' ? 'Ver caso de estudio' : 'View case study'} →
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </motion.article>
-    );
+const slideVariants = {
+    enter: (direction) => ({ opacity: 0, x: direction > 0 ? 40 : -40 }),
+    center: { opacity: 1, x: 0 },
+    exit: (direction) => ({ opacity: 0, x: direction > 0 ? -40 : 40 })
 };
+
+const Slide = ({ project, onOpen, language }) => (
+    <div className={`container ${styles.storyGrid}`}>
+        <div className={`image-reveal ${styles.storyImage}`}>
+            <img src={project.image} alt={project.title} />
+        </div>
+
+        <div className={styles.storyContent}>
+            <span className={styles.storyCategory} style={{ color: `var(--accent-${project.accent})` }}>
+                <span className={styles.dot} style={{ background: `var(--accent-${project.accent})` }} />
+                {project.category}
+            </span>
+
+            <h3 className={styles.storyTitle}>{project.title}</h3>
+
+            <p className={styles.storyContext}>{firstSentence(project.description)}</p>
+
+            <div className={styles.storyFooter}>
+                <span className={styles.storyYear}>{project.year}</span>
+                <button
+                    className={styles.storyCta}
+                    style={{ color: `var(--accent-${project.accent})` }}
+                    onClick={() => onOpen(project)}
+                >
+                    {language === 'es' ? 'Ver caso de estudio' : 'View case study'} →
+                </button>
+            </div>
+        </div>
+    </div>
+);
 
 const Portfolio = () => {
     const { language } = useLanguage();
     const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
     const projects = getProjects(language);
+
+    const [active, setActive] = useState(0);
+    const [direction, setDirection] = useState(1);
+    const activeProject = projects[active];
+
+    const goTo = (idx) => {
+        setDirection(idx > active ? 1 : -1);
+        setActive(idx);
+    };
+    const goNext = () => goTo((active + 1) % projects.length);
+    const goPrev = () => goTo((active - 1 + projects.length) % projects.length);
 
     const [selectedProject, setSelectedProject] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -196,19 +207,60 @@ const Portfolio = () => {
                 <p className="description" style={{ marginTop: '0.5rem' }}>{t('descripcion_proyectos')}</p>
             </div>
 
-            <div className={styles.storyList}>
-                {projects.map((project, idx) => (
-                    <StoryBlock
-                        key={idx}
-                        project={project}
-                        index={idx}
-                        language={language}
-                        onOpen={(p) => {
-                            setSelectedProject(p);
-                            setCurrentImageIndex(0);
-                        }}
-                    />
-                ))}
+            <div
+                className={styles.carouselBand}
+                style={{ backgroundColor: `var(--accent-${activeProject.accent}-tint)` }}
+            >
+                <div className={styles.carouselViewport}>
+                    <button
+                        className={`${styles.navArrow} ${styles.navArrowPrev}`}
+                        onClick={goPrev}
+                        aria-label={language === 'es' ? 'Proyecto anterior' : 'Previous project'}
+                    >
+                        <ArrowIcon direction="prev" />
+                    </button>
+
+                    <AnimatePresence mode="wait" custom={direction}>
+                        <motion.div
+                            key={active}
+                            custom={direction}
+                            variants={slideVariants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <Slide
+                                project={activeProject}
+                                language={language}
+                                onOpen={(p) => {
+                                    setSelectedProject(p);
+                                    setCurrentImageIndex(0);
+                                }}
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+
+                    <button
+                        className={`${styles.navArrow} ${styles.navArrowNext}`}
+                        onClick={goNext}
+                        aria-label={language === 'es' ? 'Siguiente proyecto' : 'Next project'}
+                    >
+                        <ArrowIcon direction="next" />
+                    </button>
+                </div>
+
+                <div className={styles.dotRow}>
+                    {projects.map((project, idx) => (
+                        <button
+                            key={idx}
+                            className={`${styles.dot2} ${idx === active ? styles.dotActive : ''}`}
+                            style={idx === active ? { background: `var(--accent-${project.accent})` } : undefined}
+                            onClick={() => goTo(idx)}
+                            aria-label={project.title}
+                        />
+                    ))}
+                </div>
             </div>
 
             {/* Panel deslizable con información del proyecto */}
