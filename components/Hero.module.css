@@ -142,6 +142,11 @@
 .imageWrapper {
   width: 100%;
   aspect-ratio: 1684 / 2528;
+  /* Keeps the photo from growing taller than the Hero section itself
+     (and spilling into whatever comes next) on wide/short viewports —
+     width yields to satisfy both the aspect-ratio and this cap. */
+  max-height: min(700px, 76vh);
+  margin-inline: auto;
   position: relative;
   transition: var(--transition);
 }
@@ -196,7 +201,6 @@
 
   .photoColumn {
     justify-content: center;
-    order: -1;
   }
 
   .description {
