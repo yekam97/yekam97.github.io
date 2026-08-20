@@ -50,6 +50,14 @@
   }
 }
 
+.name {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
 .label {
   font-family: var(--ff-body);
   font-size: 0.7rem;
@@ -233,7 +241,10 @@
     gap: var(--spacing-2);
   }
 
+  /* No photo on mobile — keeps the hero focused on the name, headline
+     and CTAs instead of a full-viewport image the visitor has to
+     scroll past first. */
   .photoColumn {
-    min-height: 300px;
+    display: none;
   }
 }

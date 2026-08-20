@@ -49,6 +49,8 @@ const Hero = () => {
           {language === 'es' ? 'Abierto a nuevas oportunidades' : 'Open to new opportunities'}
         </motion.div>
 
+        <motion.p variants={itemVariants} className={styles.name}>Camilo Gamba</motion.p>
+
         <motion.span variants={itemVariants} className={styles.label}>{t('diseñador')}</motion.span>
 
         <motion.h1 variants={itemVariants} className={styles.title}>
