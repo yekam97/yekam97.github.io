@@ -6,11 +6,6 @@ import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import styles from './Portfolio.module.css';
 
-// Each project's `title` is written as the real problem/result it solved,
-// drawing only on figures already published elsewhere on this site (see
-// components/Experience.js) — nothing invented. Everything else
-// (description, details, technologies, image, year, category) is the
-// original, untouched content.
 const getProjects = (language) => {
     const isEn = language === 'en';
     return [
@@ -18,8 +13,8 @@ const getProjects = (language) => {
             accent: 'industrial',
             category: isEn ? 'INDUSTRIAL DESIGN / INTERIOR DESIGN' : 'DISEÑO INDUSTRIAL / DISEÑO DE INTERIORES',
             title: isEn
-                ? 'How do you gain 20% more storage capacity without making the structure bigger?'
-                : '¿Cómo se gana un 20% más de capacidad de almacenamiento sin agrandar la estructura?',
+                ? 'Design and development of spaces and products'
+                : 'Diseño y desarrollo de espacios y productos',
             year: '2021 – 2025',
             image: '/images/industrial-remodelacion-departamento.png',
             images: ['/images/industrial-remodelacion-departamento.png'],
@@ -45,8 +40,8 @@ const getProjects = (language) => {
             accent: 'uxui',
             category: isEn ? 'UX/UI DESIGN AND WEB DEVELOPMENT' : 'DISEÑO UX / UI Y DESARROLLO WEB',
             title: isEn
-                ? 'From a price list that went stale every 2–3 months to a real-time quoting tool'
-                : 'De una lista de precios que envejecía cada 2-3 meses a un cotizador en tiempo real',
+                ? 'Design and development of digital platforms'
+                : 'Diseño y desarrollo de plataformas digitales',
             year: '2022 – 2025',
             image: '/images/Gemini_Generated_Image_3vovcz3vovcz3vov.png',
             images: ['/images/Gemini_Generated_Image_3vovcz3vovcz3vov.png'],
@@ -72,8 +67,8 @@ const getProjects = (language) => {
             accent: 'branding',
             category: isEn ? 'GRAPHIC DESIGN AND BRANDING' : 'DISEÑO GRÁFICO Y BRANDING',
             title: isEn
-                ? 'A new visual identity, 25% more projects approved on the first try'
-                : 'Una identidad visual nueva, 25% más proyectos aprobados a la primera',
+                ? 'Development of visual identity and graphic communication'
+                : 'Desarrollo de identidad visual y comunicación gráfica',
             year: '2021 – 2025',
             image: '/images/Gemini_Generated_Image_gpudthgpudthgpud.png',
             images: ['/images/Gemini_Generated_Image_gpudthgpudthgpud.png'],
@@ -99,8 +94,8 @@ const getProjects = (language) => {
             accent: 'mentoring',
             category: isEn ? 'MENTORING, TRAINING AND WORKSHOPS' : 'MENTORÍAS, FORMACIÓN Y TALLERES',
             title: isEn
-                ? 'Guiding 50+ entrepreneurs from a raw idea to a validated business model'
-                : 'Acompañar a 50+ emprendedores de una idea suelta a un modelo de negocio validado',
+                ? 'Training in entrepreneurship, technology and creativity'
+                : 'Capacitación en emprendimiento, tecnología y creatividad',
             year: '2022 – 2025',
             image: '/images/pexels-pavel-danilyuk-6340630.png',
             images: ['/images/pexels-pavel-danilyuk-6340630.png'],
@@ -138,7 +133,6 @@ const StoryBlock = ({ project, index, onOpen, language }) => {
     return (
         <motion.article
             className={styles.storyBlock}
-            style={{ background: `var(--accent-${project.accent}-tint)` }}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
