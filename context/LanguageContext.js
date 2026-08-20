@@ -6,10 +6,8 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState('es');
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     // Recuperar idioma guardado del localStorage
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage) {
@@ -22,8 +20,6 @@ export function LanguageProvider({ children }) {
     setLanguage(newLanguage);
     localStorage.setItem('language', newLanguage);
   };
-
-  if (!mounted) return children;
 
   return (
     <LanguageContext.Provider value={{ language, toggleLanguage }}>
