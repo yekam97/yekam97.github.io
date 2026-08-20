@@ -63,32 +63,29 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
 };
 
+// Lives inside Hero's text column, right under the CTA buttons — not a
+// standalone full-width section.
 const Stats = () => {
   const { language } = useLanguage();
   const stats = getStats(language);
 
   return (
-    <div className={styles.sectionWrap}>
-      <div className={styles.divider} aria-hidden="true" />
-      <div className="container">
-        <motion.div
-          className={styles.statsBar}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          {stats.map((stat, idx) => (
-            <motion.div key={idx} className={styles.statItem} variants={itemVariants}>
-              <span className={styles.statNumber}>
-                <CountUp target={stat.target} suffix={stat.suffix} locale={stat.locale} />
-              </span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </motion.div>
-          ))}
+    <motion.div
+      className={styles.statsBar}
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {stats.map((stat, idx) => (
+        <motion.div key={idx} className={styles.statItem} variants={itemVariants}>
+          <span className={styles.statNumber}>
+            <CountUp target={stat.target} suffix={stat.suffix} locale={stat.locale} />
+          </span>
+          <span className={styles.statLabel}>{stat.label}</span>
         </motion.div>
-      </div>
-    </div>
+      ))}
+    </motion.div>
   );
 };
 

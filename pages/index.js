@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Hero from '../components/Hero';
-import Stats from '../components/Stats';
 import Skills from '../components/Skills';
 import Roles from '../components/Roles';
 import Portfolio from '../components/Portfolio';
@@ -15,7 +14,6 @@ export default function HomePage() {
   return (
     <Layout>
       <Hero />
-      <Stats />
       <Skills />
       <Portfolio />
       <Experience />

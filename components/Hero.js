@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import MagneticButton from './MagneticButton';
+import Stats from './Stats';
 import styles from './Hero.module.css';
 
 const containerVariants = {
@@ -86,6 +87,10 @@ const Hero = () => {
           >
             {language === 'es' ? 'Descargar CV ↓' : 'Download CV ↓'}
           </MagneticButton>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <Stats />
         </motion.div>
       </motion.div>
 
