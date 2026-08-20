@@ -1,7 +1,13 @@
 .wash {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    /* Must be a non-negative z-index: with `main` establishing its own
+       stacking context (position:relative + z-index:1), a negative
+       z-index here ended up painted fully behind it — invisible —
+       instead of just behind main's own (transparent) content as
+       intended. 0 sits correctly below main (1) and below the grain
+       texture overlay (also 0, but declared after this in the DOM). */
+    z-index: 0;
     overflow: hidden;
     pointer-events: none;
 }
@@ -14,7 +20,7 @@
 .blob {
     position: absolute;
     mix-blend-mode: multiply;
-    filter: blur(110px);
+    filter: blur(90px);
     will-change: background-color;
 }
 
@@ -23,7 +29,7 @@
     left: -12%;
     width: 55vw;
     height: 55vw;
-    opacity: 0.16;
+    opacity: 0.5;
     border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
     transition: background-color 2.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -33,7 +39,7 @@
     right: -15%;
     width: 46vw;
     height: 46vw;
-    opacity: 0.12;
+    opacity: 0.38;
     border-radius: 58% 42% 38% 62% / 55% 62% 38% 45%;
     transition: background-color 3.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
 }
@@ -43,7 +49,7 @@
     left: 18%;
     width: 50vw;
     height: 50vw;
-    opacity: 0.14;
+    opacity: 0.42;
     border-radius: 65% 35% 45% 55% / 40% 55% 45% 60%;
     transition: background-color 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
 }
@@ -53,7 +59,7 @@
     right: 6%;
     width: 38vw;
     height: 38vw;
-    opacity: 0.1;
+    opacity: 0.3;
     border-radius: 38% 62% 55% 45% / 60% 45% 55% 40%;
     transition: background-color 3.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
 }
@@ -64,12 +70,32 @@
     }
 }
 
+/* Mobile: the same blob sizes/opacities used on desktop compound (4
+   overlapping multiply layers) into a near-solid wash on a screen
+   this narrow, burying the copy entirely. Smaller, much lower-opacity
+   blobs keep the effect present as a quiet tint instead. */
 @media (max-width: 768px) {
     .blobA,
     .blobB,
     .blobC,
     .blobD {
-        width: 80vw;
-        height: 80vw;
+        width: 60vw;
+        height: 60vw;
+    }
+
+    .blobA {
+        opacity: 0.2;
+    }
+
+    .blobB {
+        opacity: 0.15;
+    }
+
+    .blobC {
+        opacity: 0.17;
+    }
+
+    .blobD {
+        opacity: 0.12;
     }
 }
