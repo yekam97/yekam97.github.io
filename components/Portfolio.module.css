@@ -7,6 +7,15 @@
 
 .carouselViewport {
     position: relative;
+    /* Must match .container's max-width: the arrows are positioned
+       just outside this element's edges (see .navArrowPrev/Next), but
+       this element itself isn't wrapped in .container — without this,
+       it stretched to the full (unconstrained) viewport width on wide
+       screens, while the actual slide content stayed capped at 1600px
+       and centered, leaving the arrows stranded near the browser
+       window edges instead of next to the content. */
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 .navArrow {
@@ -34,12 +43,17 @@
     border-color: var(--ink);
 }
 
+/* Flush with the (now width-capped) viewport's own edge rather than a
+   negative offset outside it — a fixed negative value looked fine
+   only when there happened to be extra margin beyond .carouselViewport
+   to push into; on any screen narrower than 1600px there wasn't, and
+   the arrows ended up clipped past the true edge of the window. */
 .navArrowPrev {
-    left: -22px;
+    left: 0;
 }
 
 .navArrowNext {
-    right: -22px;
+    right: 0;
 }
 
 .dotRow {
