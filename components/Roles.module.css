@@ -18,8 +18,8 @@
 
 .facetCard:hover {
     background-color: var(--surface-high);
-    border-color: rgba(154, 68, 41, 0.35);
-    box-shadow: 0 15px 30px rgba(154, 68, 41, 0.1);
+    border-color: rgba(193, 68, 14, 0.35);
+    box-shadow: 0 15px 30px rgba(193, 68, 14, 0.1);
 }
 
 .facetLabel {

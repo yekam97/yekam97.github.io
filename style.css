@@ -1,7 +1,8 @@
 /* Editorial Curator — Design System
    - North Star: warm, paper-toned editorial portfolio (not a dark SaaS template)
    - Foundation: warm bone/cream paper (#F7F1E7), warm near-black ink
-   - Accent: muted terracotta, with a distinct earthy accent per project category
+   - Accent: a vivid, saturated color per project category — punchier
+     than a muted/pastel palette, still checked for WCAG AA contrast
    - Typography: Fraunces (display serif) & Inter (body sans)
 */
 
@@ -21,20 +22,22 @@
   --outline: rgba(31, 27, 22, 0.14);
   --outline-strong: rgba(31, 27, 22, 0.26);
 
-  /* Primary accent (terracotta) */
-  --primary: #9A4429;
-  --primary-soft: #F3E4DC;
+  /* Primary accent (vivid burnt-orange/red) */
+  --primary: #C1440E;
+  --primary-soft: #F5E1D8;
   --on-primary: #FFFFFF;
 
-  /* Category accents — one per project discipline */
-  --accent-industrial: #9A4429;
-  --accent-industrial-tint: #F3E4DC;
-  --accent-uxui: #285C56;
-  --accent-uxui-tint: #DEEAE8;
-  --accent-branding: #8C5A14;
-  --accent-branding-tint: #F1E6D0;
-  --accent-mentoring: #556140;
-  --accent-mentoring-tint: #E6E9DA;
+  /* Category accents — one vivid color per project discipline. Each
+     checked ≥4.5:1 against both --bg and white (for use as a filled
+     background with white text). */
+  --accent-industrial: #C1440E;
+  --accent-industrial-tint: #F5E1D8;
+  --accent-uxui: #0D7A6E;
+  --accent-uxui-tint: #D8E9E7;
+  --accent-branding: #A05708;
+  --accent-branding-tint: #EFE4D7;
+  --accent-mentoring: #4F7812;
+  --accent-mentoring-tint: #E2E9D9;
 
   /* Border Radii — restrained, editorial (not pill-heavy) */
   --radius-lg: 6px;

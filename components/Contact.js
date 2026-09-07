@@ -15,20 +15,6 @@ const socialLinks = [
   { label: 'DRIBBBLE', href: 'https://dribbble.com/camilog97' }
 ];
 
-const titleContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.045 } }
-};
-
-const letterVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-  }
-};
-
 const socialContainer = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }
@@ -54,25 +40,19 @@ const Contact = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <motion.h2
-          className={styles.ctaTitle}
-          variants={titleContainer}
-          initial="hidden"
-          whileInView="visible"
+        {/* A clip-path wipe reveal — the text itself is always fully
+            rendered (never split into characters that could get stuck
+            mid-fade and read as missing letters), only a mask
+            animates over it. */}
+        <motion.div
+          className={styles.ctaTitleWrap}
+          initial={{ clipPath: 'inset(0 100% 0 0)' }}
+          whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
           viewport={{ once: true }}
-          aria-label={titleText}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {titleText.split('').map((char, i) => (
-            <motion.span
-              key={i}
-              variants={letterVariants}
-              style={{ display: 'inline-block' }}
-              aria-hidden="true"
-            >
-              {char === ' ' ? ' ' : char}
-            </motion.span>
-          ))}
-        </motion.h2>
+          <h2 className={styles.ctaTitle}>{titleText}</h2>
+        </motion.div>
 
         <MagneticButton
           onClick={() => setIsModalOpen(true)}
