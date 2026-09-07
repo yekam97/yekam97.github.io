@@ -26,9 +26,15 @@ export default function MagneticButton({ children, className, style, strength = 
     y.set(0);
   };
 
+  // Renders as a real <button> when there's no href (e.g. it just opens
+  // a modal) so it stays keyboard-focusable and reads correctly to
+  // assistive tech, instead of an anchor with nothing to navigate to.
+  const Tag = props.href ? motion.a : motion.button;
+
   return (
-    <motion.a
+    <Tag
       ref={ref}
+      type={props.href ? undefined : 'button'}
       className={className}
       style={{ ...style, x: springX, y: springY }}
       onMouseMove={handleMouseMove}
@@ -36,6 +42,6 @@ export default function MagneticButton({ children, className, style, strength = 
       {...props}
     >
       {children}
-    </motion.a>
+    </Tag>
   );
 }

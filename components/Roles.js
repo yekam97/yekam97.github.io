@@ -1,4 +1,7 @@
-import { motion } from 'framer-motion';
+'use client';
+
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import styles from './Roles.module.css';
@@ -52,6 +55,51 @@ const cardVariants = {
   }
 };
 
+// A gentle, cursor-tracked 3D tilt — the card leans away from the
+// pointer like a diploma held up to the light, rather than just
+// lifting straight up.
+const RoleCard = ({ role, t }) => {
+  const cardRef = useRef(null);
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+
+  const tiltSpring = { stiffness: 260, damping: 24, mass: 0.5 };
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [5, -5]), tiltSpring);
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-5, 5]), tiltSpring);
+
+  const handleMouseMove = (e) => {
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
+  };
+  const handleMouseLeave = () => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className={styles.facetCard}
+      variants={cardVariants}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ y: -8 }}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+    >
+      <span className={styles.facetLabel}>{role.category}</span>
+      <h3 className={styles.facetTitle}>{role.title}</h3>
+      <p className={styles.facetDescription}>{role.description}</p>
+      {role.pdfUrl && (
+        <a href={role.pdfUrl} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
+          {t('ver_diploma')}
+        </a>
+      )}
+    </motion.div>
+  );
+};
+
 const Roles = () => {
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
@@ -70,7 +118,7 @@ const Roles = () => {
           {language === 'es' ? 'Mis Estudios' : 'My Education'}
         </h2>
 
-        <motion.div 
+        <motion.div
           className={styles.facetsGrid}
           variants={gridVariants}
           initial="hidden"
@@ -78,22 +126,7 @@ const Roles = () => {
           viewport={{ once: true, amount: 0.15 }}
         >
           {rolesData.map((role, idx) => (
-            <motion.div
-              key={idx}
-              className={styles.facetCard}
-              variants={cardVariants}
-              whileHover={{ y: -10 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <span className={styles.facetLabel}>{role.category}</span>
-              <h3 className={styles.facetTitle}>{role.title}</h3>
-              <p className={styles.facetDescription}>{role.description}</p>
-              {role.pdfUrl && (
-                <a href={role.pdfUrl} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
-                  {t('ver_diploma')}
-                </a>
-              )}
-            </motion.div>
+            <RoleCard key={idx} role={role} t={t} />
           ))}
         </motion.div>
       </motion.div>

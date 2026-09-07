@@ -27,10 +27,32 @@
   transform: scale(0.95);
 }
 
+.flipWindow {
+  display: inline-block;
+  perspective: 240px;
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+}
+
 .label {
-  display: block;
+  display: inline-block;
   font-weight: 700;
   line-height: 1;
+  transform-origin: 50% 50%;
+  animation: flipIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes flipIn {
+  from {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1024px) {

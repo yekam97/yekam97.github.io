@@ -24,6 +24,24 @@
   box-shadow: 0 12px 30px rgba(154, 68, 41, 0.1);
 }
 
+.certCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(154, 68, 41, 0.12), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.certCard:hover::before {
+  opacity: 1;
+}
+
+.certCard > * {
+  position: relative;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -62,11 +80,26 @@
   color: var(--primary);
 }
 
+.credentialRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
 .credential {
   font-size: 0.75rem;
   color: var(--muted);
   font-family: var(--ff-body);
   letter-spacing: 0.05em;
+}
+
+.seal {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--primary);
+  opacity: 0.75;
 }
 
 .toggleContainer {
