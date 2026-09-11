@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import styles from './ScrollMascot.module.css';
 
@@ -19,7 +19,10 @@ import styles from './ScrollMascot.module.css';
  * native reverse) on scroll up, so a given section keeps landing on
  * the same pose whichever direction you pass it — and scrolling stops
  * → the clip pauses within ~200ms, so it never sits there looping
- * pointlessly at rest.
+ * pointlessly at rest. Shows on mobile too now (previously hidden
+ * ≤640px) — much smaller there (see ScrollMascot.module.css), with
+ * its own tamer hero-waypoint scale/y so it doesn't crowd the
+ * single-column stacked mobile layout.
  */
 // Hero (stop 0) sits on the RIGHT — beside "INDUSTRIAL" and above the
 // "Títulos y certificaciones" stat — instead of the left, so it never
@@ -36,27 +39,50 @@ const xWaypoints = [58, 58, 6, 60, 8, 56, 4];
 // large as or larger than every later waypoint. 1.68 = the previous
 // 1.4 zoomed in another 20% on top.
 const scaleWaypoints = [1.68, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
+// On a narrow single-column mobile layout there's no empty side
+// region for the hero waypoint to sit in like on desktop — it lands
+// squarely in the middle of the stacked text column, so it needs to
+// be small there instead of the desktop's dominant 1.68x. The other
+// waypoints are already small (the mobile box itself is much smaller,
+// see ScrollMascot.module.css) so they're left as-is.
+const scaleWaypointsMobile = [0.55, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
 const rotateWaypoints = [-4, 3, -2, 4, -3, 2, -4];
 // Vertical nudge, hero-only: -50px right at stop 0, settling back to
-// 0 by the next waypoint (every other section is untouched).
+// 0 by the next waypoint (every other section is untouched). Not
+// needed on mobile — the hero scale reduction above already keeps it
+// out of the way there.
 const yWaypoints = [-50, 0, 0, 0, 0, 0, 0];
+const yWaypointsMobile = [0, 0, 0, 0, 0, 0, 0];
 const stops = [0, 0.16, 0.34, 0.5, 0.66, 0.84, 1];
 
 const springConfig = { stiffness: 55, damping: 20, mass: 0.7 };
+const MOBILE_QUERY = '(max-width: 640px)';
 
 const ScrollMascot = () => {
   const videoRef = useRef(null);
   const pauseTimer = useRef(null);
   const { scrollYProgress } = useScroll();
 
+  // Starts false (desktop-shaped) and corrects itself right after
+  // mount — this is a decorative, aria-hidden element, so a one-frame
+  // mismatch before the media query is read is harmless.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   // xWaypoints are sprung as plain numbers (see comment above), then
   // the "vw" unit is reattached afterwards so the actual CSS `left`
   // truly scales with viewport width.
   const xNumber = useSpring(useTransform(scrollYProgress, stops, xWaypoints), springConfig);
   const x = useTransform(xNumber, (v) => `${v}vw`);
-  const scale = useSpring(useTransform(scrollYProgress, stops, scaleWaypoints), springConfig);
+  const scale = useSpring(useTransform(scrollYProgress, stops, isMobile ? scaleWaypointsMobile : scaleWaypoints), springConfig);
   const rotate = useSpring(useTransform(scrollYProgress, stops, rotateWaypoints), springConfig);
-  const y = useSpring(useTransform(scrollYProgress, stops, yWaypoints), springConfig);
+  const y = useSpring(useTransform(scrollYProgress, stops, isMobile ? yWaypointsMobile : yWaypoints), springConfig);
 
   useEffect(() => {
     const video = videoRef.current;

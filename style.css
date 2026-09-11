@@ -136,8 +136,17 @@ ul {
   padding: 0 var(--spacing-8);
 }
 
+/* padding-top/bottom only (NOT the `padding` shorthand). This class
+   is meant to add vertical rhythm on top of whatever a section's own
+   horizontal padding already is (most often .container's, when both
+   classes land on the same element) — but the shorthand resets all
+   four sides, and being declared right after .container at equal
+   specificity, it was winning the cascade and silently zeroing out
+   .container's left/right padding everywhere the two were combined,
+   pinning every section's content flush to the viewport edge. */
 .section-padding {
-  padding: var(--section-pad-y) 0;
+  padding-top: var(--section-pad-y);
+  padding-bottom: var(--section-pad-y);
 }
 
 /* Semantic UI Components */
@@ -266,7 +275,8 @@ ul {
   }
 
   .section-padding {
-    padding: var(--section-pad-y) 0;
+    padding-top: var(--section-pad-y);
+    padding-bottom: var(--section-pad-y);
   }
 
   h1,
@@ -301,7 +311,8 @@ ul {
   }
 
   .section-padding {
-    padding: var(--section-pad-y) 0;
+    padding-top: var(--section-pad-y);
+    padding-bottom: var(--section-pad-y);
   }
 
   .label-md {

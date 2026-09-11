@@ -46,8 +46,13 @@
 }
 
 @media (max-width: 640px) {
+    /* No longer hidden — a smaller version now shows on mobile too,
+       small enough (even at the hero's biggest, ~1.68x, scale
+       waypoint) to stay a background presence behind the stacked
+       single-column layout instead of crowding it. */
     .mascotWrap {
-        display: none;
+        width: clamp(90px, 24vw, 130px);
+        height: clamp(90px, 24vw, 130px);
     }
 }
 
