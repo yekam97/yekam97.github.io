@@ -89,13 +89,20 @@
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: var(--spacing-6);
-  padding-bottom: var(--spacing-8);
-  border-bottom: 1px solid var(--outline);
-}
-
-.detailItem:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+  /* Frosted glass (same treatment as the Skills/Roles/Certifications
+     cards) instead of plain text on a bottom border — the audit
+     flagged the scroll mascot sitting directly behind this block once
+     expanded (it's tall enough to reach wherever the mascot happens
+     to be drifting) and reading as covering the text, since there was
+     no background here at all for it to sit behind. A translucent
+     card keeps every bullet legible regardless of what's behind it,
+     consistent with how the rest of the page already handles this. */
+  padding: var(--spacing-6);
+  background-color: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-md);
 }
 
 .detailHeader {

@@ -21,6 +21,18 @@ const ContactModal = ({ isOpen, onClose }) => {
         };
     }, [isOpen]);
 
+    // Cerrar con Esc — la auditoría UX/UI lo marcó como pendiente
+    // (el modal roto ni siquiera respondía a Esc; ahora sí, en
+    // cualquier estado del modal).
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, onClose]);
+
     if (!mounted) return null;
 
     const handleSubmit = async (e) => {
@@ -126,6 +138,14 @@ const ContactModal = ({ isOpen, onClose }) => {
                                     >
                                         {status === 'SUBMITTING' ? 'ENVIANDO...' : 'ENVIAR MENSAJE'}
                                     </button>
+
+                                    {/* Brief transparency note (audit finding, section 7) — this
+                                        form collects personal data (name, email, message), so a
+                                        short line on what happens with it is both good practice
+                                        and relevant under Colombia's Ley 1581 de 2012. */}
+                                    <p className={styles.privacyNote}>
+                                        Uso tu información solo para responderte — no la comparto con terceros.
+                                    </p>
                                 </form>
                             </>
                         )}

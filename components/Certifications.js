@@ -120,24 +120,32 @@ const CertCard = ({ cert, language }) => {
 
       <div className={styles.credentialRow}>
         <p className={styles.credential}>{cert.id}</p>
-        <svg viewBox="0 0 40 40" className={styles.seal} aria-hidden="true">
-          <motion.circle
+        {/* A simple pop-in (opacity/scale), not a drawn ring: the
+           previous version animated the circle's own pathLength from
+           0 -> 1, which for a chunk of that animation is a partial
+           ring with a moving gap — reads exactly like a circular
+           loading spinner, not a decorative seal (audit finding,
+           section 6). Both shapes are just always fully drawn now;
+           only the whole group fades/scales in, so it's unambiguously
+           a decorative badge appearing, never "still loading". */}
+        <motion.svg
+          viewBox="0 0 40 40"
+          className={styles.seal}
+          aria-hidden="true"
+          initial={{ opacity: 0, scale: 0.6 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <circle
             cx="20" cy="20" r="16.5"
             fill="none" stroke="currentColor" strokeWidth="1.4"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           />
-          <motion.path
+          <path
             d="M12 20.5 L17 25.5 L28.5 13.5"
             fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.5, delay: 0.85, ease: "easeOut" }}
           />
-        </svg>
+        </motion.svg>
       </div>
     </motion.div>
   );

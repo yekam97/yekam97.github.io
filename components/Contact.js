@@ -10,7 +10,12 @@ import ContactModal from './ContactModal';
 
 const socialLinks = [
   { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/yeison-camilo-gamba-gonzalez-10776268/' },
-  { label: 'INSTAGRAM', href: 'https://www.instagram.com/creat3di/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnaKLxk9GhyICBoxK1TLF1LDblaqv3XNfI1xuma9TojDAK4hAQsN2FHjO4sS8_aem_D3YRuq-M3BAyAZHd4qjejw' },
+  // Tracking params (utm_*, fbclid) stripped — this was copied
+  // straight from a shared link and dragged a long tracking string
+  // along with it (audit finding, section 7). Account left as-is
+  // (creat3di); worth double-checking this is the account you want
+  // linked here rather than a company one.
+  { label: 'INSTAGRAM', href: 'https://www.instagram.com/creat3di/' },
   { label: 'BEHANCE', href: 'https://www.behance.net/yeisongamba97' },
   { label: 'DRIBBBLE', href: 'https://dribbble.com/camilog97' }
 ];
@@ -20,9 +25,17 @@ const socialContainer = {
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }
 };
 
+// No opacity in this animation on purpose (audit finding, section 6):
+// fading in FROM 0 meant that for the ~0.4s of this transition — or
+// indefinitely, if the reveal script were ever slow/blocked — these
+// links sat there looking dim/gray, easy to read as "disabled"
+// rather than "still appearing". The links are fully opaque from the
+// very first frame; only a small y-offset settles into place, so the
+// worst case if the animation never ran at all is just links sitting
+// 10px off from their final spot, never links that look broken.
 const socialItem = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
+  hidden: { y: 10 },
+  visible: { y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
 };
 
 const Contact = () => {

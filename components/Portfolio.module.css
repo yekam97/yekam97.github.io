@@ -59,8 +59,18 @@
 .dotRow {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 0.5rem;
     margin-top: var(--spacing-10);
+}
+
+.slideCounter {
+    margin-left: var(--spacing-4);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    font-variant-numeric: tabular-nums;
 }
 
 .dot2 {

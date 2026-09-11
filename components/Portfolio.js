@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
@@ -178,6 +178,25 @@ const Portfolio = () => {
     const [direction, setDirection] = useState(1);
     const activeProject = projects[active];
 
+    // Preload every project image up front (audit finding 1.2): the
+    // carousel's <img> only started fetching its src the moment a
+    // slide mounted, so navigating to a project whose image hadn't
+    // been requested yet raced the 0.45s slide transition — the first
+    // visit showed a blank rectangle, and only a second visit (now
+    // served from cache) painted correctly. There are only 4 images
+    // total, so preloading all of them (not just the adjacent ones)
+    // is simpler and just as cheap.
+    useEffect(() => {
+        projects.forEach((p) => {
+            const img = new Image();
+            img.src = p.image;
+        });
+        // projects is re-derived every render (language toggle), but
+        // the image URLs themselves never change with language — only
+        // need this once on mount.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const goTo = (idx) => {
         setDirection(idx > active ? 1 : -1);
         setActive(idx);
@@ -260,6 +279,10 @@ const Portfolio = () => {
                             aria-label={project.title}
                         />
                     ))}
+                    {/* How many projects there are isn't obvious before you start
+                        clicking through the dots (audit finding, section 4) — a
+                        plain "1 / 4" makes that immediately clear. */}
+                    <span className={styles.slideCounter} aria-hidden="true">{active + 1} / {projects.length}</span>
                 </div>
             </div>
 
