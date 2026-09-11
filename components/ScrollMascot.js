@@ -159,7 +159,18 @@ function useActiveSection() {
     const sectionEls = SECTION_IDS.map((id) => document.getElementById(id));
 
     const compute = () => {
-      const y = window.scrollY + window.innerHeight * 0.3; // a little past the very top edge feels more natural than the exact pixel boundary
+      // A small fixed offset (roughly the sticky nav's own height, not
+      // a big percentage of viewport height) — just enough that a
+      // section counts as "active" once it's actually scrolled past
+      // the nav bar, matching what's visually at the top of the page.
+      // This used to be scrollY + 30% of viewport height, which put
+      // the trigger point a long way ahead of each section's real
+      // boundary; harmless scrolling down, but scrolling back UP had
+      // to retreat that same big distance before a section "let go" —
+      // by then you were already deep into the previous one, so the
+      // pose change read as late/mismatched against what was on
+      // screen, and reverse felt like it wasn't tracking correctly.
+      const y = window.scrollY + 88;
       let next = 0;
       for (let i = 0; i < sectionEls.length; i++) {
         if (sectionEls[i] && sectionEls[i].offsetTop <= y) next = i;
@@ -251,11 +262,19 @@ const ScrollMascot = () => {
   // forward playbackRate and the reverse step up to match, capped at
   // 3x so it still reads as the clip playing rather than a blur, and
   // floored at 1x (the clip's own normal pace) for a slow/deliberate
-  // scroll — or the very first transition on mount, since
-  // lastTransitionRef starts at 0 and any real performance.now() minus
-  // that is already a huge gap.
+  // scroll.
+  //
+  // The on-load intro is a hard exception, not just "a big gap since
+  // the ref's initial 0 value": relying on that alone meant the very
+  // first frame the page could ever be interacted with — a scroll
+  // restored by the browser, a jumpy layout shift nudging scrollY,
+  // anything landing a real second transition close behind the
+  // mount one — could read as a fast pair and speed the intro itself
+  // up, which is exactly the one moment this should never happen.
+  // isFirstRunRef makes that a hard rule instead of a timing bet.
   const prevSectionRef = useRef(0);
   const lastTransitionRef = useRef(0);
+  const isFirstRunRef = useRef(true);
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -264,9 +283,15 @@ const ScrollMascot = () => {
     prevSectionRef.current = activeSection;
 
     const now = performance.now();
-    const sinceLastTransition = now - lastTransitionRef.current;
+    let rate;
+    if (isFirstRunRef.current) {
+      isFirstRunRef.current = false;
+      rate = 1;
+    } else {
+      const sinceLastTransition = now - lastTransitionRef.current;
+      rate = Math.max(1, Math.min(3, 700 / sinceLastTransition));
+    }
     lastTransitionRef.current = now;
-    const rate = Math.max(1, Math.min(3, 700 / sinceLastTransition));
 
     let cancelled = false;
     let stopTimer = null;
