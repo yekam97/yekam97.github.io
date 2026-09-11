@@ -49,6 +49,13 @@ const videoTimeWaypoints = [1, 2.8, 4, 6, 8, 10];
 // springing a unit string directly silently drops the unit and
 // Framer re-adds "px" to the bare number instead.
 const xWaypoints = [58, 58, 6, 60, 8, 56, 4];
+// Mobile's own x drift — kept well clear of the far right edge, which
+// the fixed WhatsApp button (Sticker.js) permanently occupies in that
+// same bottom-right corner the desktop hero waypoint (58vw) sits in;
+// on mobile, bottom-anchored the same way for every section (see
+// ScrollMascot.module.css), that combination collided with the button
+// at every single scroll position, not just the hero.
+const xWaypointsMobile = [34, 50, 12, 45, 12, 40, 8];
 // Hero gets the biggest scale of the whole journey — it's the first
 // thing a visitor sees, so it should read as large as or larger than
 // every later waypoint.
@@ -201,7 +208,7 @@ const ScrollMascot = () => {
   // xWaypoints are sprung as plain numbers (see comment above), then
   // the "vw" unit is reattached afterwards so the actual CSS `left`
   // truly scales with viewport width.
-  const xNumber = useSpring(useTransform(scrollYProgress, stops, xWaypoints), springConfig);
+  const xNumber = useSpring(useTransform(scrollYProgress, stops, isMobile ? xWaypointsMobile : xWaypoints), springConfig);
   const x = useTransform(xNumber, (v) => `${v}vw`);
   const scale = useSpring(useTransform(scrollYProgress, stops, isMobile ? scaleWaypointsMobile : scaleWaypoints), springConfig);
   const rotate = useSpring(useTransform(scrollYProgress, stops, rotateWaypoints), springConfig);
