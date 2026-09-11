@@ -28,14 +28,26 @@
    ever gets darker). A soft radial mask is all that's left: it fades
    the video's straight edges to nothing so the leftover mismatch
    between the clip's gradient backdrop and the page's flat color
-   never reads as a hard rectangle. */
+   never reads as a hard rectangle.
+
+   "closest-side" (NOT the plain "circle" default of farthest-corner)
+   is what actually makes this work: it sizes the gradient so 100% =
+   the distance to the box's own flat edge, not its corner. With the
+   default sizing, a 78% transparent stop was 78% of the CORNER
+   distance — comfortably 0 by the corners, but a flat edge's midpoint
+   sits at only ~71% of that same corner distance, so it was still
+   ~26% opaque right there and the video's rectangular frame leaked
+   through as a faint box. Anchoring to closest-side instead means
+   100% IS the edge, so a transparent stop before 100% guarantees full
+   transparency at every edge (and, being farther away, every corner
+   too) — no visible rectangle anywhere on the box. */
 .mascotVideo {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
-    -webkit-mask-image: radial-gradient(circle, #fff 50%, transparent 78%);
-    mask-image: radial-gradient(circle, #fff 50%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle closest-side, #fff 35%, transparent 88%);
+    mask-image: radial-gradient(circle closest-side, #fff 35%, transparent 88%);
 }
 
 @media (max-width: 900px) {
