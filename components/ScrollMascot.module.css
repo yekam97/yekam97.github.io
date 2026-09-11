@@ -1,12 +1,50 @@
 .mascotWrap {
     position: fixed;
-    top: 50vh;
+    /* Anchored to the viewport's BOTTOM edge, not "top: 50vh" (the
+       old approach) — that put the box's top at the vertical middle
+       of the viewport and let its bottom edge fall wherever
+       top + height landed, but height only scales with viewport
+       WIDTH (the vw-based clamp below) while that "middle" reference
+       scales with viewport HEIGHT. Two independent axes compounding
+       meant the character read as grounded only by coincidence at
+       some aspect ratios, and visibly floating with a gap underneath
+       at others (tall/narrow windows especially). Anchoring to the
+       bottom removes the height variable from the equation entirely
+       — the box's bottom (and the character standing near it) always
+       sits the same small distance off the real bottom of the
+       screen, whatever the viewport's width or height.
+       transform-origin below is the other half of this: without it,
+       the scale waypoints (see ScrollMascot.js) grow/shrink the box
+       from its geometric CENTER by default, which shifts the bottom
+       edge up or down as scale changes between sections and undoes
+       the grounding on its own. Bottom-anchoring the transform origin
+       too means scale only ever grows the box upward from a fixed
+       floor. */
+    bottom: 0;
+    transform-origin: center bottom;
     /* Scales with viewport width so it holds a consistent, dominant
        presence on the first screen (≈40-45% of the hero) instead of
        looking small on wide desktops — capped so it never overwhelms
        an ultra-wide monitor. */
     width: clamp(420px, 42vw, 780px);
     height: clamp(420px, 42vw, 780px);
+    /* Independent cap on the viewport's HEIGHT, not just its width:
+       the hero waypoint scales this box up 1.68x (see scaleWaypoints
+       in ScrollMascot.js), and on a wide-but-short window (a common
+       laptop shape, not just an unusually short one) the un-capped
+       780px box already becomes a ~1310px-tall visual — taller than
+       most viewports even before that scale-up is layered on. Since
+       the box is bottom-anchored and grows upward from there (see
+       transform-origin above), the part that spills off is headroom
+       above the character, but too MUCH spillover starts eating into
+       the character's own head instead of just empty space, because
+       the video's content is letterboxed and roughly centered inside
+       this square-ish box (see object-fit below) — the more of the
+       box's own top disappears off-screen, the more of that centered
+       content goes with it. 50vh keeps the worst case (1.68x) at
+       ~84vh tall, comfortably inside virtually any real viewport. */
+    max-width: 50vh;
+    max-height: 50vh;
     /* Sits BEHIND page content (main is z-index: 1, and — like the
        old watercolor background before it — a sibling needs z-index:
        0, not a negative value, to actually render behind main instead
@@ -28,26 +66,40 @@
    ever gets darker). A soft radial mask is all that's left: it fades
    the video's straight edges to nothing so the leftover mismatch
    between the clip's gradient backdrop and the page's flat color
-   never reads as a hard rectangle.
-
-   "closest-side" (NOT the plain "circle" default of farthest-corner)
-   is what actually makes this work: it sizes the gradient so 100% =
-   the distance to the box's own flat edge, not its corner. With the
-   default sizing, a 78% transparent stop was 78% of the CORNER
-   distance — comfortably 0 by the corners, but a flat edge's midpoint
-   sits at only ~71% of that same corner distance, so it was still
-   ~26% opaque right there and the video's rectangular frame leaked
-   through as a faint box. Anchoring to closest-side instead means
-   100% IS the edge, so a transparent stop before 100% guarantees full
-   transparency at every edge (and, being farther away, every corner
-   too) — no visible rectangle anywhere on the box. */
+   never reads as a hard rectangle. See the mask-image comment below
+   for why it's an off-center ellipse rather than a simple centered
+   circle. */
 .mascotVideo {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    /* Bottom, not the default center: the video is 16:9 inside this
+       square-ish box, so object-fit: contain letterboxes it — center
+       (the default) splits that empty margin evenly top and bottom,
+       leaving the character sitting in the middle of the box with a
+       gap of empty margin below their own feet before the box's
+       bottom edge. Bottom anchoring collapses that margin entirely
+       to the top instead, so the character's feet actually reach the
+       box's own bottom edge — the one now anchored to the viewport's
+       real bottom above. */
+    object-position: center bottom;
     display: block;
-    -webkit-mask-image: radial-gradient(circle closest-side, #fff 35%, transparent 88%);
-    mask-image: radial-gradient(circle closest-side, #fff 35%, transparent 88%);
+    /* The mask has to follow object-position above: measured (via a
+       canvas pixel sample of an actual frame) that the character
+       occupies roughly the bottom 55-95% of the box once
+       bottom-anchored, so its fade needs to be centered down there
+       too — a plain center mask (the box's literal 50% 50%, which is
+       what closest-side always centers on) faded out most of the
+       character instead of just the box's edges, since the content
+       moved but the mask didn't. "ellipse Rx Ry" (explicit percentage
+       radii) is used instead of "circle closest-side" here because
+       closest-side's radius is measured to the SINGLE nearest side —
+       moving its center this close to the bottom edge would shrink
+       that radius down to the (short) distance left to the bottom,
+       collapsing the fade circle far too small. Explicit radii keep
+       the same ~44%-of-box-size fade circle as before, just recentered. */
+    -webkit-mask-image: radial-gradient(ellipse 46% 46% at 50% 72%, #fff 35%, transparent 88%);
+    mask-image: radial-gradient(ellipse 46% 46% at 50% 72%, #fff 35%, transparent 88%);
 }
 
 @media (max-width: 900px) {
