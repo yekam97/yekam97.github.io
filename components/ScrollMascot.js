@@ -17,7 +17,16 @@ import styles from './ScrollMascot.module.css';
  * being scrolled; scrolling stops → the clip pauses within ~200ms,
  * so it never sits there looping pointlessly at rest.
  */
-const xWaypoints = ['4vw', '58vw', '6vw', '60vw', '8vw', '56vw', '4vw'];
+// Hero (stop 0) sits on the RIGHT — beside "INDUSTRIAL" and above the
+// "Títulos y certificaciones" stat — instead of the left, so it never
+// overlaps the name/headline/description column. Plain numbers (vw
+// units, reattached after the spring below) — NOT unit strings like
+// '58vw': springing a unit string directly silently drops the unit
+// and Framer re-adds "px" to the bare number instead, so the mascot
+// was actually drifting inside a fixed few-dozen-px band regardless
+// of viewport width this whole time, never truly reaching the vw
+// position the waypoint named.
+const xWaypoints = [58, 58, 6, 60, 8, 56, 4];
 // The hero (stop 0, page load) gets the biggest scale of the whole
 // journey — it's the first thing a visitor sees, so it should read as
 // large as or larger than every later waypoint.
@@ -32,7 +41,11 @@ const ScrollMascot = () => {
   const pauseTimer = useRef(null);
   const { scrollYProgress } = useScroll();
 
-  const x = useSpring(useTransform(scrollYProgress, stops, xWaypoints), springConfig);
+  // xWaypoints are sprung as plain numbers (see comment above), then
+  // the "vw" unit is reattached afterwards so the actual CSS `left`
+  // truly scales with viewport width.
+  const xNumber = useSpring(useTransform(scrollYProgress, stops, xWaypoints), springConfig);
+  const x = useTransform(xNumber, (v) => `${v}vw`);
   const scale = useSpring(useTransform(scrollYProgress, stops, scaleWaypoints), springConfig);
   const rotate = useSpring(useTransform(scrollYProgress, stops, rotateWaypoints), springConfig);
 
