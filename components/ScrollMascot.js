@@ -1,51 +1,46 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring, useTransform, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import styles from './ScrollMascot.module.css';
 
 /**
  * Replaces the old page-wide color wash: a large looping clip of the
  * site's own avatar character (same figure as the WhatsApp sticker)
- * that drifts across the page as you scroll, repositioning, rescaling
- * AND changing pose (video currentTime) at a handful of waypoints —
- * one per real section of the page, measured from the DOM (see
- * useSectionStops below) rather than guessed fixed percentages, so
- * the mapping stays correct however tall any given section actually
- * renders. The page's --bg is set to the exact gray of the clip's own
- * studio backdrop, so a big box (see ScrollMascot.module.css) reads
- * as part of the page instead of a floating video rectangle.
+ * that drifts across the page as you scroll, repositioning and
+ * rescaling continuously at a handful of waypoints — one per real
+ * section of the page, measured from the DOM (see useSectionStops
+ * below) rather than guessed fixed percentages, so the mapping stays
+ * correct however tall any given section actually renders. The
+ * page's --bg is set to the exact gray of the clip's own studio
+ * backdrop, so a big box (see ScrollMascot.module.css) reads as part
+ * of the page instead of a floating video rectangle.
  *
- * Pose tracking: currentTime is driven DIRECTLY by scroll position
- * (videoTimeWaypoints below), the same way x/scale/rotate already
- * are — not by imperatively playing/pausing/reversing in response to
- * scroll events. That makes it fully deterministic: a given scroll
- * position always shows the same pose, whichever direction (or
- * speed) you scrolled to reach it, and there's no native-<video>
- * reverse-playback workaround needed at all. A short intro (1s→3s,
- * exactly Hero's own range below) plays natively on load for a bit of
- * life before the first scroll; the moment scrollYProgress actually
- * changes, the scroll-driven binding takes over.
+ * Pose tracking is intentionally NOT continuous like position/scale
+ * are: binding currentTime directly to scroll (scrubbing) means
+ * seeking the video on every scroll tick, and browsers don't seek
+ * compressed video smoothly frame-by-frame — it reads as choppy/
+ * stuttery no matter how tight the spring is. Instead, the video
+ * tracks which SECTION is active (useActiveSection below): entering a
+ * new section seeks ONCE to that section's start time, then plays
+ * forward natively (smooth, normal video playback) through to the
+ * next section's time and holds there — scrolling around *within* a
+ * section does nothing to it at all. Scrolling back to an earlier
+ * section replays that section's own range the same way.
  */
 const SECTION_IDS = ['hero', 'skills', 'portfolio', 'experiencia', 'roles', 'contacto'];
 
-// One waypoint per section start (measured from the DOM) plus a final
-// one for the very bottom of the page — 7 values, matching
-// SECTION_IDS.length + 1.
-//
-// Video pose per section (10s clip: pointing → idle/dance → thumbs
-// up), set directly by request. Each value is where that section's
-// OWN scroll range ends — which is the same point as the next
-// section's start, so e.g. Hero's "1s → 2.8s" and Skills' "→ 4s" are
-// really just two ends of one continuous 1 → 2.8 → 4 chain:
-//   Hero (1):          1s   → 2.8s
-//   Skills (2):        2.8s → 4s
-//   Portfolio (3):     4s        (unchanged, already lines up with Skills' end)
-//   Experiencia (4):   6s
-//   Roles/Estudios (5):8s
-//   Contacto (6):      10s       (the clip's own last frame — thumbs up)
-//   Page end:          10s       (holds the thumbs-up finale to the bottom)
-const videoTimeWaypoints = [1, 2.8, 4, 6, 8, 10, 10];
+// One time per section (10s clip: pointing → idle/dance → thumbs up),
+// set directly by request — each section plays natively from its own
+// value to the NEXT section's value the moment it becomes active,
+// then holds on that last frame:
+//   Hero:            1s   → 2.8s
+//   Skills:          2.8s → 4s
+//   Portfolio:       4s   → 6s
+//   Experiencia:     6s   → 8s
+//   Roles/Estudios:  8s   → 10s
+//   Contacto:        10s (the clip's own last frame — thumbs up, holds)
+const videoTimeWaypoints = [1, 2.8, 4, 6, 8, 10];
 
 // Hero sits on the RIGHT — beside "INDUSTRIAL" and above the "Títulos
 // y certificaciones" stat — instead of the left, so it never overlaps
@@ -76,10 +71,6 @@ const yWaypointsMobile = [0, 0, 0, 0, 0, 0, 0];
 const fallbackStops = [0, 0.16, 0.34, 0.5, 0.66, 0.84, 1];
 
 const springConfig = { stiffness: 55, damping: 20, mass: 0.7 };
-// Tighter/snappier than springConfig above: the video's own time
-// should track scroll closely rather than float, or a fast scroll
-// would leave the pose visibly lagging behind the section on screen.
-const timeSpringConfig = { stiffness: 260, damping: 32, mass: 0.6 };
 const MOBILE_QUERY = '(max-width: 640px)';
 
 /**
@@ -88,7 +79,8 @@ const MOBILE_QUERY = '(max-width: 640px)';
  * up to date across resizes and layout shifts (e.g. the "Ver
  * trayectoria completa" accordion, images/fonts finishing load), so
  * every waypoint below always lines up with the section it names
- * instead of a guessed fixed percentage that could drift.
+ * instead of a guessed fixed percentage that could drift. Drives the
+ * continuous x/scale/rotate/y positioning below.
  */
 function useSectionStops() {
   const [stops, setStops] = useState(fallbackStops);
@@ -141,10 +133,58 @@ function useSectionStops() {
   return stops;
 }
 
+/**
+ * Tracks which SECTION the viewport is currently past (0 = Hero, 1 =
+ * Skills, ...), updating only when that index actually changes — not
+ * on every scroll pixel — so the video effect below only fires on
+ * real section transitions.
+ */
+function useActiveSection() {
+  const [index, setIndex] = useState(0);
+  const indexRef = useRef(0);
+
+  useEffect(() => {
+    const sectionEls = SECTION_IDS.map((id) => document.getElementById(id));
+
+    const compute = () => {
+      const y = window.scrollY + window.innerHeight * 0.3; // a little past the very top edge feels more natural than the exact pixel boundary
+      let next = 0;
+      for (let i = 0; i < sectionEls.length; i++) {
+        if (sectionEls[i] && sectionEls[i].offsetTop <= y) next = i;
+      }
+      // The lookahead above (and the last section's own content often
+      // being taller than the viewport space left below it) can mean
+      // its offsetTop is never actually <= y, even at max scroll —
+      // same shape of bug as useSectionStops' clamp, just for this
+      // separate pixel-based check. Force the last section once truly
+      // at the bottom of the page, or it can get stuck one section
+      // behind forever and never reach Contacto's own pose.
+      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      if (atBottom) next = sectionEls.length - 1;
+
+      if (next !== indexRef.current) {
+        indexRef.current = next;
+        setIndex(next);
+      }
+    };
+
+    compute();
+    window.addEventListener('scroll', compute, { passive: true });
+    window.addEventListener('resize', compute);
+    return () => {
+      window.removeEventListener('scroll', compute);
+      window.removeEventListener('resize', compute);
+    };
+  }, []);
+
+  return index;
+}
+
 const ScrollMascot = () => {
   const videoRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const stops = useSectionStops();
+  const activeSection = useActiveSection();
 
   // Starts false (desktop-shaped) and corrects itself right after
   // mount — this is a decorative, aria-hidden element, so a one-frame
@@ -167,50 +207,51 @@ const ScrollMascot = () => {
   const rotate = useSpring(useTransform(scrollYProgress, stops, rotateWaypoints), springConfig);
   const y = useSpring(useTransform(scrollYProgress, stops, isMobile ? yWaypointsMobile : yWaypoints), springConfig);
 
-  const videoTime = useSpring(useTransform(scrollYProgress, stops, videoTimeWaypoints), timeSpringConfig);
-
-  // Drives the <video> element's currentTime from the scroll-linked
-  // videoTime motion value above — this only fires when scrollYProgress
-  // (and therefore videoTime) actually changes, so it never fights
-  // the on-load intro below, which plays natively at scroll 0.
-  useMotionValueEvent(videoTime, 'change', (latest) => {
-    const video = videoRef.current;
-    if (!video || !isFinite(video.duration) || video.duration <= 0) return;
-    // Skip once the intro has already landed here on its own —
-    // avoids a redundant seek fighting the intro's native playback.
-    if (Math.abs(video.currentTime - latest) < 0.02) return;
-    video.currentTime = Math.max(0, Math.min(video.duration, latest));
-  });
-
+  // Seeks ONCE to the active section's own start time and plays
+  // natively through to the next section's time, then holds — see the
+  // big comment at the top of this file for why it's not a continuous
+  // scroll-scrub. Doubles as the on-load "intro": mount = section 0
+  // (Hero) becomes active immediately, so it plays Hero's own 1s→2.8s
+  // range right away with no separate code path needed.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // A short intro plays natively the instant the page loads, before
-    // any scroll: 1s → 2.8s, exactly Hero's own defined range (1.8s of
-    // content, so 1800ms of real-time playback at 1x), so there is no
-    // snap when the scroll-driven binding above takes over.
     let cancelled = false;
-    const startIntro = () => {
+    let stopTimer = null;
+
+    const play = () => {
       if (cancelled) return;
-      video.currentTime = 1;
-      video.play().catch(() => {});
-      setTimeout(() => {
-        if (!cancelled) video.pause();
-      }, 1800);
+      const startTime = videoTimeWaypoints[activeSection];
+      const endTime = videoTimeWaypoints[activeSection + 1] ?? startTime;
+
+      video.currentTime = startTime;
+
+      if (endTime > startTime) {
+        // play() returns a promise that rejects if the browser blocks
+        // it — harmless here, it just means the clip stays on its
+        // first frame instead of playing through.
+        video.play().catch(() => {});
+        stopTimer = setTimeout(() => {
+          if (!cancelled) video.pause();
+        }, (endTime - startTime) * 1000);
+      } else {
+        video.pause();
+      }
     };
 
     if (video.readyState >= 1) {
-      startIntro();
+      play();
     } else {
-      video.addEventListener('loadedmetadata', startIntro, { once: true });
+      video.addEventListener('loadedmetadata', play, { once: true });
     }
 
     return () => {
       cancelled = true;
-      video.removeEventListener('loadedmetadata', startIntro);
+      clearTimeout(stopTimer);
+      video.removeEventListener('loadedmetadata', play);
     };
-  }, []);
+  }, [activeSection]);
 
   return (
     <motion.div
