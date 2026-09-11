@@ -54,8 +54,13 @@ const xWaypoints = [58, 58, 6, 60, 8, 56, 4];
 // same bottom-right corner the desktop hero waypoint (58vw) sits in;
 // on mobile, bottom-anchored the same way for every section (see
 // ScrollMascot.module.css), that combination collided with the button
-// at every single scroll position, not just the hero.
-const xWaypointsMobile = [34, 50, 12, 45, 12, 40, 8];
+// at every single scroll position, not just the hero. Re-measured
+// (getBoundingClientRect vs. the button's own rect, at every section)
+// after the mobile box was later zoomed in 80% — a bigger box needs
+// more clearance from the same right edge, so hero/skills/experiencia
+// (the three with the highest mobile scale × rightmost x) got pulled
+// in further; confirmed zero overlap at every section afterward.
+const xWaypointsMobile = [26, 22, 12, 20, 12, 40, 8];
 // Hero gets the biggest scale of the whole journey — it's the first
 // thing a visitor sees, so it should read as large as or larger than
 // every later waypoint.

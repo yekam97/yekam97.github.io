@@ -119,10 +119,11 @@
        pass (90-130px read as too small) while staying behind content
        (z-index: 0 above) and using a gentler hero scale
        (scaleWaypointsMobile in ScrollMascot.js) so it still doesn't
-       crowd the stacked single-column layout. */
+       crowd the stacked single-column layout. Zoomed in another 80%
+       on top of that (130-190px -> 234-342px) per request. */
     .mascotWrap {
-        width: clamp(130px, 34vw, 190px);
-        height: clamp(130px, 34vw, 190px);
+        width: clamp(234px, 61.2vw, 342px);
+        height: clamp(234px, 61.2vw, 342px);
         /* Its OWN offset, not desktop's -65px: that value was tuned
            against a box up to 780px tall — on mobile's 130-190px box
            it's most of the box's own height, which is why it read as
