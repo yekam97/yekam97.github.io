@@ -6,7 +6,7 @@ export default function Sticker() {
     <a href={url} target="_blank" rel="noopener noreferrer" style={{ position: 'fixed', right: 24, bottom: 24, zIndex: 1400, transition: 'transform 0.3s ease' }}
       onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
       onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-      <img src="/whatsapp-icon.svg" alt="WhatsApp — Contactar a Yeison Camilo Gamba" style={{ width: 60, height: 60, display: 'block', borderRadius: '50%', boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)' }} />
+      <img src="/whatsapp-icon.svg" alt="WhatsApp — Contactar a Yeison Camilo Gamba" style={{ width: 42, height: 42, display: 'block', borderRadius: '50%', boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)' }} />
     </a>
   )
 }
