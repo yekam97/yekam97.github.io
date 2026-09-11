@@ -1,19 +1,24 @@
 /* Editorial Curator — Design System
-   - North Star: warm, paper-toned editorial portfolio (not a dark SaaS template)
-   - Foundation: warm bone/cream paper (#F7F1E7), warm near-black ink
+   - North Star: editorial portfolio built around the scroll mascot video
+   - Foundation: the mascot clip's own studio-gray backdrop (#E4E4E4,
+     sampled from the video), warm near-black ink — bg matches the
+     video exactly so it blends into the page instead of sitting in a
+     visible rectangle
    - Accent: a vivid, saturated color per project category — punchier
      than a muted/pastel palette, still checked for WCAG AA contrast
+     (re-verified against the gray bg — slightly deeper than the old
+     cream-background versions to hold 4.5:1+)
    - Typography: Fraunces (display serif) & Inter (body sans)
 */
 
 :root {
   /* Surfaces */
-  --bg: #F7F1E7;
-  --bg-alt: #EFE6D4;
+  --bg: #E4E4E4;
+  --bg-alt: #D9D9D9;
   --surface: #FFFFFF;
-  --surface-low: #FBF7EF;
+  --surface-low: #ECECEC;
   --surface-high: #FFFFFF;
-  --surface-highest: #F1E9DA;
+  --surface-highest: #DCDCDC;
 
   /* Ink */
   --ink: #1F1B16;
@@ -23,20 +28,20 @@
   --outline-strong: rgba(31, 27, 22, 0.26);
 
   /* Primary accent (vivid burnt-orange/red) */
-  --primary: #C1440E;
+  --primary: #AE3D0D;
   --primary-soft: #F5E1D8;
   --on-primary: #FFFFFF;
 
   /* Category accents — one vivid color per project discipline. Each
      checked ≥4.5:1 against both --bg and white (for use as a filled
      background with white text). */
-  --accent-industrial: #C1440E;
+  --accent-industrial: #AE3D0D;
   --accent-industrial-tint: #F5E1D8;
-  --accent-uxui: #0D7A6E;
+  --accent-uxui: #0C7166;
   --accent-uxui-tint: #D8E9E7;
-  --accent-branding: #A05708;
+  --accent-branding: #965208;
   --accent-branding-tint: #EFE4D7;
-  --accent-mentoring: #4F7812;
+  --accent-mentoring: #496F11;
   --accent-mentoring-tint: #E2E9D9;
 
   /* Border Radii — restrained, editorial (not pill-heavy) */
@@ -154,7 +159,7 @@ ul {
   width: 100%;
   max-width: none;
   height: 76px;
-  background: rgba(247, 241, 231, 0.92);
+  background: rgba(228, 228, 228, 0.92);
   backdrop-filter: saturate(140%) blur(8px);
   border: none;
   border-bottom: 1px solid var(--outline);

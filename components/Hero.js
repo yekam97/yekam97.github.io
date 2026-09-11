@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import MagneticButton from './MagneticButton';
@@ -28,10 +28,6 @@ const itemVariants = {
 const Hero = () => {
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
-
-  const { scrollY } = useScroll();
-  const yParallax = useTransform(scrollY, [0, 600], [0, 100]);
-  const scaleParallax = useTransform(scrollY, [0, 600], [1, 0.94]);
 
   return (
     <section id="hero" className={`container ${styles.heroSection}`}>
@@ -94,23 +90,6 @@ const Hero = () => {
         <motion.div variants={itemVariants}>
           <Stats />
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        className={styles.photoColumn}
-        style={{ y: yParallax, scale: scaleParallax }}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.2 }}
-      >
-        <div className={styles.imageWrapper}>
-          <div className={styles.photoGlow} />
-          <img
-            src="/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png"
-            alt="Yeison Camilo Gamba Gonzalez — Diseñador Industrial y Gestor de Proyectos de Innovación"
-            className={styles.profileImage}
-          />
-        </div>
       </motion.div>
     </section>
   );

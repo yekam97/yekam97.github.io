@@ -5,17 +5,19 @@ import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import styles from './ScrollMascot.module.css';
 
 /**
- * Replaces the old page-wide color wash: a small looping clip of the
+ * Replaces the old page-wide color wash: a large looping clip of the
  * site's own avatar character (same figure as the WhatsApp sticker)
- * that drifts between the page's side margins as you scroll — never a
- * full-bleed background, just a companion that repositions and
- * rescales at a handful of waypoints down the page (see xWaypoints /
- * scaleWaypoints below). It only plays while the page is actually
+ * that drifts across the page as you scroll, repositioning and
+ * rescaling at a handful of waypoints down the page (see xWaypoints /
+ * scaleWaypoints below). The page's --bg is set to the exact gray of
+ * the clip's own studio backdrop, so a much bigger box (see
+ * ScrollMascot.module.css) reads as part of the page instead of a
+ * floating video rectangle. It only plays while the page is actually
  * being scrolled; scrolling stops → the clip pauses within ~200ms,
  * so it never sits there looping pointlessly at rest.
  */
-const xWaypoints = ['6vw', '84vw', '8vw', '86vw', '10vw', '80vw', '6vw'];
-const scaleWaypoints = [0.85, 0.55, 1, 0.6, 0.9, 0.5, 0.8];
+const xWaypoints = ['4vw', '58vw', '6vw', '60vw', '8vw', '56vw', '4vw'];
+const scaleWaypoints = [0.85, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
 const rotateWaypoints = [-4, 3, -2, 4, -3, 2, -4];
 const stops = [0, 0.16, 0.34, 0.5, 0.66, 0.84, 1];
 
