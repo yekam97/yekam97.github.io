@@ -12,12 +12,16 @@ import styles from './ScrollMascot.module.css';
  * scaleWaypoints below). The page's --bg is set to the exact gray of
  * the clip's own studio backdrop, so a much bigger box (see
  * ScrollMascot.module.css) reads as part of the page instead of a
- * floating video rectangle. It only plays while the page is actually
+ * floating video rectangle. It plays a 2s preview the instant the
+ * page loads, then otherwise only plays while the page is actually
  * being scrolled; scrolling stops → the clip pauses within ~200ms,
  * so it never sits there looping pointlessly at rest.
  */
 const xWaypoints = ['4vw', '58vw', '6vw', '60vw', '8vw', '56vw', '4vw'];
-const scaleWaypoints = [0.85, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
+// The hero (stop 0, page load) gets the biggest scale of the whole
+// journey — it's the first thing a visitor sees, so it should read as
+// large as or larger than every later waypoint.
+const scaleWaypoints = [1.4, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
 const rotateWaypoints = [-4, 3, -2, 4, -3, 2, -4];
 const stops = [0, 0.16, 0.34, 0.5, 0.66, 0.84, 1];
 
@@ -35,6 +39,16 @@ const ScrollMascot = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    // Give the mascot a bit of life the moment the page loads, even
+    // before the visitor scrolls at all: play for 2s, then settle
+    // back to paused. Reuses the same pauseTimer as handleScroll, so
+    // if a scroll happens during (or right after) that window it just
+    // clears this timer and takes over normally instead of fighting it.
+    video.play().catch(() => {});
+    pauseTimer.current = setTimeout(() => {
+      video.pause();
+    }, 2000);
 
     const handleScroll = () => {
       // play() returns a promise that rejects if the browser blocks

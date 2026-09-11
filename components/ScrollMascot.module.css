@@ -1,8 +1,12 @@
 .mascotWrap {
     position: fixed;
     top: 50vh;
-    width: 460px;
-    height: 460px;
+    /* Scales with viewport width so it holds a consistent, dominant
+       presence on the first screen (≈40-45% of the hero) instead of
+       looking small on wide desktops — capped so it never overwhelms
+       an ultra-wide monitor. */
+    width: clamp(420px, 42vw, 780px);
+    height: clamp(420px, 42vw, 780px);
     /* Sits BEHIND page content (main is z-index: 1, and — like the
        old watercolor background before it — a sibling needs z-index:
        0, not a negative value, to actually render behind main instead
@@ -36,8 +40,8 @@
 
 @media (max-width: 900px) {
     .mascotWrap {
-        width: 300px;
-        height: 300px;
+        width: 320px;
+        height: 320px;
     }
 }
 
