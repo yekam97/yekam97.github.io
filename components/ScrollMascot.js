@@ -241,13 +241,32 @@ const ScrollMascot = () => {
   // .play(). If another boundary is crossed before that finishes, the
   // cleanup below cancels it and the next run picks up smoothly from
   // wherever it actually got to — no jump, no restart.
+  //
+  // Speed also adapts to how fast the visitor is actually scrolling:
+  // a fast flick across several sections was crossing boundaries
+  // faster than the clip could play/reverse at a flat 1x, so it kept
+  // visibly lagging behind — reading as stuck/choppy even though
+  // nothing was technically broken. rate below measures the real time
+  // between this transition and the previous one and speeds both
+  // forward playbackRate and the reverse step up to match, capped at
+  // 3x so it still reads as the clip playing rather than a blur, and
+  // floored at 1x (the clip's own normal pace) for a slow/deliberate
+  // scroll — or the very first transition on mount, since
+  // lastTransitionRef starts at 0 and any real performance.now() minus
+  // that is already a huge gap.
   const prevSectionRef = useRef(0);
+  const lastTransitionRef = useRef(0);
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const movingForward = activeSection >= prevSectionRef.current;
     prevSectionRef.current = activeSection;
+
+    const now = performance.now();
+    const sinceLastTransition = now - lastTransitionRef.current;
+    lastTransitionRef.current = now;
+    const rate = Math.max(1, Math.min(3, 700 / sinceLastTransition));
 
     let cancelled = false;
     let stopTimer = null;
@@ -262,12 +281,12 @@ const ScrollMascot = () => {
 
     const reverseTo = (target) => {
       let lastTime = null;
-      const step = (now) => {
+      const step = (now2) => {
         if (cancelled) return;
-        if (lastTime === null) lastTime = now;
-        const dt = (now - lastTime) / 1000;
-        lastTime = now;
-        const next = video.currentTime - dt;
+        if (lastTime === null) lastTime = now2;
+        const dt = (now2 - lastTime) / 1000;
+        lastTime = now2;
+        const next = video.currentTime - dt * rate;
         if (next <= target) {
           video.currentTime = target;
           reverseFrame = null;
@@ -287,13 +306,17 @@ const ScrollMascot = () => {
       if (movingForward) {
         if (endTime > startTime) {
           video.currentTime = startTime;
+          video.playbackRate = rate;
           // play() returns a promise that rejects if the browser
           // blocks it — harmless here, it just means the clip stays
           // on its first frame instead of playing through.
           video.play().catch(() => {});
           stopTimer = setTimeout(() => {
-            if (!cancelled) video.pause();
-          }, (endTime - startTime) * 1000);
+            if (!cancelled) {
+              video.pause();
+              video.playbackRate = 1;
+            }
+          }, ((endTime - startTime) / rate) * 1000);
         } else {
           // Last section, nothing to play forward into.
           video.pause();
