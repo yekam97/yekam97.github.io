@@ -5,8 +5,15 @@
 }
 
 .skillCard {
-    background-color: var(--surface);
-    border: 1px solid var(--outline);
+    /* Frosted glass: translucent instead of solid white, so the
+       scroll mascot (and anything else behind main) reads as a soft
+       blurred shape through the card rather than being hidden flat
+       — the backdrop-filter blur is what actually sells "glass"; the
+       rgba alone would just look like a dim, flat card. */
+    background-color: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: var(--radius-lg);
     padding: var(--spacing-6);
     cursor: default;
@@ -18,8 +25,8 @@
 }
 
 .skillCard:hover {
-    background-color: var(--surface);
-    border-color: var(--outline-strong);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 26px 42px rgba(31, 27, 22, 0.16);
 }
 

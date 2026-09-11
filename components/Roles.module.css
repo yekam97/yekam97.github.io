@@ -5,10 +5,15 @@
 }
 
 .facetCard {
-    background-color: var(--surface-low);
+    /* Frosted glass — translucent + blurred instead of a flat fill,
+       so the scroll mascot (and anything else behind main) shows
+       through softly rather than being hidden flat. */
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: var(--spacing-8);
     border-radius: var(--radius-md);
-    border: 1px solid var(--outline);
+    border: 1px solid rgba(255, 255, 255, 0.55);
     transition: var(--transition);
     height: 100%;
     display: flex;
@@ -17,7 +22,7 @@
 }
 
 .facetCard:hover {
-    background-color: var(--surface-high);
+    background-color: rgba(255, 255, 255, 0.68);
     border-color: rgba(193, 68, 14, 0.35);
     box-shadow: 0 15px 30px rgba(193, 68, 14, 0.1);
 }
