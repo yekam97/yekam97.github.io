@@ -46,13 +46,14 @@
 }
 
 @media (max-width: 640px) {
-    /* No longer hidden — a smaller version now shows on mobile too,
-       small enough (even at the hero's biggest, ~1.68x, scale
-       waypoint) to stay a background presence behind the stacked
-       single-column layout instead of crowding it. */
+    /* Shows on mobile too (not hidden), sized well up from the first
+       pass (90-130px read as too small) while staying behind content
+       (z-index: 0 above) and using a gentler hero scale
+       (scaleWaypointsMobile in ScrollMascot.js) so it still doesn't
+       crowd the stacked single-column layout. */
     .mascotWrap {
-        width: clamp(90px, 24vw, 130px);
-        height: clamp(90px, 24vw, 130px);
+        width: clamp(130px, 34vw, 190px);
+        height: clamp(130px, 34vw, 190px);
     }
 }
 
