@@ -19,8 +19,10 @@
        edge up or down as scale changes between sections and undoes
        the grounding on its own. Bottom-anchoring the transform origin
        too means scale only ever grows the box upward from a fixed
-       floor. */
-    bottom: 0;
+       floor. -10px (not 0): nudges the whole grounded box 10px lower,
+       per request, on every viewport size alike (bottom-anchoring is
+       exactly what makes a single tweak here apply uniformly). */
+    bottom: -10px;
     transform-origin: center bottom;
     /* Scales with viewport width so it holds a consistent, dominant
        presence on the first screen (≈40-45% of the hero) instead of
