@@ -34,15 +34,18 @@ const SECTION_IDS = ['hero', 'skills', 'portfolio', 'experiencia', 'roles', 'con
 // SECTION_IDS.length + 1.
 //
 // Video pose per section (10s clip: pointing → idle/dance → thumbs
-// up), set directly by request:
-//   Hero (1):          1s → 3s  (spans this section's own scroll range)
-//   Skills (2):        3s       (boundary with Hero, see above)
-//   Portfolio (3):     4s
-//   Experiencia (4):   5s       (interpolated between Portfolio and Roles)
-//   Roles/Estudios (5):6s
-//   Contacto (6):      7.5s     (interpolated, heading toward the thumbs-up)
-//   Page end:          9s       (thumbs-up finale)
-const videoTimeWaypoints = [1, 3, 4, 5, 6, 7.5, 9];
+// up), set directly by request. Each value is where that section's
+// OWN scroll range ends — which is the same point as the next
+// section's start, so e.g. Hero's "1s → 2.8s" and Skills' "→ 4s" are
+// really just two ends of one continuous 1 → 2.8 → 4 chain:
+//   Hero (1):          1s   → 2.8s
+//   Skills (2):        2.8s → 4s
+//   Portfolio (3):     4s        (unchanged, already lines up with Skills' end)
+//   Experiencia (4):   6s
+//   Roles/Estudios (5):8s
+//   Contacto (6):      10s       (the clip's own last frame — thumbs up)
+//   Page end:          10s       (holds the thumbs-up finale to the bottom)
+const videoTimeWaypoints = [1, 2.8, 4, 6, 8, 10, 10];
 
 // Hero sits on the RIGHT — beside "INDUSTRIAL" and above the "Títulos
 // y certificaciones" stat — instead of the left, so it never overlaps
@@ -184,8 +187,9 @@ const ScrollMascot = () => {
     if (!video) return;
 
     // A short intro plays natively the instant the page loads, before
-    // any scroll: 1s → 3s, exactly Hero's own defined range, so there
-    // is no snap when the scroll-driven binding above takes over.
+    // any scroll: 1s → 2.8s, exactly Hero's own defined range (1.8s of
+    // content, so 1800ms of real-time playback at 1x), so there is no
+    // snap when the scroll-driven binding above takes over.
     let cancelled = false;
     const startIntro = () => {
       if (cancelled) return;
@@ -193,7 +197,7 @@ const ScrollMascot = () => {
       video.play().catch(() => {});
       setTimeout(() => {
         if (!cancelled) video.pause();
-      }, 2000);
+      }, 1800);
     };
 
     if (video.readyState >= 1) {
