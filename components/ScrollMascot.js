@@ -12,10 +12,14 @@ import styles from './ScrollMascot.module.css';
  * scaleWaypoints below). The page's --bg is set to the exact gray of
  * the clip's own studio backdrop, so a much bigger box (see
  * ScrollMascot.module.css) reads as part of the page instead of a
- * floating video rectangle. It plays a 2s preview the instant the
+ * floating video rectangle. It plays a 3s preview the instant the
  * page loads, then otherwise only plays while the page is actually
- * being scrolled; scrolling stops → the clip pauses within ~200ms,
- * so it never sits there looping pointlessly at rest.
+ * being scrolled — forward on scroll down, backward (currentTime
+ * stepped back by hand each frame, since <video> has no reliable
+ * native reverse) on scroll up, so a given section keeps landing on
+ * the same pose whichever direction you pass it — and scrolling stops
+ * → the clip pauses within ~200ms, so it never sits there looping
+ * pointlessly at rest.
  */
 // Hero (stop 0) sits on the RIGHT — beside "INDUSTRIAL" and above the
 // "Títulos y certificaciones" stat — instead of the left, so it never
@@ -29,9 +33,13 @@ import styles from './ScrollMascot.module.css';
 const xWaypoints = [58, 58, 6, 60, 8, 56, 4];
 // The hero (stop 0, page load) gets the biggest scale of the whole
 // journey — it's the first thing a visitor sees, so it should read as
-// large as or larger than every later waypoint.
-const scaleWaypoints = [1.4, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
+// large as or larger than every later waypoint. 1.68 = the previous
+// 1.4 zoomed in another 20% on top.
+const scaleWaypoints = [1.68, 0.6, 1, 0.65, 0.95, 0.55, 0.85];
 const rotateWaypoints = [-4, 3, -2, 4, -3, 2, -4];
+// Vertical nudge, hero-only: -50px right at stop 0, settling back to
+// 0 by the next waypoint (every other section is untouched).
+const yWaypoints = [-50, 0, 0, 0, 0, 0, 0];
 const stops = [0, 0.16, 0.34, 0.5, 0.66, 0.84, 1];
 
 const springConfig = { stiffness: 55, damping: 20, mass: 0.7 };
@@ -48,27 +56,80 @@ const ScrollMascot = () => {
   const x = useTransform(xNumber, (v) => `${v}vw`);
   const scale = useSpring(useTransform(scrollYProgress, stops, scaleWaypoints), springConfig);
   const rotate = useSpring(useTransform(scrollYProgress, stops, rotateWaypoints), springConfig);
+  const y = useSpring(useTransform(scrollYProgress, stops, yWaypoints), springConfig);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    let lastScrollY = window.scrollY;
+    let reverseFrame = null;
+    let lastFrameTime = null;
+
+    // <video> has no reliable native reverse playback (negative
+    // playbackRate is unsupported or flaky across browsers), so
+    // reverse is faked by manually walking currentTime backwards a
+    // little every animation frame instead of calling .play().
+    const stopReverse = () => {
+      if (reverseFrame !== null) {
+        cancelAnimationFrame(reverseFrame);
+        reverseFrame = null;
+        lastFrameTime = null;
+      }
+    };
+
+    const stepReverse = (now) => {
+      if (lastFrameTime === null) lastFrameTime = now;
+      const delta = (now - lastFrameTime) / 1000;
+      lastFrameTime = now;
+      if (isFinite(video.duration) && video.duration > 0) {
+        let t = video.currentTime - delta;
+        if (t < 0) t += video.duration; // wrap to the end, mirroring loop
+        video.currentTime = t;
+      }
+      reverseFrame = requestAnimationFrame(stepReverse);
+    };
+
+    const startReverse = () => {
+      if (reverseFrame !== null) return;
+      video.pause();
+      reverseFrame = requestAnimationFrame(stepReverse);
+    };
+
     // Give the mascot a bit of life the moment the page loads, even
-    // before the visitor scrolls at all: play for 2s, then settle
-    // back to paused. Reuses the same pauseTimer as handleScroll, so
-    // if a scroll happens during (or right after) that window it just
-    // clears this timer and takes over normally instead of fighting it.
+    // before the visitor scrolls at all: play forward for 3s, then
+    // settle back to paused. Reuses the same pauseTimer as
+    // handleScroll, so a scroll during (or right after) that window
+    // just clears this timer and hands off normally instead of the
+    // two fighting each other.
     video.play().catch(() => {});
     pauseTimer.current = setTimeout(() => {
       video.pause();
-    }, 2000);
+    }, 3000);
 
     const handleScroll = () => {
-      // play() returns a promise that rejects if the browser blocks
-      // it — harmless here, it just means the clip stays paused.
-      video.play().catch(() => {});
+      const currentY = window.scrollY;
+      const direction = currentY === lastScrollY ? null : currentY > lastScrollY ? 'down' : 'up';
+      lastScrollY = currentY;
+
       clearTimeout(pauseTimer.current);
+
+      // Scrolling down plays forward as usual; scrolling up plays the
+      // clip backwards instead of continuing forward — so a given
+      // section is always tied to the same pose in the animation
+      // whichever direction you scroll past it, rather than the pose
+      // drifting further every time you scroll back up over it.
+      if (direction === 'up') {
+        startReverse();
+      } else {
+        stopReverse();
+        // play() returns a promise that rejects if the browser blocks
+        // it — harmless here, it just means the clip stays paused.
+        video.play().catch(() => {});
+      }
+
       pauseTimer.current = setTimeout(() => {
+        stopReverse();
         video.pause();
       }, 200);
     };
@@ -77,13 +138,14 @@ const ScrollMascot = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(pauseTimer.current);
+      stopReverse();
     };
   }, []);
 
   return (
     <motion.div
       className={styles.mascotWrap}
-      style={{ left: x, scale, rotate }}
+      style={{ left: x, scale, rotate, y }}
       aria-hidden="true"
     >
       <video
