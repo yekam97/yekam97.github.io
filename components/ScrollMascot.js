@@ -226,13 +226,21 @@ const ScrollMascot = () => {
   // (Hero) becomes active immediately, so it plays Hero's own 1s→2.8s
   // range right away with no separate code path needed.
   //
-  // Only replays that little animation when arriving FORWARD (i.e.
-  // scrolling down into a section for the first time on this pass) —
-  // scrolling back UP into a section you already passed through jumps
-  // straight to its resting frame instead of playing the whole clip
-  // again. Without this, scrolling back and forth near any section
-  // boundary kept re-triggering the same replay over and over, which
-  // read as stuttery/repetitive rather than smooth.
+  // Direction matters, and only changes ONCE per section boundary
+  // crossed (never continuously per scroll pixel — that's what made
+  // the very first version of this feel choppy): arriving FORWARD
+  // (scrolling down into a section for the first time on this pass)
+  // plays that section's own range natively, start to end. Arriving
+  // BACKWARD (scrolling back up into a section already passed)
+  // doesn't just snap to a frame OR replay the forward clip again —
+  // it plays smoothly in REVERSE from wherever the clip currently
+  // sits down to this section's resting frame. <video> has no
+  // reliable native reverse playback, so that's faked by manually
+  // walking currentTime backward the real elapsed time every
+  // animation frame until it reaches the target, instead of calling
+  // .play(). If another boundary is crossed before that finishes, the
+  // cleanup below cancels it and the next run picks up smoothly from
+  // wherever it actually got to — no jump, no restart.
   const prevSectionRef = useRef(0);
   useEffect(() => {
     const video = videoRef.current;
@@ -243,26 +251,57 @@ const ScrollMascot = () => {
 
     let cancelled = false;
     let stopTimer = null;
+    let reverseFrame = null;
+
+    const stopReverse = () => {
+      if (reverseFrame !== null) {
+        cancelAnimationFrame(reverseFrame);
+        reverseFrame = null;
+      }
+    };
+
+    const reverseTo = (target) => {
+      let lastTime = null;
+      const step = (now) => {
+        if (cancelled) return;
+        if (lastTime === null) lastTime = now;
+        const dt = (now - lastTime) / 1000;
+        lastTime = now;
+        const next = video.currentTime - dt;
+        if (next <= target) {
+          video.currentTime = target;
+          reverseFrame = null;
+          return;
+        }
+        video.currentTime = next;
+        reverseFrame = requestAnimationFrame(step);
+      };
+      reverseFrame = requestAnimationFrame(step);
+    };
 
     const apply = () => {
       if (cancelled) return;
       const startTime = videoTimeWaypoints[activeSection];
       const endTime = videoTimeWaypoints[activeSection + 1] ?? startTime;
 
-      if (movingForward && endTime > startTime) {
-        video.currentTime = startTime;
-        // play() returns a promise that rejects if the browser blocks
-        // it — harmless here, it just means the clip stays on its
-        // first frame instead of playing through.
-        video.play().catch(() => {});
-        stopTimer = setTimeout(() => {
-          if (!cancelled) video.pause();
-        }, (endTime - startTime) * 1000);
+      if (movingForward) {
+        if (endTime > startTime) {
+          video.currentTime = startTime;
+          // play() returns a promise that rejects if the browser
+          // blocks it — harmless here, it just means the clip stays
+          // on its first frame instead of playing through.
+          video.play().catch(() => {});
+          stopTimer = setTimeout(() => {
+            if (!cancelled) video.pause();
+          }, (endTime - startTime) * 1000);
+        } else {
+          // Last section, nothing to play forward into.
+          video.pause();
+          video.currentTime = endTime;
+        }
       } else {
-        // Backward re-entry (or a section with no range to play):
-        // land on the resting frame instantly, no animated replay.
         video.pause();
-        video.currentTime = endTime;
+        reverseTo(endTime);
       }
     };
 
@@ -275,6 +314,7 @@ const ScrollMascot = () => {
     return () => {
       cancelled = true;
       clearTimeout(stopTimer);
+      stopReverse();
       video.removeEventListener('loadedmetadata', apply);
     };
   }, [activeSection]);
