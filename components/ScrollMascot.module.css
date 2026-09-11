@@ -1,0 +1,47 @@
+.mascotWrap {
+    position: fixed;
+    top: 50vh;
+    width: 200px;
+    height: 200px;
+    z-index: 1500;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* The clip itself is a small studio render on a light-gray backdrop,
+   not a transparent-background asset. Two tricks fake a cutout without
+   real per-pixel keying:
+   1. mix-blend-mode: multiply — the backdrop's near-white gray
+      multiplies away into the page's own cream tone instead of
+      sitting on top of it as an opaque box.
+   2. A soft radial mask fades the video's own rectangular edges to
+      nothing, so what's left reads as a soft-edged figure rather than
+      a video frame. */
+.mascotVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: radial-gradient(circle, #fff 42%, transparent 72%);
+    mask-image: radial-gradient(circle, #fff 42%, transparent 72%);
+}
+
+@media (max-width: 900px) {
+    .mascotWrap {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 640px) {
+    .mascotWrap {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mascotWrap {
+        display: none;
+    }
+}

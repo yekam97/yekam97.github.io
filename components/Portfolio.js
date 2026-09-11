@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
-import { usePageAccent } from '@/context/PageAccentContext';
 import { translations } from '@/lib/translations';
 import styles from './Portfolio.module.css';
 
@@ -178,13 +177,6 @@ const Portfolio = () => {
     const [active, setActive] = useState(0);
     const [direction, setDirection] = useState(1);
     const activeProject = projects[active];
-
-    // Tell the page-wide LivingBackground which color is "live" right
-    // now, so the watercolor wash follows the carousel.
-    const { setAccent } = usePageAccent();
-    useEffect(() => {
-        setAccent(activeProject.accent);
-    }, [activeProject.accent, setAccent]);
 
     const goTo = (idx) => {
         setDirection(idx > active ? 1 : -1);
