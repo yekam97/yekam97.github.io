@@ -225,21 +225,32 @@ const ScrollMascot = () => {
   // scroll-scrub. Doubles as the on-load "intro": mount = section 0
   // (Hero) becomes active immediately, so it plays Hero's own 1s→2.8s
   // range right away with no separate code path needed.
+  //
+  // Only replays that little animation when arriving FORWARD (i.e.
+  // scrolling down into a section for the first time on this pass) —
+  // scrolling back UP into a section you already passed through jumps
+  // straight to its resting frame instead of playing the whole clip
+  // again. Without this, scrolling back and forth near any section
+  // boundary kept re-triggering the same replay over and over, which
+  // read as stuttery/repetitive rather than smooth.
+  const prevSectionRef = useRef(0);
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    const movingForward = activeSection >= prevSectionRef.current;
+    prevSectionRef.current = activeSection;
+
     let cancelled = false;
     let stopTimer = null;
 
-    const play = () => {
+    const apply = () => {
       if (cancelled) return;
       const startTime = videoTimeWaypoints[activeSection];
       const endTime = videoTimeWaypoints[activeSection + 1] ?? startTime;
 
-      video.currentTime = startTime;
-
-      if (endTime > startTime) {
+      if (movingForward && endTime > startTime) {
+        video.currentTime = startTime;
         // play() returns a promise that rejects if the browser blocks
         // it — harmless here, it just means the clip stays on its
         // first frame instead of playing through.
@@ -248,20 +259,23 @@ const ScrollMascot = () => {
           if (!cancelled) video.pause();
         }, (endTime - startTime) * 1000);
       } else {
+        // Backward re-entry (or a section with no range to play):
+        // land on the resting frame instantly, no animated replay.
         video.pause();
+        video.currentTime = endTime;
       }
     };
 
     if (video.readyState >= 1) {
-      play();
+      apply();
     } else {
-      video.addEventListener('loadedmetadata', play, { once: true });
+      video.addEventListener('loadedmetadata', apply, { once: true });
     }
 
     return () => {
       cancelled = true;
       clearTimeout(stopTimer);
-      video.removeEventListener('loadedmetadata', play);
+      video.removeEventListener('loadedmetadata', apply);
     };
   }, [activeSection]);
 
