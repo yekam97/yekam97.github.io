@@ -372,6 +372,40 @@
     color: var(--secondary);
 }
 
+/* Enlaces del proyecto (descarga, código) */
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+}
+
+.linkBtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.3rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--outline-strong);
+    color: var(--ink);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.linkBtn:hover {
+    border-color: var(--ink);
+}
+
+.linkBtnPrimary {
+    color: var(--on-primary);
+    border-color: transparent;
+}
+
+.linkBtnPrimary:hover {
+    border-color: transparent;
+    filter: brightness(1.1);
+}
+
 .details,
 .technologies {
     display: flex;

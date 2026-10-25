@@ -10,6 +10,39 @@ const getProjects = (language) => {
     const isEn = language === 'en';
     return [
         {
+            accent: 'software',
+            category: isEn ? 'SOFTWARE DEVELOPMENT / MUSIC TECHNOLOGY' : 'DESARROLLO DE SOFTWARE / TECNOLOGÍA MUSICAL',
+            title: isEn
+                ? 'PadBox: a MIDI pad controller app for Windows'
+                : 'PadBox: app para controladores MIDI de pads en Windows',
+            year: '2026',
+            image: '/images/padbox-musica.png',
+            images: ['/images/padbox-musica.png', '/images/padbox-oficina.png', '/images/padbox-drum-pad.png'],
+            description: isEn
+                ? 'Free, open-source desktop app that turns any MIDI pad controller into a musical instrument and a shortcut panel for Windows. I designed and developed it end to end: from the interaction model and visual design to the MIDI integration, a custom audio engine and RGB lighting control for the M-VAVE SMC-PAD Pocket.'
+                : 'App de escritorio gratuita y de código abierto que convierte cualquier controlador MIDI de pads en un instrumento musical y en un panel de atajos para Windows. La diseñé y desarrollé de principio a fin: desde el modelo de interacción y el diseño visual hasta la integración MIDI, un motor de audio propio y el control de las luces RGB del M-VAVE SMC-PAD Pocket.',
+            details: isEn ? [
+                'Two modes on one pad: Music (rhythms, instruments, loops) and Office (Windows, OBS, Photoshop and browser shortcuts)',
+                'Twelve unique music presets, each with its own looped rhythm, instrument, key and drum kit',
+                'Drum-pad style mode with original synthesized sounds and loops that start in sync',
+                'Drag-and-drop custom sounds (mp3, wav) onto any pad',
+                'Profiles for M-VAVE, Akai and Novation controllers, plus auto-learning of any MIDI controller',
+                'Pad colors on the device matched to each preset and grouped by function'
+            ] : [
+                'Dos modos en un solo pad: Música (ritmos, instrumentos, bucles) y Oficina (atajos de Windows, OBS, Photoshop y navegador)',
+                'Doce presets musicales únicos, cada uno con su propio ritmo en bucle, instrumento, tonalidad y batería',
+                'Modo estilo drum pad con sonidos originales sintetizados y bucles que entran sincronizados',
+                'Sonidos propios (mp3, wav) arrastrándolos sobre cualquier pad',
+                'Perfiles para controladores M-VAVE, Akai y Novation, y aprendizaje automático de cualquier controlador MIDI',
+                'Colores de los pads en el aparato según el preset y agrupados por función'
+            ],
+            technologies: ['C# / .NET', 'Windows Forms', 'MIDI y SysEx', isEn ? 'Audio synthesis' : 'Síntesis de audio', 'UX/UI'],
+            links: [
+                { label: isEn ? 'Download PadBox' : 'Descargar PadBox', href: 'https://yekam97.github.io/padbox/', primary: true },
+                { label: isEn ? 'Source code on GitHub' : 'Código en GitHub', href: 'https://github.com/yekam97/PadBox' }
+            ]
+        },
+        {
             accent: 'industrial',
             category: isEn ? 'INDUSTRIAL DESIGN / INTERIOR DESIGN' : 'DISEÑO INDUSTRIAL / DISEÑO DE INTERIORES',
             title: isEn
@@ -183,8 +216,8 @@ const Portfolio = () => {
     // slide mounted, so navigating to a project whose image hadn't
     // been requested yet raced the 0.45s slide transition — the first
     // visit showed a blank rectangle, and only a second visit (now
-    // served from cache) painted correctly. There are only 4 images
-    // total, so preloading all of them (not just the adjacent ones)
+    // served from cache) painted correctly. There are only a handful
+    // of images, so preloading all of them (not just the adjacent ones)
     // is simpler and just as cheap.
     useEffect(() => {
         projects.forEach((p) => {
@@ -332,6 +365,23 @@ const Portfolio = () => {
                                     <div className={styles.description}>
                                         <p>{selectedProject.description}</p>
                                     </div>
+
+                                    {selectedProject.links && (
+                                        <div className={styles.links}>
+                                            {selectedProject.links.map((link) => (
+                                                <a
+                                                    key={link.href}
+                                                    href={link.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={`${styles.linkBtn} ${link.primary ? styles.linkBtnPrimary : ''}`}
+                                                    style={link.primary ? { background: `var(--accent-${selectedProject.accent})` } : undefined}
+                                                >
+                                                    {link.label} →
+                                                </a>
+                                            ))}
+                                        </div>
+                                    )}
 
                                     {selectedProject.details && (
                                         <div className={styles.details}>
