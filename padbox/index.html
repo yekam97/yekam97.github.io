@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PadBox — controlador MIDI de pads para Windows</title>
+<meta name="description" content="PadBox convierte cualquier controlador MIDI de pads en un instrumento y en un panel de atajos para Windows. Gratis y de código abierto.">
+<meta property="og:title" content="PadBox — tu controlador de pads, a otro nivel">
+<meta property="og:description" content="Música, cumbia, bucles estilo drum pad y atajos para Windows, OBS y Photoshop desde tu controlador MIDI. Gratis.">
+<meta property="og:image" content="https://yekam97.github.io/padbox/captura-musica.png">
+<meta name="theme-color" content="#E4E4E4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #E4E4E4; --surface: #FFFFFF; --surface-low: #ECECEC;
+    --ink: #1F1B16; --secondary: #4A423A; --muted: #6B6152;
+    --outline: rgba(31, 27, 22, 0.14);
+    --primary: #AE3D0D; --primary-soft: #F5E1D8; --on-primary: #FFFFFF;
+    --teal: #0C7166;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Inter, system-ui, sans-serif; }
+  a { color: var(--primary); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .brand { font-family: Fraunces, serif; font-weight: 650; font-size: 24px; text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+  .logo { width: 30px; height: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .logo span { border-radius: 4px; }
+  .back { color: var(--secondary); text-decoration: none; font-size: 15px; }
+  .back:hover { color: var(--primary); }
+
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 36px 0 64px; }
+  .eyebrow { color: var(--primary); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+  h1 { font-family: Fraunces, serif; font-weight: 600; font-size: clamp(38px, 5.4vw, 62px); line-height: 1.04; margin: 10px 0 18px; letter-spacing: -.01em; }
+  h1 em { font-style: italic; color: var(--primary); }
+  .lead { color: var(--secondary); font-size: 19px; margin: 0 0 28px; max-width: 34em; }
+  .cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; font-weight: 650; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+  .btn.primary { background: var(--primary); color: var(--on-primary); box-shadow: 0 10px 26px rgba(174, 61, 13, .28); }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(174, 61, 13, .34); }
+  .btn.ghost { color: var(--ink); border: 1.5px solid var(--outline); background: var(--surface); }
+  .btn.ghost:hover { border-color: var(--ink); }
+  .meta { color: var(--muted); font-size: 14px; margin-top: 14px; }
+  .shot { border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 60px rgba(31, 27, 22, .18); background: #14161c; }
+  .shot img { display: block; width: 100%; height: auto; }
+
+  section { padding: 56px 0; }
+  h2 { font-family: Fraunces, serif; font-weight: 600; font-size: clamp(28px, 3.6vw, 40px); margin: 0 0 10px; line-height: 1.15; }
+  .sub { color: var(--secondary); margin: 0 0 32px; max-width: 40em; }
+
+  .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .card { background: var(--surface); border-radius: var(--radius); padding: 28px; border: 1px solid var(--outline); }
+  .card h3 { margin: 0 0 8px; font-size: 21px; }
+  .card p { margin: 0 0 14px; color: var(--secondary); }
+  .tag { display: inline-block; font-size: 13px; font-weight: 650; padding: 4px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .tag.music { background: #ECE6FF; color: #5B3FD6; }
+  .tag.office { background: #DCF3EE; color: var(--teal); }
+  ul.list { margin: 0; padding-left: 20px; color: var(--secondary); }
+  ul.list li { margin: 4px 0; }
+
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  figure { margin: 0; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: s; }
+  .step { background: var(--surface); border-radius: var(--radius); padding: 24px; border: 1px solid var(--outline); }
+  .step::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 700; margin-bottom: 12px; }
+  .step h3 { margin: 0 0 6px; font-size: 18px; }
+  .step p { margin: 0; color: var(--secondary); font-size: 15px; }
+
+  .table-wrap { overflow-x: auto; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--outline); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+  th, td { text-align: left; padding: 13px 18px; border-bottom: 1px solid var(--outline); }
+  th { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 650; }
+  tr:last-child td { border-bottom: 0; }
+  .ok { color: var(--teal); font-weight: 650; }
+  .pending { color: var(--muted); }
+
+  .note { background: var(--primary-soft); border-radius: var(--radius); padding: 22px 26px; color: var(--ink); }
+  .note strong { color: var(--primary); }
+
+  footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--outline); margin-top: 24px; }
+  footer p { margin: 6px 0; }
+
+  header.top { gap: 16px; }
+  @media (max-width: 560px) { .back .long { display: none; } }
+  @media (max-width: 860px) {
+    .hero, .modes, .gallery { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .hero { gap: 32px; padding-top: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">
+      <span class="logo" aria-hidden="true"><span style="background:#FFCC00"></span><span style="background:#FFCC00"></span><span style="background:#7C5CFF"></span><span style="background:#00B894"></span></span>
+      PadBox
+    </a>
+    <a class="back" href="/">← Portafolio<span class="long"> de Yeison Camilo Gamba</span></a>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Gratis · Windows 10 y 11 · Código abierto</div>
+      <h1>Tu controlador de pads, <em>a otro nivel</em>.</h1>
+      <p class="lead">PadBox convierte cualquier controlador MIDI de pads en un instrumento con ritmos y sonidos propios, y en un panel de atajos para Windows, OBS, Photoshop y más.</p>
+      <div class="cta">
+        <a class="btn primary" href="PadBox-1.0.0.zip" download>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Descargar PadBox 1.0.0
+        </a>
+        <a class="btn ghost" href="https://github.com/yekam97/padbox">Ver el código en GitHub</a>
+      </div>
+      <div class="meta">Archivo .zip de 3,4 MB · No necesita instalación ni internet</div>
+    </div>
+    <div class="shot"><img src="captura-musica.png" alt="PadBox en modo Música con el preset Batería rock" width="1672" height="1196"></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Dos modos, un solo pad para cambiar</h2>
+    <p class="sub">El pad 1 cambia entre Música y Oficina, y los pads 2 y 3 pasan al preset anterior y al siguiente. Al cambiar aparece un aviso pequeño con el nombre del preset, y si tu controlador lo permite, los pads se pintan con sus colores.</p>
+    <div class="modes">
+      <div class="card">
+        <span class="tag music">Música</span>
+        <h3>Toca, haz bucles y crea</h3>
+        <p>Cada preset tiene su propio ritmo en el pad 4, su instrumento, su tonalidad y su batería.</p>
+        <ul class="list">
+          <li>Batería rock, cumbia, cumbia villera, vallenato, cumbia rebajada</li>
+          <li>Acordeón, piano, saxofón, guitarra blues, dubstep</li>
+          <li>«Drum Pad EDM»: bucles sincronizados como en las apps de drum pad</li>
+          <li>Tus propios sonidos: arrastra un mp3 o wav sobre un pad</li>
+          <li>Funciona con FL Studio, Ableton y otros DAW</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag office">Oficina</span>
+        <h3>Atajos con un toque</h3>
+        <p>Cada grupo de funciones tiene su color para encontrarlo de un vistazo.</p>
+        <ul class="list">
+          <li>Escritorio: copiar, pegar, ventanas, captura, música y volumen</li>
+          <li>Navegador: pestañas, atrás, recargar, zoom</li>
+          <li>OBS: grabar, transmitir, escenas, micrófono</li>
+          <li>Photoshop, Illustrator y Word/Excel</li>
+          <li>Cualquier atajo, texto o programa que quieras</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="gallery">
+      <figure><div class="shot"><img src="captura-oficina.png" alt="Modo Oficina con el preset Escritorio y sus grupos de colores" width="1672" height="1196" loading="lazy"></div>
+        <figcaption>Modo Oficina: atajos de Windows agrupados por color.</figcaption></figure>
+      <figure><div class="shot"><img src="captura-edm.png" alt="Preset Drum Pad EDM con bucles de batería, bajos, acordes, melodías y efectos" width="1672" height="1196" loading="lazy"></div>
+        <figcaption>Drum Pad EDM: 13 sonidos originales con bucles sincronizados.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="empezar">
+  <div class="wrap">
+    <h2>Empieza en un minuto</h2>
+    <p class="sub">PadBox es portátil: todo vive en su carpeta, incluida tu configuración.</p>
+    <div class="steps">
+      <div class="step"><h3>Descarga y descomprime</h3><p>Guarda la carpeta donde quieras, por ejemplo en Documentos.</p></div>
+      <div class="step"><h3>Conecta tu controlador</h3><p>Por USB. PadBox reconoce los modelos de la lista solo.</p></div>
+      <div class="step"><h3>Abre PadBox.exe</h3><p>¿Otro modelo? Elige «Otro controlador» y pulsa «Detectar pads».</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compatibles">
+  <div class="wrap">
+    <h2>Controladores compatibles</h2>
+    <p class="sub">Funciona con cualquier controlador MIDI de 8 o 16 pads. Estos modelos tienen perfil propio:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Controlador</th><th>Pads</th><th>Colores en los pads</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>M-VAVE SMC-PAD Pocket</td><td>16</td><td>RGB por pad</td><td class="ok">Probado</td></tr>
+          <tr><td>M-VAVE SMC-PAD</td><td>16</td><td>—</td><td class="pending">Sin probar</td></tr>
+          <tr><td>M-VAVE SMK-25 / SMK-37</td><td>8</td><td>—</td><td class="pending">Sin probar</td></tr>
+          <tr><td>Akai MPD218 / MPD226 / MPD232</td><td>16</td><td>—</td><td class="pending">Sin probar</td></tr>
+          <tr><td>Akai LPD8 · Akai MPK Mini</td><td>8</td><td>—</td><td class="pending">Sin probar</td></tr>
+          <tr><td>Novation Launchpad X · Mini MK3 · Pro MK3</td><td>16 (bloque 4×4)</td><td>RGB por pad</td><td class="pending">Sin probar</td></tr>
+          <tr><td>Cualquier otro controlador MIDI</td><td>8 o 16</td><td>—</td><td>Con «Detectar pads»</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="meta">«Sin probar»: el perfil se hizo con la documentación del fabricante. Si tienes uno de esos modelos, cuéntanos cómo te va en GitHub.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="note">
+      <strong>¿Windows muestra «Windows protegió tu PC»?</strong> Pasa con los programas nuevos que aún no tienen firma digital. Pulsa <em>Más información</em> → <em>Ejecutar de todas formas</em>. Algunos antivirus también desconfían de los programas que simulan teclas, que es lo que hace el modo Oficina. Todo el código está publicado en GitHub para que cualquiera lo revise.
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <p>PadBox 1.0.0 · Licencia MIT · Hecho por <a href="/">Yeison Camilo Gamba</a></p>
+    <p>Los colores del SMC-PAD Pocket usan la documentación del protocolo de M-VAVE del proyecto <a href="https://github.com/krisvandecruys/DiscoFloor">DiscoFloor</a>. Los del Launchpad usan el protocolo público de Novation.</p>
+    <p>PadBox no está afiliado a M-VAVE, Akai, Novation, OBS, Adobe ni Microsoft.</p>
+    <p lang="en">English: PadBox turns any MIDI pad controller into an instrument and a Windows shortcut panel. Free, portable, open source.</p>
+  </footer>
+</div>
+</body>
+</html>
