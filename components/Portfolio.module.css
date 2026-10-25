@@ -150,6 +150,40 @@
     color: var(--secondary);
 }
 
+/* Cifras clave bajo el resumen: llenan la tarjeta con datos concretos */
+.storyStats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+    list-style: none;
+    padding: var(--spacing-4) 0;
+    margin: 0;
+    border-top: 1px solid var(--outline);
+    border-bottom: 1px solid var(--outline);
+}
+
+.storyStats li,
+.resultsGrid li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.storyStats strong,
+.resultsGrid strong {
+    font-family: var(--ff-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.storyStats span,
+.resultsGrid span {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--secondary);
+}
+
 .storyFooter {
     display: flex;
     align-items: center;
@@ -191,6 +225,16 @@
 
     .storyContent {
         max-width: none;
+    }
+
+    .storyStats,
+    .resultsGrid {
+        gap: var(--spacing-3);
+    }
+
+    .storyStats strong,
+    .resultsGrid strong {
+        font-size: 1.3rem;
     }
 
     .navArrow {
@@ -370,6 +414,35 @@
     font-size: 0.95rem;
     line-height: 1.6;
     color: var(--secondary);
+}
+
+.caption {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--secondary);
+    text-align: center;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.results h3 {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.resultsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* Enlaces del proyecto (descarga, código) */
