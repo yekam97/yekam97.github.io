@@ -15,13 +15,17 @@ Portafolio profesional de **Yeison Camilo Gamba Gonzalez**, Diseñador Industria
 ## Estructura
 
 ```
-components/     Componentes de UI (Hero, Portfolio, Experience, Contact, etc.)
+components/     Componentes de UI (Hero, Portfolio, Experience, Contact, Stage, MascotaRig, ...)
 context/        LanguageContext — sistema de idioma ES/EN
-lib/            Diccionario de traducciones
-pages/          Rutas de Next.js (Pages Router)
-public/         Assets estáticos, imágenes, diplomas, favicon
+lib/            Datos compartidos (experience, projects, education) y utilidades
+pages/          Rutas: / , /trayectoria , /estudios , /proyectos/<slug>
+public/         Assets estáticos (imágenes, diplomas, favicon, /padbox)
+assets/mascota/ Ilustraciones vectoriales de la mascota (ver su README)
 docs/           Notas y bitácoras de desarrollo (histórico, no forma parte del sitio)
 ```
+
+La página principal muestra solo resúmenes cortos; el detalle vive en subpáginas
+(`/trayectoria`, `/estudios`, `/proyectos/<slug>`), enlazadas con botones.
 
 ## Desarrollo local
 
@@ -32,12 +36,18 @@ npm run dev
 
 Abre [http://localhost:3000](http://localhost:3000).
 
-## Build de producción
+## Build y despliegue
+
+El sitio se exporta como HTML estático (`output: 'export'` en `next.config.js`) y se publica en
+GitHub Pages con un workflow de GitHub Actions (`.github/workflows/deploy.yml`) en cada push a `main`.
 
 ```bash
-npm run build
-npm run start
+npm run build      # genera la carpeta out/
+npx serve out      # (opcional) previsualizar el resultado
 ```
+
+**Configuración única en GitHub:** Settings -> Pages -> *Build and deployment* -> **Source: GitHub Actions**.
+Sin eso, Pages sigue sirviendo el repositorio con Jekyll (mostrando solo este README).
 
 ## Idiomas
 

@@ -59,12 +59,12 @@ const LAYOUTS = {
   },
   contact: {
     dark: true,
-    tint: ['rgba(255,255,255,0.07)', 'rgba(174,61,13,0.45)'],
+    tint: ['rgba(0,0,0,0.14)', 'rgba(204,2,0,0.6)'],
     shapes: [
       { t: 'sparkle', x: 82, y: 10, s: 54, c: C.sun, d: -38 },
       { t: 'ring', x: 8, y: 34, s: 42, c: C.light, d: 28 },
-      { t: 'plus', x: 14, y: 76, s: 38, c: C.primary, d: -24 },
-      { t: 'bolt', x: 86, y: 58, s: 74, c: C.coral, d: 32, r: -8 },
+      { t: 'plus', x: 14, y: 76, s: 38, c: 'var(--bg)', d: -24 },
+      { t: 'bolt', x: 86, y: 58, s: 74, c: 'var(--red)', d: 32, r: -8 },
       { t: 'dots', x: 66, y: 90, s: 48, c: C.light, d: 18 }
     ]
   }

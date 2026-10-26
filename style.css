@@ -1,55 +1,55 @@
-/* Editorial Curator — Design System
-   - North Star: editorial portfolio built around the scroll mascot video
-   - Foundation: the mascot clip's own studio-gray backdrop (#E4E4E4,
-     sampled from the video), warm near-black ink — bg matches the
-     video exactly so it blends into the page instead of sitting in a
-     visible rectangle
-   - Accent: a vivid, saturated color per project category — punchier
-     than a muted/pastel palette, still checked for WCAG AA contrast
-     (re-verified against the gray bg — slightly deeper than the old
-     cream-background versions to hold 4.5:1+)
+/* Design System — dark theme
+   - Foundation: near-black page (#0F0F0F) with white type
+   - Brand colours, taken from the reference UI: electric green #01D67C
+     (primary; always paired with near-black text) and signal red #CC0200
+     (secondary; solid blocks with white text, lighter #FF4D3D when it has
+     to be read as text on the dark page)
+   - Category accents are variations of those two + white, each checked
+     for contrast against the page
    - Typography: Fraunces (display serif) & Inter (body sans)
 */
 
 :root {
   /* Surfaces */
-  --bg: #E4E4E4;
-  --bg-alt: #D9D9D9;
-  --surface: #FFFFFF;
-  --surface-low: #ECECEC;
-  --surface-high: #FFFFFF;
-  --surface-highest: #DCDCDC;
+  --bg: #0F0F0F;
+  --bg-alt: #161616;
+  --surface: #1A1A1A;
+  --surface-low: #141414;
+  --surface-high: #222222;
+  --surface-highest: #2B2B2B;
 
   /* Ink */
-  --ink: #1F1B16;
-  --secondary: #4A423A;
-  --muted: #6B6152;
-  --outline: rgba(31, 27, 22, 0.14);
-  --outline-strong: rgba(31, 27, 22, 0.26);
+  --ink: #FFFFFF;
+  --secondary: #CFCFCF;
+  --muted: #9C9C9C;
+  --outline: rgba(255, 255, 255, 0.13);
+  --outline-strong: rgba(255, 255, 255, 0.28);
 
-  /* Primary accent (vivid burnt-orange/red) */
-  --primary: #AE3D0D;
-  --primary-soft: #F5E1D8;
-  --on-primary: #FFFFFF;
+  /* Primary (green) + secondary (red) */
+  --primary: #01D67C;
+  --primary-soft: rgba(1, 214, 124, 0.14);
+  --on-primary: #06140D;
+  --red: #CC0200;
+  --red-text: #FF4D3D;
+  --on-red: #FFFFFF;
 
-  /* Category accents — one vivid color per project discipline. Each
-     checked ≥4.5:1 against both --bg and white (for use as a filled
-     background with white text). */
-  --accent-industrial: #AE3D0D;
-  --accent-industrial-tint: #F5E1D8;
-  --accent-uxui: #0C7166;
-  --accent-uxui-tint: #D8E9E7;
-  --accent-branding: #965208;
-  --accent-branding-tint: #EFE4D7;
-  --accent-mentoring: #496F11;
-  --accent-mentoring-tint: #E2E9D9;
-  --accent-software: #5B3FD6;
-  --accent-software-tint: #E6E1F7;
+  /* Category accents — used as text/borders on the dark page (all >= 4.5:1),
+     with a dark tint for the carousel band behind each project. */
+  --accent-industrial: #01D67C;
+  --accent-industrial-tint: #0B2A1E;
+  --accent-uxui: #FF4D3D;
+  --accent-uxui-tint: #2C100E;
+  --accent-branding: #F2F2F2;
+  --accent-branding-tint: #202020;
+  --accent-mentoring: #7DF5BF;
+  --accent-mentoring-tint: #10261C;
+  --accent-software: #FF8A7A;
+  --accent-software-tint: #2B1613;
 
   /* Illustration-only colours (decorative shapes in the big stages) —
      never used for text, so no contrast requirement */
-  --sun: #F4B400;
-  --coral: #FF6B4A;
+  --sun: #F2F2F2;
+  --coral: #FF4D3D;
 
   /* Border Radii — restrained, editorial (not pill-heavy) */
   --radius-lg: 6px;
@@ -64,9 +64,11 @@
   /* Spacing */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
   --spacing-4: 1rem;
   --spacing-6: 2rem;
   --spacing-8: 2.75rem;
+  --spacing-10: 3.5rem;
   --spacing-12: 4rem;
   --spacing-16: 6rem;
 
@@ -176,17 +178,17 @@ ul {
   width: min(calc(100% - 2rem), 1600px);
   height: 62px;
   margin: 12px auto 0;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(22, 22, 22, 0.78);
   backdrop-filter: saturate(160%) blur(14px);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1.25rem;
-  box-shadow: 0 10px 30px rgba(31, 27, 22, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transition: transform 0.4s cubic-bezier(0.5, 0, 0, 1) 0.2s;
 }
 
@@ -211,7 +213,7 @@ ul {
   height: 1.75em;
   margin: -0.25em -1em -0.25em 0.9em;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.18);
   font-size: 0.95em;
   line-height: 1;
   transition: transform 0.5s cubic-bezier(0.5, 0, 0, 1), background 0.3s ease;
@@ -220,7 +222,7 @@ ul {
 a:hover > .btn-chip,
 button:hover > .btn-chip {
   transform: rotate(-45deg) scale(1.08);
-  background: rgba(255, 255, 255, 0.32);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 /* Hand-drawn underline: wrap the word in .squiggle-host and put a

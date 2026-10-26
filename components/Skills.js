@@ -154,13 +154,14 @@ const Skills = () => {
           <motion.div
             key={idx}
             className={styles.skillCard}
+            data-tone={idx % 2 === 0 ? 'green' : 'red'}
             variants={cardVariants}
             style={{ rotate: restingTilt[idx % restingTilt.length] }}
             whileHover={{ rotate: 0, scale: 1.045, y: -10 }}
             whileTap={{ rotate: 0, scale: 1.06, y: -6 }}
             transition={{ type: 'spring', stiffness: 320, damping: 22 }}
           >
-            <span className={styles.skillIcon} style={{ color: `var(--accent-${group.accent})`, background: `var(--accent-${group.accent}-tint)` }}>
+            <span className={styles.skillIcon}>
               {icons[group.icon]}
             </span>
             <span className={styles.skillLabel}>{group.label}</span>

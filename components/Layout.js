@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
@@ -12,8 +12,13 @@ import MagneticButton from './MagneticButton';
 import ScrollPath from './ScrollPath';
 import { scrollToId } from '@/lib/scroll';
 import Preloader from './Preloader';
+import { usePreloaderDone, finishPreloader } from '@/lib/preloader';
 
-export default function Layout({ children }) {
+// `subpage`: inner pages (trayectoria, estudios, proyectos/…) — no intro curtain,
+// no scroll thread, and the nav links go back to the matching section of the home page.
+export default function Layout({ children, subpage = false }) {
+  const router = useRouter();
+  const introDone = usePreloaderDone();
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
 
@@ -49,12 +54,30 @@ export default function Layout({ children }) {
 
   const handleNavClick = (e) => {
     e.preventDefault();
-    scrollToId(e.currentTarget.getAttribute('href').substring(1));
+    const id = (e.currentTarget.getAttribute('href').split('#')[1]) || 'hero';
+    if (subpage) router.push(id === 'hero' ? '/' : `/#${id}`);
+    else scrollToId(id);
   };
+
+  // The intro curtain is only for the first thing a visitor sees: if they land
+  // on an inner page first, don't replay it when they go back to the home page.
+  useEffect(() => {
+    if (subpage) finishPreloader();
+  }, [subpage]);
+
+  // Arriving on the home page with a #section (e.g. coming back from a subpage):
+  // scroll to it once the intro is out of the way and the sections have mounted.
+  useEffect(() => {
+    if (subpage || !introDone) return undefined;
+    const id = window.location.hash.slice(1);
+    if (!id) return undefined;
+    const timer = setTimeout(() => scrollToId(id), 450);
+    return () => clearTimeout(timer);
+  }, [subpage, introDone]);
 
   return (
     <>
-      <Preloader />
+      {!subpage && <Preloader />}
       <ScrollProgress />
 
       {/* Quiet paper-grain texture — replaces the old neon cursor glow /
@@ -74,65 +97,10 @@ export default function Layout({ children }) {
         }}
       />
 
-      <Head>
-        <title>Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta name="keywords" content="Diseño Industrial, UX, UI, Renderizado 3D, Innovación, Desarrollo Web, Diseño de Productos, Colombia, UPTC" />
-        <meta name="author" content="Yeison Camilo Gamba" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://yekam97.github.io/" />
-        <meta property="og:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
-        <meta property="og:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta property="og:image" content="https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png" />
-
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://yekam97.github.io/" />
-        <meta property="twitter:title" content="Yeison Camilo Gamba | Portafolio de Diseño Industrial & UX/UI" />
-        <meta property="twitter:description" content="Portafolio profesional de Yeison Camilo Gamba, Diseñador Industrial especializado en diseño de productos, experiencia de usuario (UX/UI), renderizado 3D y gestión de proyectos de innovación." />
-        <meta property="twitter:image" content="https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png" />
-
-        <link rel="canonical" href="https://yekam97.github.io/" />
-
-        {/* Structured data — helps recruiters/search engines resolve this
-            page to a Person profile instead of a generic website. */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: 'Yeison Camilo Gamba Gonzalez',
-              alternateName: 'Camilo Gamba',
-              jobTitle: 'Diseñador Industrial & Líder de Diseño',
-              url: 'https://yekam97.github.io/',
-              image: 'https://yekam97.github.io/images/Gemini_Generated_Image_5jzwlz5jzwlz5jzw.png',
-              email: 'mailto:yeisongamba97@gmail.com',
-              worksFor: {
-                '@type': 'Organization',
-                name: 'Imporelec'
-              },
-              alumniOf: {
-                '@type': 'CollegeOrUniversity',
-                name: 'Universidad Pedagógica y Tecnológica de Colombia'
-              },
-              sameAs: [
-                'https://www.linkedin.com/in/yeison-camilo-gamba-gonzalez-10776268/',
-                'https://www.instagram.com/creat3di/',
-                'https://www.behance.net/yeisongamba97',
-                'https://dribbble.com/camilog97'
-              ]
-            })
-          }}
-        />
-      </Head>
 
       <header ref={headerRef} className={`nav-glass ${navHidden ? 'nav-hidden' : ''}`}>
         <motion.a
-          href="#hero"
+          href={subpage ? '/' : '#hero'}
           onClick={handleNavClick}
           className="brand-logo"
           style={{ fontFamily: 'var(--ff-display)', fontStyle: 'italic', fontWeight: 600, fontSize: '1.3rem', color: 'var(--ink)', cursor: 'pointer' }}
@@ -143,10 +111,10 @@ export default function Layout({ children }) {
           YG
         </motion.a>
         <nav style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
-          <a href="#portfolio" className="nav-item" onClick={handleNavClick}>{t('proyectos')}</a>
-          <a href="#experiencia" className="nav-item" onClick={handleNavClick}>{t('trayectoria')}</a>
-          <a href="#roles" className="nav-item" onClick={handleNavClick}>{t('estudios')}</a>
-          <MagneticButton href="#contacto" className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }} strength={0.4}>
+          <a href={`${subpage ? '/' : ''}#portfolio`} className="nav-item" onClick={handleNavClick}>{t('proyectos')}</a>
+          <a href={`${subpage ? '/' : ''}#experiencia`} className="nav-item" onClick={handleNavClick}>{t('trayectoria')}</a>
+          <a href={`${subpage ? '/' : ''}#roles`} className="nav-item" onClick={handleNavClick}>{t('estudios')}</a>
+          <MagneticButton href={`${subpage ? '/' : ''}#contacto`} className="btn-neon" onClick={handleNavClick} style={{ height: '36px', padding: '0 1rem', fontSize: '0.7rem' }} strength={0.4}>
             {t('contacto')}
           </MagneticButton>
           <LanguageToggle />
@@ -155,7 +123,7 @@ export default function Layout({ children }) {
 
       <main ref={mainRef} style={{ position: 'relative', zIndex: 1, overflowX: 'clip' }}>
         {children}
-        <ScrollPath mainRef={mainRef} />
+        {!subpage && <ScrollPath mainRef={mainRef} />}
       </main>
 
       <Sticker />

@@ -2,7 +2,7 @@
     position: fixed;
     inset: 0;
     z-index: 1000000;
-    background: var(--ink);
+    background: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 .dot {
-    fill: var(--primary);
+    fill: var(--red);
 }
 
 /* The curtain's bottom edge: a half-ellipse hanging just below it, so
@@ -40,6 +40,6 @@
     right: 0;
     top: calc(100% - 1px);
     height: 12vh;
-    background: var(--ink);
+    background: var(--primary);
     border-radius: 0 0 50% 50% / 0 0 100% 100%;
 }

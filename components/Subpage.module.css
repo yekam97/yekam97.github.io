@@ -1,0 +1,183 @@
+.page {
+    padding-top: var(--spacing-8);
+    padding-bottom: var(--section-pad-y);
+}
+
+/* ---- header ---- */
+.header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: var(--spacing-12);
+    align-items: center;
+    padding: var(--spacing-8) 0 var(--spacing-12);
+}
+
+.headerText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--spacing-8);
+    transition: var(--transition);
+}
+
+.back:hover {
+    color: var(--primary);
+    transform: translateX(-4px);
+}
+
+.title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    font-weight: 600;
+    line-height: 1.05;
+    color: var(--ink);
+}
+
+.lead {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--secondary);
+    max-width: 34ch;
+    margin-top: var(--spacing-6);
+}
+
+.headerStage {
+    min-width: 0;
+}
+
+/* ---- footer ---- */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-6);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-16);
+    padding-top: var(--spacing-8);
+    border-top: 1px solid var(--outline);
+}
+
+.footerText {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--ink);
+    max-width: 18ch;
+}
+
+.footerCtas {
+    display: flex;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
+}
+
+/* ---- trayectoria: role cards ---- */
+.roles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.roleCard {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--spacing-6);
+    padding: var(--spacing-6) var(--spacing-8);
+    background: var(--surface);
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-lg);
+}
+
+.roleMeta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.rolePeriod {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+}
+
+.roleCompany {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-primary);
+    background: var(--primary);
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-pill);
+}
+
+.roleTitle {
+    font-family: var(--ff-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: var(--spacing-4);
+}
+
+.bullets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.bullets li {
+    position: relative;
+    padding-left: var(--spacing-6);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--secondary);
+}
+
+.bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* ---- estudios: two columns like the old home section ---- */
+.twoCols {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--spacing-12);
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .header {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-8);
+    }
+
+    .twoCols {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .roleCard {
+        grid-template-columns: 1fr;
+        padding: var(--spacing-6);
+    }
+}

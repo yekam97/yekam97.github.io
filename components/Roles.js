@@ -6,35 +6,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import styles from './Roles.module.css';
 
-const getRolesData = (language) => {
-  const isEn = language === 'en';
-  return [
-    {
-      category: isEn ? 'UNDERGRADUATE' : 'PREGRADO',
-      title: isEn ? 'Industrial Designer' : 'Diseñador Industrial',
-      description: isEn
-        ? 'Pedagogical and Technological University of Colombia. Professional oriented towards product development, innovation and functional solutions that integrate creativity, technology and sustainability. Strategic approach and prototyping.'
-        : 'Universidad Pedagógica y Tecnológica de Colombia. Profesional orientado al desarrollo de productos, innovación y soluciones funcionales que integran creatividad, tecnología y sostenibilidad. Enfoque estratégico y prototipado.',
-      pdfUrl: '/DIPLOMA PREGRADO.pdf'
-    },
-    {
-      category: isEn ? 'SPECIALIZATION' : 'ESPECIALIZACIÓN',
-      title: isEn ? 'Marketing Management Specialization' : 'Alta Gerencia en Mercadotecnia',
-      description: isEn
-        ? 'Pedagogical and Technological University of Colombia. Training in market strategy design, positioning and business models. Strategic marketing management and entrepreneurship strengthening.'
-        : 'Universidad Pedagógica y Tecnológica de Colombia. Formación en diseño de estrategias de mercado, posicionamiento y modelos de negocio. Gestión estratégica del marketing y fortalecimiento de emprendimientos.',
-      pdfUrl: '/DIPLOMA DE GRADO ESPECIALIZACIÓN.pdf'
-    },
-    {
-      category: isEn ? 'MASTER\'S' : 'MAESTRÍA',
-      title: isEn ? 'Sustainable Development Projects' : 'Proyectos de Desarrollo Sostenible',
-      description: isEn
-        ? 'Master\'s with focus on formulation, management and evaluation of territorial projects and social innovation. Integration of economic, environmental and social impact for sustainable solutions.'
-        : 'Magíster con enfoque en la formulación, gestión y evaluación de proyectos territoriales e innovación social. Integración de impacto económico, ambiental y social para soluciones sostenibles.',
-      pdfUrl: '/DIPLOMA DE MAESTRIA.pdf'
-    }
-  ];
-};
+import { getRolesData } from '@/lib/education';
 
 const gridVariants = {
   hidden: { opacity: 0 },
@@ -58,9 +30,9 @@ const cardVariants = {
 // A gentle, cursor-tracked 3D tilt — the card leans away from the
 // pointer like a diploma held up to the light, rather than just
 // lifting straight up.
-const RoleCard = ({ role, t, language }) => {
+const RoleCard = ({ role, t, language, full }) => {
   const cardRef = useRef(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(full);
   // Short by default (first sentence = the institution); the rest is one click away
   const cut = role.description.indexOf('. ');
   const short = cut === -1 ? role.description : role.description.slice(0, cut + 1);
@@ -96,7 +68,7 @@ const RoleCard = ({ role, t, language }) => {
       <span className={styles.facetLabel}>{role.category}</span>
       <h3 className={styles.facetTitle}>{role.title}</h3>
       <p className={styles.facetDescription}>{open && rest ? `${short} ${rest}` : short}</p>
-      {rest && (
+      {rest && !full && (
         <button type="button" className={styles.moreBtn} onClick={() => setOpen((v) => !v)} aria-expanded={open}>
           {open ? (language === 'es' ? 'Menos ▴' : 'Less ▴') : (language === 'es' ? 'Leer más ▾' : 'Read more ▾')}
         </button>
@@ -110,7 +82,7 @@ const RoleCard = ({ role, t, language }) => {
   );
 };
 
-const Roles = () => {
+const Roles = ({ full = false }) => {
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
   const rolesData = getRolesData(language);
@@ -136,7 +108,7 @@ const Roles = () => {
           viewport={{ once: true, amount: 0.15 }}
         >
           {rolesData.map((role, idx) => (
-            <RoleCard key={idx} role={role} t={t} language={language} />
+            <RoleCard key={idx} role={role} t={t} language={language} full={full} />
           ))}
         </motion.div>
       </motion.div>

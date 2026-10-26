@@ -8,12 +8,12 @@
     /* Frosted glass — translucent + blurred instead of a flat fill,
        so the scroll mascot (and anything else behind main) shows
        through softly rather than being hidden flat. */
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: var(--spacing-8);
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition);
     height: 100%;
     display: flex;
@@ -22,9 +22,9 @@
 }
 
 .facetCard:hover {
-    background-color: rgba(255, 255, 255, 0.68);
-    border-color: rgba(193, 68, 14, 0.35);
-    box-shadow: 0 15px 30px rgba(193, 68, 14, 0.1);
+    background-color: rgba(255, 255, 255, 0.09);
+    border-color: rgba(1, 214, 124, 0.45);
+    box-shadow: 0 15px 30px rgba(1, 214, 124, 0.08);
 }
 
 .facetLabel {
@@ -89,9 +89,6 @@
         font-size: 1.3rem;
     }
 
-    .facetDescription {
-        display: none;
-    }
 
     .pdfLink {
         font-size: 0.75rem;

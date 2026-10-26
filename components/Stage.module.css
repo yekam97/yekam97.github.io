@@ -70,11 +70,11 @@
 .mascot {
     height: 100%;
     aspect-ratio: var(--aspect);
-    filter: drop-shadow(0 22px 26px rgba(31, 27, 22, 0.22));
+    filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.55));
 }
 
 .dark .mascot {
-    filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.4));
 }
 
 /* ---- sticker chips ---- */
@@ -88,7 +88,7 @@
     display: inline-block;
     padding: 0.5rem 0.95rem;
     border-radius: var(--radius-pill);
-    background: #fff;
+    background: var(--surface);
     color: var(--ink);
     border: 2px solid var(--chip, var(--primary));
     font-size: 0.72rem;
@@ -96,7 +96,7 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     white-space: nowrap;
-    box-shadow: 0 10px 22px rgba(31, 27, 22, 0.14);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5);
     animation: stage-float 5s ease-in-out infinite;
 }
 
