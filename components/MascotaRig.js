@@ -2,18 +2,18 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
-import { PROFILES, autoWave, hopEnvelope } from '@/lib/mascotaMotion';
+import { PROFILES, hopEnvelope } from '@/lib/mascotaMotion';
 
 // The mascot as a vector rig (see assets/mascota/README.md). Three poses,
 // each split into body parts that rotate around their own joints:
 //   salto    — mid-air jump
 //   pensando — hand on chin, one leg kicked up
-//   parado   — standing, front view (waves hello)
+//   parado   — standing, front view
 //
 // - The vector data (~120-150 KB per pose) is only fetched once the mascot
 //   is within ~1500px of the viewport, so it never weighs on first load.
 // - Idle: a gentle float with limbs/head swaying. `hop` triggers a short
-//   reaction (jump / wave / "idea!"), used by hover on a nearby button.
+//   reaction (jump / bounce / "idea!"), used by hover on a nearby button.
 // - Reduced motion: renders the still pose, no loop.
 // - The white "die-cut sticker" edge is an SVG filter (dilate + white), so
 //   it follows every limb as it moves.
@@ -92,7 +92,7 @@ export default function MascotaRig({ pose = 'salto', hop = false, flip = false, 
       if (visible) {
         const t = (now - t0) / 1000;
         const h = hopEnvelope(now, hopStart.current);
-        const out = profile({ t, h, piv, wave: pose === 'parado' ? autoWave(t) : 0, u });
+        const out = profile({ t, h, piv, u });
         for (const id in out) {
           if (g[id]) g[id].setAttribute('transform', out[id]);
         }

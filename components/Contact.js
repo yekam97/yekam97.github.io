@@ -64,8 +64,8 @@ const Contact = () => {
       className={styles.ctaSection}
       style={reduce ? undefined : { clipPath }}
     >
-      {/* Big illustrated stage: the standing mascot waves hello and reacts
-          (a bigger wave) while the CTA is hovered or focused. */}
+      {/* Big illustrated stage: the standing mascot breathes calmly and gives a
+          small bounce while the CTA is hovered or focused. */}
       <div className={styles.stageBox}>
         <Stage pose="parado" variant="contact" hop={hop} height="520px" />
       </div>

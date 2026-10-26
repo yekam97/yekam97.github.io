@@ -5,7 +5,7 @@ Sustituyen al video de fondo que seguía el scroll.
 
 | Pose | Carpeta | Partes | Dónde se usa |
 | --- | --- | --- | --- |
-| De pie (saluda) | `parado/` | 11 | Hero y Contacto |
+| De pie | `parado/` | 11 | Hero y Contacto |
 | Pensando | `pensando/` | 9 | Habilidades |
 | Salto | `salto/` | 8 | Trayectoria |
 
@@ -34,7 +34,7 @@ no quede un hueco.
   velocidad vertical), en vez de oscilar cada uno por su cuenta; lo que toca algo (la mano en el mentón) usa
   **exactamente la misma transformación** que eso, para no destapar lo que hay debajo; solo los gestos
   (saludo, salto) son grandes y entran/salen suavizados.
-  - `parado`: respira y saluda cada ~8 s (brazo arriba, antebrazo oscilando); al pasar el mouse por un botón cercano saluda y rebota.
+  - `parado`: solo respira y se mece muy poco; al pasar el mouse por un botón cercano da un pequeño rebote (sin saludo: se veía raro).
   - `pensando`: flota, la pierna en alto y la otra se mecen suave; cabeza y mano se mueven juntas.
   - `salto`: flota; brazos y piernas arrastran el movimiento; en el "hop" suben los brazos.
 - `components/Stage.js` compone la escena grande: blobs orgánicos + formas flotantes (`components/Shapes.js`) +
