@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import MagneticButton from './MagneticButton';
+import ArrowChip from './ArrowChip';
+import PopIn from './PopIn';
 import styles from './Contact.module.css';
 import ContactModal from './ContactModal';
 
@@ -40,12 +42,37 @@ const socialItem = {
 
 const Contact = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Hovering the CTA makes the mascot hop (the reference site's
+  // callout: hovering its button sets the whole block "active").
+  const [hop, setHop] = useState(false);
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
   const titleText = t('construyamos');
 
   return (
     <section id="contacto" className={styles.ctaSection}>
+      {/* Decorative sticker: elastic pop-in on scroll, idle float, and a
+          hop while the CTA is hovered/focused. */}
+      <PopIn className={styles.mascot} fromX="14%" delay={0.35} amount={0.2}>
+        <motion.img
+          src="/images/mascota-salto.webp"
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className={styles.mascotImg}
+          animate={
+            hop
+              ? { y: [0, -38, 0], rotate: [0, -7, 4, 0] }
+              : { y: [0, -8, 0], rotate: [0, 1.5, 0] }
+          }
+          transition={
+            hop
+              ? { duration: 0.65, ease: 'easeOut' }
+              : { duration: 3.6, repeat: Infinity, ease: 'easeInOut' }
+          }
+        />
+      </PopIn>
+
       <motion.div
         className={styles.ctaContent}
         initial={{ opacity: 0, scale: 0.98 }}
@@ -71,8 +98,13 @@ const Contact = () => {
           onClick={() => setIsModalOpen(true)}
           className={styles.blackBtn}
           strength={0.3}
+          onHoverStart={() => setHop(true)}
+          onHoverEnd={() => setHop(false)}
+          onFocus={() => setHop(true)}
+          onBlur={() => setHop(false)}
         >
           {language === 'es' ? 'PONTE EN CONTACTO' : 'GET IN TOUCH'}
+          <ArrowChip />
         </MagneticButton>
       </motion.div>
 

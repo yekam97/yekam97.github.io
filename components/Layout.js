@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
@@ -10,10 +10,40 @@ import Sticker from './Sticker';
 import LanguageToggle from './LanguageToggle';
 import MagneticButton from './MagneticButton';
 import ScrollMascot from './ScrollMascot';
+import Preloader from './Preloader';
 
 export default function Layout({ children }) {
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
+
+  // The bar slides away while you scroll down and comes back as soon as
+  // you scroll up (same behavior as the reference site's floating menu).
+  // It never hides near the top of the page, nor while keyboard focus is
+  // inside it.
+  const headerRef = useRef(null);
+  const [navHidden, setNavHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let hidden = false;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const dy = y - lastY;
+      if (Math.abs(dy) < 8) return; // ignore tiny jitters
+      lastY = y;
+
+      const focusInside = headerRef.current?.contains(document.activeElement);
+      const next = y > 160 && dy > 0 && !focusInside;
+      if (next !== hidden) {
+        hidden = next;
+        setNavHidden(next);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const handleNavClick = (e) => {
     e.preventDefault();
@@ -26,6 +56,7 @@ export default function Layout({ children }) {
 
   return (
     <>
+      <Preloader />
       <ScrollProgress />
       <ScrollMascot />
 
@@ -102,7 +133,7 @@ export default function Layout({ children }) {
         />
       </Head>
 
-      <header className="nav-glass">
+      <header ref={headerRef} className={`nav-glass ${navHidden ? 'nav-hidden' : ''}`}>
         <motion.a
           href="#hero"
           onClick={handleNavClick}

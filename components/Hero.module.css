@@ -129,6 +129,20 @@
   color: var(--primary);
 }
 
+/* One clipped "mask" per headline line; the line inside slides up from
+   below it. The extra bottom padding (cancelled by the negative margin)
+   keeps descenders and the squiggle from being cut by the clip. */
+.lineMask {
+  display: block;
+  overflow: hidden;
+  padding: 0.04em 0.12em 0.2em 0;
+  margin-bottom: -0.2em;
+}
+
+.line {
+  display: block;
+}
+
 .description {
   font-family: var(--ff-body);
   font-size: 1.1rem;

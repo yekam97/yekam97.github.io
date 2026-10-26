@@ -1,9 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useSpring, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import Squiggle from './Squiggle';
 import styles from './Experience.module.css';
+
+// Hand-drawn wavy vertical line (in px, so it never gets stretched) that
+// runs down the milestone list and "draws" itself as you scroll — the
+// reference site's scroll-driven path.
+const WAVE_X = 8;
+const buildWave = (h) => {
+  if (!h) return `M${WAVE_X} 0`;
+  const step = 110;
+  let d = `M${WAVE_X} 0`;
+  for (let y = 0, i = 0; y < h; y += step, i++) {
+    const s = i % 2 === 0 ? 1 : -1;
+    const y2 = Math.min(y + step, h);
+    const len = y2 - y;
+    d += ` C ${WAVE_X + 5 * s} ${y + len / 3}, ${WAVE_X - 5 * s} ${y + (2 * len) / 3}, ${WAVE_X} ${y2}`;
+  }
+  return d;
+};
 
 // Full, untouched experience data — identical figures/dates/companies as
 // before. Only the layout changed: a short "milestones" summary is shown
@@ -182,35 +200,95 @@ const Experience = () => {
   const experienceData = getExperienceData(language);
   const milestones = getMilestones(language);
   const [expanded, setExpanded] = useState(false);
+  const reduce = useReducedMotion();
+
+  // Scroll-drawn timeline line: it draws as the list scrolls through the
+  // viewport, and each milestone's dot lights up once the line reaches it.
+  const timelineRef = useRef(null);
+  const rowRefs = useRef([]);
+  const [dims, setDims] = useState({ h: 0, fracs: [] });
+  const [lit, setLit] = useState(0);
+
+  useEffect(() => {
+    const el = timelineRef.current;
+    if (!el) return undefined;
+    const measure = () => {
+      const h = el.offsetHeight;
+      const fracs = rowRefs.current.map((r) => (r && h ? (r.offsetTop + 26) / h : 1));
+      setDims((prev) =>
+        prev.h === h && prev.fracs.length === fracs.length && prev.fracs.every((f, i) => Math.abs(f - fracs[i]) < 0.001)
+          ? prev
+          : { h, fracs }
+      );
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 70%', 'end 60%'] });
+  const draw = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.4 });
+  useMotionValueEvent(draw, 'change', (v) => {
+    const n = dims.fracs.filter((f) => f <= v).length;
+    setLit((prev) => (prev === n ? prev : n));
+  });
+  const litCount = reduce ? milestones.length : lit;
+  const wave = buildWave(dims.h);
+
+  const headingWords = language === 'es' ? ['Trayectoria', 'Profesional'] : ['Professional', 'Trajectory'];
 
   return (
     <section id="experiencia" className="container section-padding">
       <span className="label-md">{language === 'es' ? 'Cronología' : 'Timeline'}</span>
-      <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-10)' }}>
-        {language === 'es' ? 'Trayectoria Profesional' : 'Professional Trajectory'}
+      <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>
+        {headingWords[0]}{' '}
+        <span className="squiggle-host">
+          {headingWords[1]}
+          <Squiggle />
+        </span>
       </h2>
 
       {/* Milestones — one line each, quiet index-page rhythm */}
-      <motion.ol
-        className={styles.milestoneList}
-        variants={listVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {milestones.map((m) => {
-          const exp = experienceData[m.idx];
-          return (
-            <motion.li key={m.idx} className={styles.milestoneRow} variants={rowVariants}>
-              <span className={styles.milestonePeriod}>{exp.period}</span>
-              <span className={styles.milestoneRole}>
-                {exp.role} <span className={styles.milestoneCompany}>· {exp.company}</span>
-              </span>
-              <span className={styles.milestoneHeadline}>{m.headline}</span>
-            </motion.li>
-          );
-        })}
-      </motion.ol>
+      <div className={styles.timeline} ref={timelineRef}>
+        <svg
+          className={styles.timelineSvg}
+          width="16"
+          height={dims.h}
+          viewBox={`0 0 16 ${dims.h || 1}`}
+          aria-hidden="true"
+        >
+          <path d={wave} className={styles.timelineTrack} />
+          <motion.path d={wave} className={styles.timelineFill} style={{ pathLength: reduce ? 1 : draw }} />
+        </svg>
+
+        <motion.ol
+          className={styles.milestoneList}
+          variants={listVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {milestones.map((m, i) => {
+            const exp = experienceData[m.idx];
+            return (
+              <motion.li
+                key={m.idx}
+                ref={(el) => { rowRefs.current[i] = el; }}
+                className={styles.milestoneRow}
+                variants={rowVariants}
+              >
+                <span className={`${styles.node} ${i < litCount ? styles.nodeLit : ''}`} aria-hidden="true" />
+                <span className={styles.milestonePeriod}>{exp.period}</span>
+                <span className={styles.milestoneRole}>
+                  {exp.role} <span className={styles.milestoneCompany}>· {exp.company}</span>
+                </span>
+                <span className={styles.milestoneHeadline}>{m.headline}</span>
+              </motion.li>
+            );
+          })}
+        </motion.ol>
+      </div>
 
       <button
         className={styles.expandToggle}

@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
+import { usePreloaderDone } from '@/lib/preloader';
 import MagneticButton from './MagneticButton';
+import ArrowChip from './ArrowChip';
+import Squiggle from './Squiggle';
 import Stats from './Stats';
 import styles from './Hero.module.css';
 
@@ -25,9 +28,29 @@ const itemVariants = {
   }
 };
 
+// Headline reveal: each line sits in its own clipped mask and slides up
+// from below it (the reference site's line-by-line title reveal).
+const titleVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.13 } }
+};
+
+const lineVariants = {
+  hidden: { y: '115%' },
+  visible: { y: '0%', transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
+};
+
+const getTitleLines = (language) =>
+  language === 'es'
+    ? [{ text: 'Donde las' }, { text: 'ideas', italic: true }, { text: 'tomaron forma.' }]
+    : [{ text: 'Where' }, { text: 'ideas', italic: true }, { text: 'came to life.' }];
+
 const Hero = () => {
   const { language } = useLanguage();
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
+  // The entrance waits for the intro curtain; if the intro isn't playing
+  // (reduced motion, phones) this is already true on the first render.
+  const ready = usePreloaderDone();
 
   return (
     <section id="hero" className={`container ${styles.heroSection}`}>
@@ -38,7 +61,7 @@ const Hero = () => {
         className={styles.textColumn}
         variants={containerVariants}
         initial="hidden"
-        animate="visible"
+        animate={ready ? 'visible' : 'hidden'}
       >
         <motion.div variants={itemVariants} className={styles.availabilityBadge}>
           <span className={styles.pulseDot} />
@@ -49,20 +72,21 @@ const Hero = () => {
 
         <motion.span variants={itemVariants} className={styles.label}>{t('diseñador')}</motion.span>
 
-        <motion.h1 variants={itemVariants} className={styles.title}>
-          {language === 'es' ? (
-            <>
-              Donde las <br />
-              <span className={styles.italic}>ideas</span> <br />
-              tomaron forma.
-            </>
-          ) : (
-            <>
-              Where <br />
-              <span className={styles.italic}>ideas</span> <br />
-              came to life.
-            </>
-          )}
+        <motion.h1 variants={titleVariants} className={styles.title}>
+          {getTitleLines(language).map((line) => (
+            <span key={line.text} className={styles.lineMask}>
+              <motion.span variants={lineVariants} className={styles.line}>
+                {line.italic ? (
+                  <span className={`${styles.italic} squiggle-host`}>
+                    {line.text}
+                    <Squiggle play={ready} delay={1.1} />
+                  </span>
+                ) : (
+                  line.text
+                )}
+              </motion.span>
+            </span>
+          ))}
         </motion.h1>
 
         <motion.p variants={itemVariants} className={styles.description}>
@@ -76,6 +100,7 @@ const Hero = () => {
         <motion.div variants={itemVariants} className={styles.ctaGroup}>
           <MagneticButton href="#contacto" className="btn-neon">
             {language === 'es' ? 'Enviar Mensaje' : 'Send Message'}
+            <ArrowChip />
           </MagneticButton>
           <MagneticButton
             href="/cv-yeison-camilo-gamba.pdf"

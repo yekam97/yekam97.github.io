@@ -1,0 +1,45 @@
+.curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+}
+
+.markWrap {
+    width: clamp(120px, 14vw, 190px);
+}
+
+.mark {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+
+.stroke {
+    stroke: var(--bg);
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.dot {
+    fill: var(--primary);
+}
+
+/* The curtain's bottom edge: a half-ellipse hanging just below it, so
+   the lifting edge is curved instead of a flat line. Sits off-screen
+   (top: 100%) until the curtain starts moving. */
+.lip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% - 1px);
+    height: 12vh;
+    background: var(--ink);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}

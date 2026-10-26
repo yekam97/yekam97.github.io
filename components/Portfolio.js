@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
+import Squiggle from './Squiggle';
 import styles from './Portfolio.module.css';
 
 const getProjects = (language) => {
@@ -347,7 +348,12 @@ const Portfolio = () => {
     return (
         <section id="portfolio">
             <div className="container" style={{ marginBottom: 'var(--spacing-12)' }}>
-                <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>{t('proyectos')}</h2>
+                <h2 className="newsreader" style={{ fontSize: '3.5rem' }}>
+                    <span className="squiggle-host">
+                        {t('proyectos')}
+                        <Squiggle />
+                    </span>
+                </h2>
                 <p className="description" style={{ marginTop: '0.5rem' }}>{t('descripcion_proyectos')}</p>
             </div>
 
