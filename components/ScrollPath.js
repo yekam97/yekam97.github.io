@@ -22,13 +22,14 @@ const SAMPLES = 900;      // path samples used to map scroll -> drawn length
 const HEAD_AT = 0.6;      // viewport fraction where the drawing head sits
 
 // Which direct children of <main> share one lane (hero+rail, skills, ...)
-const GROUPS = [[0, 1], [2], [3], [4], [5, 6], [7]];
+// hero, rail | skills | portfolio | experience | education | contact
+const GROUPS = [[0, 1], [2], [3], [4], [5], [6]];
 
 const num = (v) => parseFloat(v) || 0;
 
 function measure(main) {
   const kids = [...main.children].filter((el) => el.dataset.pathIgnore !== 'true');
-  const groups = kids.length === 8 ? GROUPS : kids.map((_, i) => [i]);
+  const groups = kids.length === 7 ? GROUPS : kids.map((_, i) => [i]);
   const base = main.getBoundingClientRect().top + window.scrollY;
 
   return groups.map((ids, gi) => {

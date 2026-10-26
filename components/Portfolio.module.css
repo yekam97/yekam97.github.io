@@ -1,4 +1,177 @@
-/* ---------- Next-step row under the carousel ---------- */
+.section {
+    padding: var(--section-pad-y) 0 0;
+}
+
+/* ---------- Floating field ---------- */
+
+.field {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--spacing-6);
+    row-gap: var(--spacing-8);
+    margin-top: var(--spacing-12);
+    padding-bottom: var(--spacing-8);
+}
+
+.item {
+    position: relative;
+    z-index: 1;
+}
+
+/* deliberate offsets: scattered, not a table */
+.p0 { grid-column: 1 / 7; }
+.p1 { grid-column: 8 / 13; margin-top: 90px; }
+.p2 { grid-column: 1 / 5; margin-top: -10px; }
+.p3 { grid-column: 5 / 9; margin-top: 80px; }
+.p4 { grid-column: 9 / 13; margin-top: 10px; }
+
+.float {
+    animation: drift var(--dur, 7s) ease-in-out var(--delay, 0s) infinite;
+}
+
+@keyframes drift {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    50% { transform: translateY(-14px) rotate(calc(var(--rot, 0deg) * 0.35)); }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card:hover,
+.card:focus-visible {
+    transform: translateY(-10px) scale(1.03);
+}
+
+.imgWrap {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--outline-strong);
+    background: var(--surface);
+    box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55);
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.card:hover .imgWrap,
+.card:focus-visible .imgWrap {
+    border-color: var(--accent);
+    box-shadow: 0 34px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--accent);
+}
+
+.imgWrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .imgWrap img {
+    transform: scale(1.06);
+}
+
+/* number sticker, top-left */
+.num {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    min-width: 34px;
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: center;
+    color: var(--bg);
+}
+
+/* round arrow, appears on hover */
+.go {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 1.1rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(8px) scale(0.8);
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card:hover .go,
+.card:focus-visible .go {
+    opacity: 1;
+    transform: none;
+}
+
+.cap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0 0.25rem;
+}
+
+.cat {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: var(--ff-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+}
+
+.more {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted);
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.card:hover .more {
+    color: var(--ink);
+    letter-spacing: 0.03em;
+}
+
+/* ---------- decorative floaters ---------- */
+
+.deco {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    animation: drift 8s ease-in-out infinite;
+}
+
+.deco svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.decoA { width: 56px; height: 56px; left: 49%; top: -2%; animation-delay: -2s; }
+.decoB { width: 40px; height: 40px; left: 3%; top: 46%; animation-delay: -4s; }
+.decoC { width: 46px; height: 46px; right: 4%; top: 52%; animation-delay: -1s; }
+.decoD { width: 90px; height: 28px; left: 42%; top: 71%; animation-delay: -5s; }
+
+/* ---------- next step ---------- */
 
 .nextRow {
     display: flex;
@@ -18,259 +191,44 @@
     max-width: 22ch;
 }
 
-/* ---------- Carousel: one project at a time ---------- */
+/* ---------- responsive ---------- */
 
-.carouselBand {
-    padding: var(--section-pad-y) 0;
-    transition: background-color 0.6s ease;
+@media (max-width: 1024px) {
+    .field {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--spacing-6);
+        row-gap: var(--spacing-8);
+    }
+
+    .p0, .p1, .p2, .p3, .p4 { grid-column: auto; margin-top: 0; }
+    .p1 { margin-top: 60px; }
+    .p3 { margin-top: 60px; }
+    .p4 { grid-column: 1 / 2; }
 }
 
-.carouselViewport {
-    position: relative;
-    /* Must match .container's max-width: the arrows are positioned
-       just outside this element's edges (see .navArrowPrev/Next), but
-       this element itself isn't wrapped in .container — without this,
-       it stretched to the full (unconstrained) viewport width on wide
-       screens, while the actual slide content stayed capped at 1600px
-       and centered, leaving the arrows stranded near the browser
-       window edges instead of next to the content. */
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
-.navArrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--outline-strong);
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 5;
-    transition: var(--transition);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-}
-
-.navArrow:hover {
-    background: var(--ink);
-    color: var(--bg);
-    border-color: var(--ink);
-}
-
-/* Flush with the (now width-capped) viewport's own edge rather than a
-   negative offset outside it — a fixed negative value looked fine
-   only when there happened to be extra margin beyond .carouselViewport
-   to push into; on any screen narrower than 1600px there wasn't, and
-   the arrows ended up clipped past the true edge of the window. */
-.navArrowPrev {
-    left: 0;
-}
-
-.navArrowNext {
-    right: 0;
-}
-
-.dotRow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: var(--spacing-10);
-}
-
-.slideCounter {
-    margin-left: var(--spacing-4);
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    font-variant-numeric: tabular-nums;
-}
-
-.dot2 {
-    width: 8px;
-    height: 8px;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: var(--outline-strong);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.dotActive {
-    width: 26px;
-    border-radius: 4px;
-}
-
-.storyGrid {
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: var(--spacing-12);
-    align-items: center;
-}
-
-.storyImage {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
-}
-
-.storyImage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.storyContent {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-6);
-    max-width: 560px;
-}
-
-.storyCategory {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-}
-
-.dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.storyTitle {
-    font-family: var(--ff-display);
-    font-optical-sizing: auto;
-    font-size: clamp(1.7rem, 3vw, 2.6rem);
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--ink);
-}
-
-.storyContext {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--secondary);
-}
-
-/* Cifras clave bajo el resumen: llenan la tarjeta con datos concretos */
-.storyStats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-4);
-    list-style: none;
-    padding: var(--spacing-4) 0;
-    margin: 0;
-    border-top: 1px solid var(--outline);
-    border-bottom: 1px solid var(--outline);
-}
-
-.storyStats li,
-.resultsGrid li {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.storyStats strong,
-.resultsGrid strong {
-    font-family: var(--ff-display);
-    font-size: 1.6rem;
-    font-weight: 600;
-    line-height: 1;
-}
-
-.storyStats span,
-.resultsGrid span {
-    font-size: 0.72rem;
-    line-height: 1.35;
-    color: var(--secondary);
-}
-
-.storyFooter {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-6);
-    margin-top: var(--spacing-2);
-}
-
-.storyYear {
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 600;
-}
-
-.storyCta {
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: var(--ff-body);
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    transition: var(--transition);
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-}
-
-.storyCta:hover {
-    gap: 0.6rem;
-}
-
-@media (max-width: 900px) {
-    .storyGrid {
+@media (max-width: 640px) {
+    .field {
         grid-template-columns: 1fr;
-        gap: var(--spacing-6);
+        row-gap: var(--spacing-10);
     }
 
-    .storyContent {
-        max-width: none;
+    .p0, .p1, .p2, .p3, .p4 { grid-column: 1; margin-top: 0; }
+    .p1 { margin-left: 8%; }
+    .p2 { margin-right: 8%; }
+    .p3 { margin-left: 8%; }
+    .p4 { margin-right: 8%; }
+
+    .decoB, .decoC { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .float,
+    .deco {
+        animation: none;
     }
 
-    .storyStats,
-    .resultsGrid {
-        gap: var(--spacing-3);
-    }
-
-    .storyStats strong,
-    .resultsGrid strong {
-        font-size: 1.3rem;
-    }
-
-    .navArrow {
-        width: 38px;
-        height: 38px;
-        /* Content stacks image-then-text on mobile — align the arrows
-           with the image's vertical center rather than the whole
-           (much taller) stacked slide. */
-        top: 130px;
-    }
-
-    .navArrowPrev {
-        left: 4px;
-    }
-
-    .navArrowNext {
-        right: 4px;
+    .card,
+    .imgWrap img {
+        transition: none;
     }
 }

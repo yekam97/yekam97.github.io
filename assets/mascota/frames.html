@@ -1,0 +1,84 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Mascota - hoja de fotogramas</title>
+<!--
+  Herramienta de revisión (no se despliega): dibuja cada pose en varios instantes
+  del ciclo con los mismos perfiles de movimiento que usa el sitio (lib/mascotaMotion.js).
+  Para verla hay que servirla junto a _motion.js y _rig-<pose>.json (copias de
+  lib/mascotaMotion.js y assets/mascota/<pose>/mascota-rig.json), y abrir  ?pose=salto|pensando|parado
+-->
+<style>
+  body{margin:0;background:#bdbdbd;color:#222;font:11px/1.2 system-ui,sans-serif}
+  .grid{display:grid;gap:4px;padding:4px}
+  .cell{background:#e6e6e6;border-radius:6px;padding:2px;text-align:center}
+  svg{width:100%;display:block}
+</style>
+<div class="grid" id="grid"></div>
+<script type="module">
+import { PROFILES } from './_motion.js';
+const pose = new URLSearchParams(location.search).get('pose') || 'salto';
+const CROPS = { salto: [20, 20, 1157, 1210], pensando: [250, 26, 741, 1125], parado: [300, 28, 710, 1194] };
+const COLS = { salto: 4, pensando: 5, parado: 6 };
+const SCENES = {
+  salto: [
+    ['t0', { t: 0 }], ['t.5', { t: 0.5 }], ['t1', { t: 1 }], ['t1.4', { t: 1.4 }],
+    ['t1.9', { t: 1.9 }], ['t2.4', { t: 2.4 }], ['hop 1', { t: 0.5, h: 1 }], ['hop .5', { t: 0.5, h: 0.5 }],
+  ],
+  pensando: [
+    ['t0', { t: 0 }], ['t.7', { t: 0.7 }], ['t1.4', { t: 1.4 }], ['t2.1', { t: 2.1 }], ['t2.8', { t: 2.8 }],
+    ['t3.5', { t: 3.5 }], ['hop 1', { t: 0, h: 1 }], ['hop .5', { t: 0, h: 0.5 }], ['t4.2', { t: 4.2 }], ['t5', { t: 5 }],
+  ],
+  parado: [
+    ['t.5', { t: 0.5 }], ['t1.5', { t: 1.5 }], ['wave 6.0', { t: 6.0, wave: 1 }], ['wave 6.15', { t: 6.15, wave: 1 }],
+    ['wave 6.3', { t: 6.3, wave: 1 }], ['wave 6.45', { t: 6.45, wave: 1 }], ['wave .5', { t: 6.3, wave: 0.5 }],
+    ['hop 1', { t: 0.4, h: 1 }], ['wave 6.6', { t: 6.6, wave: 1 }], ['wave 6.75', { t: 6.75, wave: 1 }],
+    ['wave 6.9', { t: 6.9, wave: 1 }], ['wave 7.05', { t: 7.05, wave: 1 }],
+  ],
+};
+const rig = await (await fetch(`./_rig-${pose}.json`)).json();
+const piv = Object.fromEntries(rig.parts.map((p) => [p.id, p.pivot]));
+const [cx, cy, cw, ch] = CROPS[pose];
+const grid = document.getElementById('grid');
+const qs = new URLSearchParams(location.search);
+const rot = (a, p) => `rotate(${a} ${p.x} ${p.y})`;
+const render = (label, tr, view) => {
+  const groups = rig.parts.map((part) => {
+    const paths = part.paths.map((p) => `<path d="${p.d}" fill="${p.fill}" transform="translate(${p.x} ${p.y})"/>`).join('');
+    return `<g transform="${tr[part.id] || ''}">${paths}</g>`;
+  }).join('');
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.innerHTML = `<div>${label}</div><svg viewBox="${view.join(' ')}" style="overflow:hidden">${groups}</svg>`;
+  grid.appendChild(cell);
+};
+// ?lab=1 : free pose lab. Query: part=<id>&angles=a,b,c (degrees) rendered one frame per angle; with=<id>:<deg> to hold another part
+if (qs.get('lab')) {
+  const cols = Number(qs.get('cols')) || 3;
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  const view = (qs.get('view') || `${cx},${cy},${cw},${ch}`).split(',').map(Number);
+  const angles = (qs.get('angles') || '0').split(',').map(Number);
+  const part = qs.get('part');
+  const fixed = (qs.get('with') || '').split(';').filter(Boolean).map((x) => x.split(':'));
+  for (const ang of angles) {
+    const tr = {};
+    for (const [id, deg] of fixed) tr[id] = rot(Number(deg), piv[id]);
+    if (qs.get('follow')) tr[qs.get('follow')] = (tr[qs.get('follow')] || '') + ' ' + rot(Number(qs.get('followdeg')), piv[qs.get('followabout')]);
+    if (part) tr[part] = (tr[part] ? tr[part] + ' ' : '') + rot(ang, piv[qs.get('about') || part]);
+    render(`${part} ${ang}`, tr, view);
+  }
+} else {
+const cols = Number(new URLSearchParams(location.search).get('cols')) || COLS[pose];
+grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+for (const [label, st] of SCENES[pose]) {
+  const out = PROFILES[pose]({ t: st.t, h: st.h || 0, wave: st.wave || 0, piv });
+  const groups = rig.parts.map((part) => {
+    const paths = part.paths.map((p) => `<path d="${p.d}" fill="${p.fill}" transform="translate(${p.x} ${p.y})"/>`).join('');
+    return `<g transform="${out[part.id] || ''}">${paths}</g>`;
+  }).join('');
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.innerHTML = `<div>${label}</div><svg viewBox="${cx} ${cy - 80} ${cw} ${ch + 160}" style="overflow:visible">${groups}</svg>`;
+  grid.appendChild(cell);
+}
+}
+</script>

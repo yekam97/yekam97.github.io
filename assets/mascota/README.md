@@ -29,8 +29,14 @@ no quede un hueco.
 - `components/MascotaRig.js` carga el JSON de la pose **bajo demanda** (cuando la mascota está a ~1500 px del viewport)
   y la anima con `requestAnimationFrame`: cada parte gira sobre su pivote y los hijos componen la rotación del padre
   (zapato → pierna, antebrazo → brazo, cabeza → torso). Con `prefers-reduced-motion` queda quieta.
-- Movimiento por pose: `parado` respira y saluda cada ~8 s (y más fuerte al pasar el mouse por un botón cercano),
-  `pensando` cambia de pierna y mueve la cabeza, `salto` flota y rebota.
+- El movimiento vive en `lib/mascotaMotion.js` (funciones puras: tiempo -> transformación por parte). Reglas:
+  un solo ciclo lento de flotación mueve todo y los miembros solo lo "arrastran" (rotación proporcional a la
+  velocidad vertical), en vez de oscilar cada uno por su cuenta; lo que toca algo (la mano en el mentón) usa
+  **exactamente la misma transformación** que eso, para no destapar lo que hay debajo; solo los gestos
+  (saludo, salto) son grandes y entran/salen suavizados.
+  - `parado`: respira y saluda cada ~8 s (brazo arriba, antebrazo oscilando); al pasar el mouse por un botón cercano saluda y rebota.
+  - `pensando`: flota, la pierna en alto y la otra se mecen suave; cabeza y mano se mueven juntas.
+  - `salto`: flota; brazos y piernas arrastran el movimiento; en el "hop" suben los brazos.
 - `components/Stage.js` compone la escena grande: blobs orgánicos + formas flotantes (`components/Shapes.js`) +
   chips tipo sticker detrás de la mascota, con parallax ligado al scroll.
 - El borde blanco tipo sticker es un filtro SVG (dilatar + blanco), así que sigue a cada miembro.
@@ -48,3 +54,10 @@ de cadera se puede abrir una cuña entre el torso y las piernas.
 El vectorizado se hizo con `vtracer` a partir de la ilustración original: recorte de fondo (relleno desde los bordes más
 las bolsas de fondo encerradas), segmentación por polígonos + reglas de color por parte, y trazado de cada parte por
 separado a ~62 % de la resolución. Si me pasas otra ilustración en la misma línea, genero su carpeta con el mismo formato.
+
+## Revisar el movimiento
+
+`frames.html` dibuja cada pose en varios instantes con los mismos perfiles que usa el sitio, para detectar gestos raros sin
+esperar a verlos en movimiento. No se despliega: para usarla, copia `lib/mascotaMotion.js` como `_motion.js` y cada
+`<pose>/mascota-rig.json` como `_rig-<pose>.json` junto a ella, sírvela con cualquier servidor estático y abre
+`frames.html?pose=salto|pensando|parado` (opcional `&cols=N`). Con `&lab=1&part=<id>&angles=a,b,c` prueba ángulos sueltos de una parte.

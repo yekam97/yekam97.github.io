@@ -8,8 +8,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 // almost immediately (0.15s) so it never sits half-faded.
 const spring = (delay) => ({
   type: 'spring',
-  stiffness: 150,
-  damping: 8,
+  stiffness: 140,
+  damping: 14,
   mass: 1,
   delay
 });

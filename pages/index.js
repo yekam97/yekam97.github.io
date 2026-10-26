@@ -7,7 +7,6 @@ import Portfolio from '../components/Portfolio';
 import Experience from '../components/Experience';
 import EducationSummary from '../components/EducationSummary';
 import Contact from '../components/Contact';
-import ClosingCta from '../components/ClosingCta';
 
 const Layout = dynamic(() => import('../components/Layout'), { ssr: false });
 
@@ -22,7 +21,6 @@ export default function HomePage() {
         <Portfolio />
         <Experience />
         <EducationSummary />
-        <ClosingCta />
         <Contact />
       </Layout>
     </>

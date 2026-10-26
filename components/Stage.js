@@ -99,7 +99,7 @@ export default function Stage({ pose = 'parado', variant = 'hero', chips = [], f
   const blobScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.78, 1.06, 0.9]);
   const blobRotate = useTransform(scrollYProgress, [0, 1], [-14, 14]);
   const blob2Scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 0.8, 1.05]);
-  const mascotY = useTransform(scrollYProgress, [0, 1], [26, -26]);
+  const mascotY = useTransform(scrollYProgress, [0, 1], [14, -14]);
 
   return (
     <div
