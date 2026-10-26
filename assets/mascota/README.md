@@ -1,7 +1,8 @@
 # Mascota Camilo — versión vectorial
 
 Vectorización a color de la mascota (pose de salto), lista para animar. Está fuera de `public/`,
-así que **no se despliega** hasta que copies lo que uses a `public/`.
+así que los archivos sueltos **no se publican** (si los quieres como URL, cópialos a `public/`),
+pero `mascota-rig.json` sí entra al sitio porque lo importa `components/MascotaRig.js`.
 
 ## Archivos
 
@@ -58,5 +59,13 @@ shoe.setAttribute('transform', `rotate(${legDeg} 620 700) rotate(${shoeDeg} 800 
 - Los brazos incluyen un "muñón" de piel escondido bajo la manga, así que pueden girar sin dejar hueco.
 - Rango cómodo: brazos hasta ±28°, cabeza ±14°, piernas/zapatos hasta ±12–16°. Con giros de cadera mayores
   se abre una cuña entre el torso y las piernas (no hay "pelvis" dibujada debajo de la camisa).
-- El trazado se hizo con `vtracer` a partir de la ilustración original; la imagen raster sigue siendo
-  `public/images/mascota-salto.webp` (versión sticker) y el original está en tu carpeta de adjuntos.
+- El trazado se hizo con `vtracer` a partir de la ilustración original.
+
+## Dónde se usa en el sitio
+
+`components/MascotaRig.js` importa `mascota-rig.json` (carga diferida: solo cuando la mascota está a
+~1500 px del viewport) y la anima. Se usa en la sección Contacto (`components/Contact.js`):
+flota en reposo y **salta al pasar el mouse/foco por el botón**. El borde blanco tipo sticker es un
+filtro SVG (dilatar + blanco), así que sigue a cada miembro. Con `prefers-reduced-motion` se muestra
+quieta. Como el JSON se importa desde aquí, **esta carpeta debe quedarse en el repo** aunque no se despliegue
+como archivos sueltos.

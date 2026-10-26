@@ -7,6 +7,7 @@ import { translations } from '@/lib/translations';
 import MagneticButton from './MagneticButton';
 import ArrowChip from './ArrowChip';
 import PopIn from './PopIn';
+import MascotaRig from './MascotaRig';
 import styles from './Contact.module.css';
 import ContactModal from './ContactModal';
 
@@ -51,26 +52,11 @@ const Contact = () => {
 
   return (
     <section id="contacto" className={styles.ctaSection}>
-      {/* Decorative sticker: elastic pop-in on scroll, idle float, and a
-          hop while the CTA is hovered/focused. */}
+      {/* Decorative vector mascot: elastic pop-in on scroll, then an
+          animated rig (idle sway) that hops while the CTA is hovered or
+          focused. */}
       <PopIn className={styles.mascot} fromX="14%" delay={0.35} amount={0.2}>
-        <motion.img
-          src="/images/mascota-salto.webp"
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-          className={styles.mascotImg}
-          animate={
-            hop
-              ? { y: [0, -38, 0], rotate: [0, -7, 4, 0] }
-              : { y: [0, -8, 0], rotate: [0, 1.5, 0] }
-          }
-          transition={
-            hop
-              ? { duration: 0.65, ease: 'easeOut' }
-              : { duration: 3.6, repeat: Infinity, ease: 'easeInOut' }
-          }
-        />
+        <MascotaRig hop={hop} className={styles.mascotImg} />
       </PopIn>
 
       <motion.div
