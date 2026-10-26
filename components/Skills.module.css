@@ -1,3 +1,50 @@
+/* Intro row: big illustrated stage on the left, short copy + buttons on the right */
+.intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: var(--spacing-12);
+    align-items: center;
+    margin-bottom: var(--spacing-12);
+}
+
+.introStage {
+    order: 1;
+    min-width: 0;
+}
+
+.introText {
+    order: 2;
+}
+
+.lead {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--secondary);
+    max-width: 32ch;
+    margin: var(--spacing-4) 0 var(--spacing-6);
+}
+
+.introCtas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+}
+
+@media (max-width: 1024px) {
+    .intro {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-8);
+    }
+
+    .introText {
+        order: 1;
+    }
+
+    .introStage {
+        order: 2;
+    }
+}
+
 .skillsGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

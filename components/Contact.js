@@ -1,13 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import MagneticButton from './MagneticButton';
 import ArrowChip from './ArrowChip';
-import PopIn from './PopIn';
-import MascotaRig from './MascotaRig';
+import Stage from './Stage';
 import styles from './Contact.module.css';
 import ContactModal from './ContactModal';
 
@@ -50,14 +49,26 @@ const Contact = () => {
   const t = (key) => translations[language]?.[key] || translations['es']?.[key] || key;
   const titleText = t('construyamos');
 
+  // "Iris" reveal: the dark panel opens as a circle that grows from its top
+  // centre while it scrolls into view (the reference site's expanding
+  // sections). Skipped with reduced motion.
+  const reduce = useReducedMotion();
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'start 30%'] });
+  const clipPath = useTransform(scrollYProgress, (v) => `circle(${(Math.min(v, 1) * 150).toFixed(1)}% at 50% 6%)`);
+
   return (
-    <section id="contacto" className={styles.ctaSection}>
-      {/* Decorative vector mascot: elastic pop-in on scroll, then an
-          animated rig (idle sway) that hops while the CTA is hovered or
-          focused. */}
-      <PopIn className={styles.mascot} fromX="14%" delay={0.35} amount={0.2}>
-        <MascotaRig hop={hop} className={styles.mascotImg} />
-      </PopIn>
+    <motion.section
+      id="contacto"
+      ref={sectionRef}
+      className={styles.ctaSection}
+      style={reduce ? undefined : { clipPath }}
+    >
+      {/* Big illustrated stage: the standing mascot waves hello and reacts
+          (a bigger wave) while the CTA is hovered or focused. */}
+      <div className={styles.stageBox}>
+        <Stage pose="parado" variant="contact" hop={hop} height="520px" />
+      </div>
 
       <motion.div
         className={styles.ctaContent}
@@ -82,6 +93,7 @@ const Contact = () => {
 
         <MagneticButton
           onClick={() => setIsModalOpen(true)}
+          data-path-end="true"
           className={styles.blackBtn}
           strength={0.3}
           onHoverStart={() => setHop(true)}
@@ -121,7 +133,7 @@ const Contact = () => {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

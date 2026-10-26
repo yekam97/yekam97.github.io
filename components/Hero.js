@@ -3,7 +3,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import { usePreloaderDone } from '@/lib/preloader';
 import MagneticButton from './MagneticButton';
-import ArrowChip from './ArrowChip';
+import SectionCta from './SectionCta';
+import Stage from './Stage';
 import Squiggle from './Squiggle';
 import Stats from './Stats';
 import styles from './Hero.module.css';
@@ -90,18 +91,15 @@ const Hero = () => {
         </motion.h1>
 
         <motion.p variants={itemVariants} className={styles.description}>
-          {language === 'es' ? (
-            'Diseñador industrial con pasión por la innovación, la estrategia y la creación de experiencias de usuario memorables. Transformo ideas en soluciones tangibles que combinan estética, funcionalidad e impacto real.'
-          ) : (
-            'Industrial designer passionate about innovation, strategy, and creating memorable user experiences. I transform ideas into tangible solutions that combine aesthetics, functionality, and real impact.'
-          )}
+          {language === 'es'
+            ? 'Diseñador industrial. Convierto ideas en productos, interfaces y experiencias memorables.'
+            : 'Industrial designer. I turn ideas into products, interfaces and memorable experiences.'}
         </motion.p>
 
         <motion.div variants={itemVariants} className={styles.ctaGroup}>
-          <MagneticButton href="#contacto" className="btn-neon">
-            {language === 'es' ? 'Enviar Mensaje' : 'Send Message'}
-            <ArrowChip />
-          </MagneticButton>
+          <SectionCta to="portfolio">
+            {language === 'es' ? 'Ver proyectos' : 'See projects'}
+          </SectionCta>
           <MagneticButton
             href="/cv-yeison-camilo-gamba.pdf"
             download
@@ -116,6 +114,18 @@ const Hero = () => {
           <Stats />
         </motion.div>
       </motion.div>
+
+      <div className={styles.stageCol}>
+        <Stage
+          pose="parado"
+          variant="hero"
+          chips={[
+            { label: language === 'es' ? 'Diseño industrial' : 'Industrial design', color: 'var(--accent-industrial)', x: 2, y: 14 },
+            { label: 'UX/UI', color: 'var(--accent-uxui)', x: 66, y: 28 },
+            { label: 'Branding', color: 'var(--accent-branding)', x: 60, y: 76 }
+          ]}
+        />
+      </div>
     </section>
   );
 };

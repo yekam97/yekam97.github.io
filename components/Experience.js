@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import Squiggle from './Squiggle';
+import SectionCta from './SectionCta';
+import Stage from './Stage';
 import styles from './Experience.module.css';
 
 // Hand-drawn wavy vertical line (in px, so it never gets stretched) that
@@ -240,14 +242,34 @@ const Experience = () => {
 
   return (
     <section id="experiencia" className="container section-padding">
-      <span className="label-md">{language === 'es' ? 'Cronología' : 'Timeline'}</span>
-      <h2 className="newsreader" style={{ fontSize: '3rem', marginBottom: 'var(--spacing-12)' }}>
-        {headingWords[0]}{' '}
-        <span className="squiggle-host">
-          {headingWords[1]}
-          <Squiggle />
-        </span>
-      </h2>
+      <div className={styles.header}>
+        <div className={styles.headerText}>
+          <span className="label-md">{language === 'es' ? 'Cronología' : 'Timeline'}</span>
+          <h2 className="newsreader" style={{ fontSize: '3rem' }}>
+            {headingWords[0]}{' '}
+            <span className="squiggle-host">
+              {headingWords[1]}
+              <Squiggle />
+            </span>
+          </h2>
+          <p className={styles.lead}>
+            {language === 'es'
+              ? 'Del diseño de producto a la gestión de innovación.'
+              : 'From product design to innovation management.'}
+          </p>
+        </div>
+        <div className={styles.headerStage}>
+          <Stage
+            pose="salto"
+            variant="experience"
+            height="min(460px, 60vh)"
+            chips={[
+              { label: language === 'es' ? '3+ años' : '3+ years', color: 'var(--accent-mentoring)', x: 4, y: 16 },
+              { label: language === 'es' ? '8 roles' : '8 roles', color: 'var(--accent-branding)', x: 66, y: 70 }
+            ]}
+          />
+        </div>
+      </div>
 
       {/* Milestones — one line each, quiet index-page rhythm */}
       <div className={styles.timeline} ref={timelineRef}>
@@ -327,6 +349,9 @@ const Experience = () => {
           ))}
         </div>
       </motion.div>
+      <div className={styles.nextRow}>
+        <SectionCta to="roles">{language === 'es' ? 'Ver estudios' : 'See education'}</SectionCta>
+      </div>
     </section>
   );
 };

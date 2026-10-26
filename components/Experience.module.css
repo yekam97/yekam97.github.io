@@ -1,3 +1,38 @@
+/* ---------- Header: short copy + big illustrated stage ---------- */
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-12);
+  align-items: center;
+  margin-bottom: var(--spacing-12);
+}
+
+.lead {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--secondary);
+  max-width: 30ch;
+  margin-top: var(--spacing-4);
+}
+
+.headerStage {
+  min-width: 0;
+}
+
+.nextRow {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: var(--spacing-12);
+}
+
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+}
+
 /* ---------- Milestone summary (default view) ---------- */
 
 .timeline {

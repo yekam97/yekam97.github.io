@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import SectionCta from './SectionCta';
+import Squiggle from './Squiggle';
+import Stage from './Stage';
 import styles from './Skills.module.css';
 
 // Small hand-drawn line icons — one per discipline, matching the site's
@@ -91,14 +95,52 @@ const restingTilt = [-2.5, 1.5, -1.5, 2.5];
 const Skills = () => {
   const { language } = useLanguage();
   const skillGroups = getSkillGroups(language);
+  const isEs = language === 'es';
+  // The thinking mascot reacts (nods / kicks) while the main button is hovered
+  const [hop, setHop] = useState(false);
 
   return (
     <section id="skills" className="container section-padding">
-      <div style={{ marginBottom: 'var(--spacing-12)' }}>
-        <span className="label-md">{language === 'es' ? 'Herramientas' : 'Tools'}</span>
-        <h2 className="newsreader" style={{ fontSize: '3rem', marginTop: 'var(--spacing-2)' }}>
-          {language === 'es' ? 'Habilidades y Stack' : 'Skills & Stack'}
-        </h2>
+      {/* Short copy + clear next steps, with a big illustrated stage beside it */}
+      <div className={styles.intro}>
+        <div className={styles.introText}>
+          <span className="label-md">{isEs ? 'Qué hago' : 'What I do'}</span>
+          <h2 className="newsreader" style={{ fontSize: '3rem', marginTop: 'var(--spacing-2)' }}>
+            {isEs ? 'Cuatro áreas, ' : 'Four areas, '}
+            <span className="squiggle-host">
+              {isEs ? 'una mirada' : 'one view'}
+              <Squiggle />
+            </span>
+            .
+          </h2>
+          <p className={styles.lead}>
+            {isEs
+              ? 'De la idea al producto: diseño, desarrollo y método.'
+              : 'From idea to product: design, development and method.'}
+          </p>
+          <div className={styles.introCtas}>
+            <SectionCta to="portfolio" onHoverStart={() => setHop(true)} onHoverEnd={() => setHop(false)}>
+              {isEs ? 'Ver proyectos' : 'See projects'}
+            </SectionCta>
+            <SectionCta to="experiencia" variant="outline">
+              {isEs ? 'Mi trayectoria' : 'My journey'}
+            </SectionCta>
+          </div>
+        </div>
+
+        <div className={styles.introStage}>
+          <Stage
+            pose="pensando"
+            variant="skills"
+            flip
+            hop={hop}
+            chips={[
+              { label: 'Figma', color: 'var(--accent-uxui)', x: 4, y: 20 },
+              { label: 'CAD', color: 'var(--accent-industrial)', x: 70, y: 12 },
+              { label: 'HTML + JS', color: 'var(--accent-software)', x: 66, y: 80 }
+            ]}
+          />
+        </div>
       </div>
 
       <motion.div

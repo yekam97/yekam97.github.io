@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
@@ -58,8 +58,13 @@ const cardVariants = {
 // A gentle, cursor-tracked 3D tilt — the card leans away from the
 // pointer like a diploma held up to the light, rather than just
 // lifting straight up.
-const RoleCard = ({ role, t }) => {
+const RoleCard = ({ role, t, language }) => {
   const cardRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  // Short by default (first sentence = the institution); the rest is one click away
+  const cut = role.description.indexOf('. ');
+  const short = cut === -1 ? role.description : role.description.slice(0, cut + 1);
+  const rest = cut === -1 ? '' : role.description.slice(cut + 2);
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
@@ -90,7 +95,12 @@ const RoleCard = ({ role, t }) => {
     >
       <span className={styles.facetLabel}>{role.category}</span>
       <h3 className={styles.facetTitle}>{role.title}</h3>
-      <p className={styles.facetDescription}>{role.description}</p>
+      <p className={styles.facetDescription}>{open && rest ? `${short} ${rest}` : short}</p>
+      {rest && (
+        <button type="button" className={styles.moreBtn} onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+          {open ? (language === 'es' ? 'Menos ▴' : 'Less ▴') : (language === 'es' ? 'Leer más ▾' : 'Read more ▾')}
+        </button>
+      )}
       {role.pdfUrl && (
         <a href={role.pdfUrl} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
           {t('ver_diploma')}
@@ -126,7 +136,7 @@ const Roles = () => {
           viewport={{ once: true, amount: 0.15 }}
         >
           {rolesData.map((role, idx) => (
-            <RoleCard key={idx} role={role} t={t} />
+            <RoleCard key={idx} role={role} t={t} language={language} />
           ))}
         </motion.div>
       </motion.div>

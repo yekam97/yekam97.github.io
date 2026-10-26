@@ -29,29 +29,25 @@
   line-height: 0.9;
 }
 
-/* Mascot sticker beside the CTA (desktop); stacks above the title on
+/* Big illustrated stage beside the CTA (desktop); stacks above the title on
    tablet/phone, where there's no free side space. */
-.mascot {
+.stageBox {
   position: absolute;
-  right: clamp(1rem, 7vw, 8rem);
-  bottom: calc(var(--spacing-16) + 5.5rem);
-  width: clamp(150px, 19vw, 290px);
+  right: clamp(0.5rem, 3vw, 4rem);
+  top: 50%;
+  transform: translateY(-52%);
+  width: clamp(300px, 32vw, 500px);
   z-index: 1;
   pointer-events: none;
 }
 
-.mascotImg {
-  width: 100%;
-  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
-  user-select: none;
-}
-
 @media (max-width: 1024px) {
-  .mascot {
+  .stageBox {
     position: relative;
     right: auto;
-    bottom: auto;
-    width: clamp(130px, 28vw, 200px);
+    top: auto;
+    transform: none;
+    width: min(86vw, 380px);
     margin-bottom: var(--spacing-4);
   }
 }

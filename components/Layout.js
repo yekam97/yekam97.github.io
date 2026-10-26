@@ -9,7 +9,8 @@ import ScrollProgress from './ScrollProgress';
 import Sticker from './Sticker';
 import LanguageToggle from './LanguageToggle';
 import MagneticButton from './MagneticButton';
-import ScrollMascot from './ScrollMascot';
+import ScrollPath from './ScrollPath';
+import { scrollToId } from '@/lib/scroll';
 import Preloader from './Preloader';
 
 export default function Layout({ children }) {
@@ -21,6 +22,7 @@ export default function Layout({ children }) {
   // It never hides near the top of the page, nor while keyboard focus is
   // inside it.
   const headerRef = useRef(null);
+  const mainRef = useRef(null);
   const [navHidden, setNavHidden] = useState(false);
 
   useEffect(() => {
@@ -47,18 +49,13 @@ export default function Layout({ children }) {
 
   const handleNavClick = (e) => {
     e.preventDefault();
-    const targetId = e.currentTarget.getAttribute('href').substring(1);
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      window.scrollTo({ top: targetElement.offsetTop - 90, behavior: 'smooth' });
-    }
+    scrollToId(e.currentTarget.getAttribute('href').substring(1));
   };
 
   return (
     <>
       <Preloader />
       <ScrollProgress />
-      <ScrollMascot />
 
       {/* Quiet paper-grain texture — replaces the old neon cursor glow /
           particle canvas with something that fits a warm, editorial page
@@ -156,8 +153,9 @@ export default function Layout({ children }) {
         </nav>
       </header>
 
-      <main style={{ position: 'relative', zIndex: 1 }}>
+      <main ref={mainRef} style={{ position: 'relative', zIndex: 1, overflowX: 'clip' }}>
         {children}
+        <ScrollPath mainRef={mainRef} />
       </main>
 
       <Sticker />

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import Squiggle from './Squiggle';
+import SectionCta from './SectionCta';
 import styles from './Portfolio.module.css';
 
 const getProjects = (language) => {
@@ -415,6 +416,14 @@ const Portfolio = () => {
                         plain "1 / 4" makes that immediately clear. */}
                     <span className={styles.slideCounter} aria-hidden="true">{active + 1} / {projects.length}</span>
                 </div>
+            </div>
+
+            {/* Next step: from the projects to the story behind them */}
+            <div className={`container ${styles.nextRow}`}>
+                <p className={styles.nextText}>
+                    {language === 'es' ? 'Detrás de cada proyecto hay un camino.' : 'Behind every project there is a path.'}
+                </p>
+                <SectionCta to="experiencia">{language === 'es' ? 'Ver trayectoria' : 'See journey'}</SectionCta>
             </div>
 
             {/* Panel deslizable con información del proyecto */}

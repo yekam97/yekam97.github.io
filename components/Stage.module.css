@@ -1,0 +1,130 @@
+.stage {
+    --stage-h: min(640px, 70vh);
+    position: relative;
+    width: 100%;
+    height: var(--stage-h);
+    isolation: isolate;
+}
+
+/* ---- blobs: big organic shapes behind everything ---- */
+.blob {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 112%;
+    aspect-ratio: 1;
+    margin: calc(-56% * 1) 0 0 -56%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blob2 {
+    width: 78%;
+    margin: -34% 0 0 -6%;
+    left: 50%;
+    top: 58%;
+}
+
+.blobSvg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ---- floating shapes ---- */
+.shape {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shapeSvg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    animation: stage-float 6s ease-in-out infinite;
+}
+
+@keyframes stage-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(6deg); }
+}
+
+/* ---- mascot ---- */
+.mascotBox {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.popin {
+    height: 94%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.mascot {
+    height: 100%;
+    aspect-ratio: var(--aspect);
+    filter: drop-shadow(0 22px 26px rgba(31, 27, 22, 0.22));
+}
+
+.dark .mascot {
+    filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.5));
+}
+
+/* ---- sticker chips ---- */
+.chip {
+    position: absolute;
+    z-index: 3;
+    transform-origin: center;
+}
+
+.chipFloat {
+    display: inline-block;
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius-pill);
+    background: #fff;
+    color: var(--ink);
+    border: 2px solid var(--chip, var(--primary));
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 10px 22px rgba(31, 27, 22, 0.14);
+    animation: stage-float 5s ease-in-out infinite;
+}
+
+@media (max-width: 1024px) {
+    .stage {
+        --stage-h: min(460px, 62vh);
+    }
+}
+
+@media (max-width: 640px) {
+    .stage {
+        --stage-h: 360px;
+    }
+
+    /* the jumping pose has its arms spread wide: keep it inside the screen */
+    .stage[data-pose='salto'] .popin {
+        height: 80%;
+    }
+
+    .chipFloat {
+        font-size: 0.6rem;
+        padding: 0.35rem 0.7rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shapeSvg,
+    .chipFloat {
+        animation: none;
+    }
+}

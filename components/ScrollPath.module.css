@@ -1,0 +1,57 @@
+.path {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: visible;
+}
+
+/* The full route, faint, so you can see where the thread is heading */
+.track {
+    fill: none;
+    stroke: rgba(31, 27, 22, 0.1);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 2 9;
+}
+
+/* The part that has been "drawn" so far */
+.draw {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.head {
+    fill: #fff;
+    stroke: var(--primary);
+    stroke-width: 4;
+}
+
+.pulse {
+    fill: var(--primary);
+    opacity: 0.25;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: path-pulse 1.8s ease-out infinite;
+}
+
+@keyframes path-pulse {
+    0% { transform: scale(0.5); opacity: 0.45; }
+    100% { transform: scale(1.7); opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .path {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pulse {
+        animation: none;
+    }
+}

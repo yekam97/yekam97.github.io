@@ -46,6 +46,11 @@
   --accent-software: #5B3FD6;
   --accent-software-tint: #E6E1F7;
 
+  /* Illustration-only colours (decorative shapes in the big stages) —
+     never used for text, so no contrast requirement */
+  --sun: #F4B400;
+  --coral: #FF6B4A;
+
   /* Border Radii — restrained, editorial (not pill-heavy) */
   --radius-lg: 6px;
   --radius-md: 4px;
