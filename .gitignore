@@ -31,3 +31,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original, uncompressed videos (the site uses the compressed copies in public/videos)
+/videos-originales/
