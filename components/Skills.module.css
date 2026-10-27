@@ -62,6 +62,11 @@
     transition: box-shadow var(--transition), filter var(--transition);
 }
 
+/* the AI card spans the whole row and lays its chips out in a wider flow */
+.skillCardWide {
+    grid-column: 1 / -1;
+}
+
 .skillCard[data-tone='green'] {
     background-color: var(--primary);
     color: var(--on-primary);

@@ -31,6 +31,13 @@ const icons = {
       <line x1="17" y1="25" x2="27" y2="25" />
     </svg>
   ),
+  ai: (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M13 5 L15.5 12.5 L23 15 L15.5 17.5 L13 25 L10.5 17.5 L3 15 L10.5 12.5 Z" />
+      <path d="M24 4 V9 M21.5 6.5 H26.5" />
+      <path d="M25 21 V27 M22 24 H28" />
+    </svg>
+  ),
   languages: (
     <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M5 7 H27 V21 H14 L8 27 V21 H5 Z" />
@@ -64,6 +71,16 @@ const getSkillGroups = (language) => {
       accent: 'branding',
       label: isEn ? 'LANGUAGES' : 'IDIOMAS',
       items: [isEn ? 'Spanish (Native)' : 'Español (Nativo)', isEn ? 'English (B2)' : 'Inglés (B2)']
+    },
+    // Full-width card under the four above: it has the longest list
+    {
+      icon: 'ai',
+      accent: 'software',
+      wide: true,
+      label: isEn ? 'ARTIFICIAL INTELLIGENCE' : 'INTELIGENCIA ARTIFICIAL',
+      items: isEn
+        ? ['Image generation', 'Video generation', 'Vibe coding', 'Prompt engineering', 'AI assistants & agents (Claude)', 'Workflow automation', 'AI-assisted concepting & rendering', 'AI image editing & retouching']
+        : ['Generación de imágenes', 'Generación de video', 'Vibe coding', 'Prompt engineering', 'Asistentes y agentes de IA (Claude)', 'Automatización de flujos', 'Conceptos y renders asistidos por IA', 'Edición y retoque con IA']
     }
   ];
 };
@@ -106,7 +123,7 @@ const Skills = () => {
         <div className={styles.introText}>
           <span className="label-md">{isEs ? 'Qué hago' : 'What I do'}</span>
           <h2 className="newsreader" style={{ fontSize: '3rem', marginTop: 'var(--spacing-2)' }}>
-            {isEs ? 'Cuatro áreas, ' : 'Four areas, '}
+            {isEs ? 'Cinco áreas, ' : 'Five areas, '}
             <span className="squiggle-host">
               {isEs ? 'una mirada' : 'one view'}
               <Squiggle />
@@ -115,8 +132,8 @@ const Skills = () => {
           </h2>
           <p className={styles.lead}>
             {isEs
-              ? 'De la idea al producto: diseño, desarrollo y método.'
-              : 'From idea to product: design, development and method.'}
+              ? 'De la idea al producto: diseño, desarrollo, IA y método.'
+              : 'From idea to product: design, development, AI and method.'}
           </p>
           <div className={styles.introCtas}>
             <SectionCta to="portfolio" onHoverStart={() => setHop(true)} onHoverEnd={() => setHop(false)}>
@@ -153,10 +170,10 @@ const Skills = () => {
         {skillGroups.map((group, idx) => (
           <motion.div
             key={idx}
-            className={styles.skillCard}
+            className={`${styles.skillCard} ${group.wide ? styles.skillCardWide : ''}`}
             data-tone={idx % 2 === 0 ? 'green' : 'red'}
             variants={cardVariants}
-            style={{ rotate: restingTilt[idx % restingTilt.length] }}
+            style={{ rotate: group.wide ? 0 : restingTilt[idx % restingTilt.length] }}
             whileHover={{ rotate: 0, scale: 1.045, y: -10 }}
             whileTap={{ rotate: 0, scale: 1.06, y: -6 }}
             transition={{ type: 'spring', stiffness: 320, damping: 22 }}
