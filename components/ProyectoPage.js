@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import BackLink from './BackLink';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
@@ -34,9 +34,9 @@ export default function ProyectoPage({ slug }) {
   return (
     <div className={`container ${subpage.page}`}>
       <div className={styles.top}>
-        <Link href="/#portfolio" className={subpage.back}>
+        <BackLink href="/#portfolio" className={subpage.back}>
           <span aria-hidden="true">←</span> {isEs ? 'Todos los proyectos' : 'All projects'}
-        </Link>
+        </BackLink>
         <span className={styles.category} style={{ color: accent }}>
           <span className={styles.dot} style={{ background: accent }} />
           {project.category}

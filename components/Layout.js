@@ -10,7 +10,9 @@ import Sticker from './Sticker';
 import LanguageToggle from './LanguageToggle';
 import MagneticButton from './MagneticButton';
 import ScrollPath from './ScrollPath';
+import BackFab from './BackFab';
 import { scrollToId } from '@/lib/scroll';
+import { trackReturnPoint, markInnerPage, restoreReturnPoint, clearReturnPoint } from '@/lib/returnPoint';
 import Preloader from './Preloader';
 import { usePreloaderDone, finishPreloader } from '@/lib/preloader';
 
@@ -70,10 +72,20 @@ export default function Layout({ children, subpage = false }) {
   useEffect(() => {
     if (subpage || !introDone) return undefined;
     const id = window.location.hash.slice(1);
-    if (!id) return undefined;
+    if (!id) return restoreReturnPoint(); // back from an inner page: the exact spot left
+    clearReturnPoint();
     const timer = setTimeout(() => scrollToId(id), 450);
     return () => clearTimeout(timer);
   }, [subpage, introDone]);
+
+  // Remember where on the home page an inner page was opened from, so "back" returns there.
+  useEffect(() => {
+    if (subpage) {
+      markInnerPage();
+      return undefined;
+    }
+    return trackReturnPoint();
+  }, [subpage]);
 
   return (
     <>
@@ -127,6 +139,7 @@ export default function Layout({ children, subpage = false }) {
       </main>
 
       <Sticker />
+      {subpage && <BackFab />}
 
       <style jsx>{`
         .nav-item {

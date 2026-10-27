@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import BackLink from './BackLink';
 import { motion } from 'framer-motion';
 import Squiggle from './Squiggle';
 import styles from './Subpage.module.css';
@@ -10,9 +10,9 @@ export default function SubpageHeader({ backHref, backLabel, label, titleStart, 
   return (
     <header className={styles.header}>
       <div className={styles.headerText}>
-        <Link href={backHref} className={styles.back}>
+        <BackLink href={backHref} className={styles.back}>
           <span aria-hidden="true">←</span> {backLabel}
-        </Link>
+        </BackLink>
         <motion.span
           className="label-md"
           initial={{ opacity: 0, y: 12 }}
