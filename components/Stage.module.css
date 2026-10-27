@@ -67,14 +67,27 @@
     align-items: flex-end;
 }
 
+/* Soft ground shadow as a plain gradient ellipse. It used to be a CSS
+   drop-shadow filter on the animated SVG, which the browser re-blurred every
+   frame (very slow without GPU acceleration). */
 .mascot {
+    position: relative;
+    isolation: isolate;
     height: 100%;
     aspect-ratio: var(--aspect);
-    filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.55));
 }
 
-.dark .mascot {
-    filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.4));
+.mascot::before {
+    content: '';
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: -3%;
+    height: 9%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
 }
 
 /* ---- sticker chips ---- */

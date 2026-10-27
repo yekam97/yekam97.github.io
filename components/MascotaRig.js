@@ -15,8 +15,12 @@ import { PROFILES, hopEnvelope } from '@/lib/mascotaMotion';
 // - Idle: a gentle float with limbs/head swaying. `hop` triggers a short
 //   reaction (jump / bounce / "idea!"), used by hover on a nearby button.
 // - Reduced motion: renders the still pose, no loop.
-// - The white "die-cut sticker" edge is an SVG filter (dilate + white), so
-//   it follows every limb as it moves.
+// - The white "die-cut sticker" edge is a layer of thick white strokes drawn
+//   behind the big shapes of every part (same transforms), so it follows each
+//   limb as it moves. It used to be an SVG filter (feMorphology), which the
+//   browser had to re-run on the CPU every frame and made slower machines/
+//   browsers lag.
+// - If frames are consistently slow the loop drops to ~30fps by itself.
 
 const LOADERS = {
   salto: () => import('@/assets/mascota/salto/mascota-rig.json'),
@@ -31,6 +35,10 @@ const CROPS = {
   pensando: [250, 26, 741, 1125],
   parado: [300, 28, 710, 1194],
 };
+// Only the larger shapes feed the sticker edge: tiny interior details can't
+// change the silhouette, and stroking hundreds of them would be wasted work.
+const EDGE_MIN = 250;
+
 export const MASCOT_ASPECT = {
   salto: CROPS.salto[2] / CROPS.salto[3],
   pensando: CROPS.pensando[2] / CROPS.pensando[3],
@@ -42,6 +50,7 @@ export default function MascotaRig({ pose = 'salto', hop = false, flip = false, 
   const uid = useId().replace(/:/g, '');
   const wrapRef = useRef(null);
   const groups = useRef({});
+  const edges = useRef({});
   const hopStart = useRef(-1);
   const [rig, setRig] = useState(null);
   const crop = CROPS[pose];
@@ -77,6 +86,7 @@ export default function MascotaRig({ pose = 'salto', hop = false, flip = false, 
     if (!rig || reduce) return undefined;
     const piv = Object.fromEntries(rig.parts.map((p) => [p.id, p.pivot]));
     const g = groups.current;
+    const e = edges.current;
     const profile = PROFILES[pose];
     const u = crop[3] / 1210; // normalises float/hop distances to the pose's size
 
@@ -88,13 +98,33 @@ export default function MascotaRig({ pose = 'salto', hop = false, flip = false, 
 
     const t0 = performance.now();
     let raf = 0;
+    // Adaptive frame rate: if the average frame takes > ~26ms (device/browser
+    // can't keep 60fps), only draw every other frame.
+    let last = t0;
+    let slowSum = 0;
+    let slowN = 0;
+    let half = false;
+    let skip = false;
     const frame = (now) => {
-      if (visible) {
+      const dt = now - last;
+      last = now;
+      if (!half && dt < 250) {
+        slowSum += dt;
+        slowN += 1;
+        if (slowN === 45) {
+          if (slowSum / slowN > 26) half = true;
+          slowSum = 0;
+          slowN = 0;
+        }
+      }
+      skip = half ? !skip : false;
+      if (visible && !skip) {
         const t = (now - t0) / 1000;
         const h = hopEnvelope(now, hopStart.current);
         const out = profile({ t, h, piv, u });
         for (const id in out) {
           if (g[id]) g[id].setAttribute('transform', out[id]);
+          if (e[id]) e[id].setAttribute('transform', out[id]);
         }
       }
       raf = requestAnimationFrame(frame);
@@ -108,7 +138,7 @@ export default function MascotaRig({ pose = 'salto', hop = false, flip = false, 
   }, [rig, reduce, pose, crop]);
 
   const [cx, cy, cw, ch] = crop;
-  const fid = `sticker-${uid}`;
+  const edge = Math.round(ch * 0.0115) * 2; // stroke width = 2 x the old dilate radius
 
   return (
     <div
@@ -126,27 +156,17 @@ export default function MascotaRig({ pose = 'salto', hop = false, flip = false, 
           role="presentation"
         >
           {outline && (
-            <defs>
-              <filter
-                id={fid}
-                filterUnits="userSpaceOnUse"
-                x={cx - cw * 0.5}
-                y={cy - ch * 0.15}
-                width={cw * 2}
-                height={ch * 1.3}
-                colorInterpolationFilters="sRGB"
-              >
-                <feMorphology in="SourceAlpha" operator="dilate" radius={Math.round(ch * 0.0115)} result="grow" />
-                <feFlood floodColor="#ffffff" result="white" />
-                <feComposite in="white" in2="grow" operator="in" result="edge" />
-                <feMerge>
-                  <feMergeNode in="edge" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+            <g stroke="#ffffff" strokeWidth={edge} strokeLinejoin="round" strokeLinecap="round">
+              {rig.parts.map((part) => (
+                <g key={part.id} ref={(el) => { edges.current[part.id] = el; }}>
+                  {part.paths.filter((p) => p.d.length > EDGE_MIN).map((p, i) => (
+                    <path key={i} d={p.d} fill="#ffffff" transform={`translate(${p.x} ${p.y})`} />
+                  ))}
+                </g>
+              ))}
+            </g>
           )}
-          <g filter={outline ? `url(#${fid})` : undefined}>
+          <g>
             {rig.parts.map((part) => (
               <g key={part.id} data-part={part.id} ref={(el) => { groups.current[part.id] = el; }}>
                 {part.paths.map((p, i) => (
