@@ -27,31 +27,24 @@
   z-index: 1;
 }
 
-/* Large, semi-transparent outline word sitting behind the headline —
-   purely decorative, never intercepts clicks, never covers the copy
-   (lower z-index + transparent fill, only a faint stroke). */
+/* Large outline wordmark on its own row below the hero content: it used to sit
+   behind the headline and the green blob, which made it unreadable. Purely
+   decorative: no clicks, transparent fill, only a faint stroke. */
 .ghostWord {
-  position: absolute;
-  top: 48%;
-  left: -1%;
-  transform: translateY(-50%);
+  grid-column: 1 / -1;
+  display: block;
+  text-align: center;
   font-family: var(--ff-display);
   font-weight: 600;
-  font-size: clamp(6rem, 17vw, 12.5rem);
-  line-height: 1;
+  font-size: clamp(3.5rem, 12vw, 10.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
   color: transparent;
   -webkit-text-stroke: 1.5px var(--outline-strong);
   white-space: nowrap;
-  z-index: 0;
+  margin-top: calc(var(--spacing-4) * -1);
   pointer-events: none;
   user-select: none;
-}
-
-@media (max-width: 1024px) {
-  .ghostWord {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 }
 
 @media (max-width: 640px) {

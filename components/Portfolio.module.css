@@ -171,26 +171,6 @@
 .decoC { width: 46px; height: 46px; right: 4%; top: 52%; animation-delay: -1s; }
 .decoD { width: 90px; height: 28px; left: 42%; top: 71%; animation-delay: -5s; }
 
-/* ---------- next step ---------- */
-
-.nextRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-6);
-    flex-wrap: wrap;
-    padding-top: var(--spacing-12);
-}
-
-.nextText {
-    font-family: var(--ff-display);
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 500;
-    color: var(--ink);
-    line-height: 1.2;
-    max-width: 22ch;
-}
-
 /* ---------- responsive ---------- */
 
 @media (max-width: 1024px) {

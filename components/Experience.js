@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import Squiggle from './Squiggle';
-import SectionCta from './SectionCta';
 import PageCta from './PageCta';
 import Stage from './Stage';
 import styles from './Experience.module.css';
@@ -163,9 +162,7 @@ const Experience = () => {
       <div className={styles.nextRow}>
         <PageCta href="/trayectoria/">
           {language === 'es' ? 'Ver trayectoria completa' : 'See full trajectory'}
-        </PageCta>
-        <SectionCta to="roles" variant="outline">{language === 'es' ? 'Ver estudios' : 'See education'}</SectionCta>
-      </div>
+        </PageCta>      </div>
     </section>
   );
 };

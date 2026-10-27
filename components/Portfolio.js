@@ -6,7 +6,6 @@ import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/lib/translations';
 import { getProjects } from '@/lib/projects';
 import Squiggle from './Squiggle';
-import SectionCta from './SectionCta';
 import { Sparkle, Plus, Ring, Wave } from './Shapes';
 import styles from './Portfolio.module.css';
 
@@ -76,14 +75,6 @@ export default function Portfolio() {
             );
           })}
         </div>
-      </div>
-
-      {/* Next step: from the projects to the story behind them */}
-      <div className={`container ${styles.nextRow}`}>
-        <p className={styles.nextText}>
-          {isEs ? 'Detrás de cada proyecto hay un camino.' : 'Behind every project there is a path.'}
-        </p>
-        <SectionCta to="experiencia">{isEs ? 'Ver trayectoria' : 'See journey'}</SectionCta>
       </div>
     </section>
   );
