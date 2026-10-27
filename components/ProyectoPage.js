@@ -23,7 +23,13 @@ export default function ProyectoPage({ slug }) {
   const next = projects[(idx + 1) % projects.length];
   const [shot, setShot] = useState(0);
   const accent = `var(--accent-${project.accent})`;
-  const count = project.images.length;
+  // Galería: el video del proyecto (si tiene) va primero, luego las imágenes
+  const media = [
+    ...(project.video ? [{ type: 'video', ...project.video }] : []),
+    ...project.images.map((src, i) => ({ type: 'image', src, caption: project.captions?.[i] })),
+  ];
+  const item = media[Math.min(shot, media.length - 1)];
+  const count = media.length;
 
   return (
     <div className={`container ${subpage.page}`}>
@@ -48,22 +54,28 @@ export default function ProyectoPage({ slug }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35 }}
           >
-            <img src={project.images[shot]} alt={project.captions?.[shot] || project.title} />
+            {item.type === 'video' ? (
+              <video src={item.src} poster={item.poster} controls playsInline preload="metadata" aria-label={item.caption || project.title} />
+            ) : (
+              <img src={item.src} alt={item.caption || project.title} />
+            )}
           </motion.div>
-          {project.captions?.[shot] && <p className={styles.caption}>{project.captions[shot]}</p>}
+          {item.caption && <p className={styles.caption}>{item.caption}</p>}
           {count > 1 && (
-            <div className={styles.thumbs} role="tablist" aria-label={isEs ? 'Imágenes del proyecto' : 'Project images'}>
-              {project.images.map((src, i) => (
+            <div className={styles.thumbs} role="tablist" aria-label={isEs ? 'Imágenes y video del proyecto' : 'Project images and video'}>
+              {media.map((m, i) => (
                 <button
-                  key={src}
+                  key={m.src}
                   type="button"
                   role="tab"
                   aria-selected={i === shot}
+                  aria-label={m.type === 'video' ? (isEs ? 'Ver el video' : 'Watch the video') : undefined}
                   className={`${styles.thumb} ${i === shot ? styles.thumbActive : ''}`}
                   style={i === shot ? { borderColor: accent } : undefined}
                   onClick={() => setShot(i)}
                 >
-                  <img src={src} alt="" loading="lazy" />
+                  <img src={m.type === 'video' ? m.poster : m.src} alt="" loading="lazy" />
+                  {m.type === 'video' && <span className={styles.play} aria-hidden="true">▶</span>}
                 </button>
               ))}
             </div>

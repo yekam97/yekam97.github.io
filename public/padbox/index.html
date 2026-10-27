@@ -63,6 +63,7 @@
   ul.list li { margin: 4px 0; }
 
   .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #0E1014; }
   figure { margin: 0; }
   figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
 
@@ -122,6 +123,16 @@
     <div class="shot"><img src="captura-musica.png" alt="PadBox en modo Música con el preset Batería rock" width="1672" height="1196"></div>
   </div>
 </div>
+
+<section id="video">
+  <div class="wrap">
+    <h2>PadBox en 30 segundos</h2>
+    <p class="sub">Con sonido: la música está hecha con los sonidos de la propia app.</p>
+    <div class="shot video-frame">
+      <video src="padbox-promo.mp4" poster="padbox-promo-portada.jpg" controls playsinline preload="metadata" width="1920" height="1080" aria-label="Video promocional de PadBox"></video>
+    </div>
+  </div>
+</section>
 
 <section>
   <div class="wrap">
