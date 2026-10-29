@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PadBox — Política de privacidad</title>
+<meta name="description" content="Política de privacidad de PadBox: la app no recoge, no envía ni comparte datos personales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..650&family=Inter:wght@400..650&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #E4E4E4; --surface: #FFFFFF; --ink: #1F1B16; --secondary: #4A423A; --muted: #6B6152; --outline: rgba(31, 27, 22, 0.14); --primary: #AE3D0D; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 Inter, system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+  a { color: var(--primary); }
+  .back { color: var(--secondary); text-decoration: none; font-size: 15px; }
+  h1 { font-family: Fraunces, serif; font-weight: 600; font-size: clamp(32px, 5vw, 46px); line-height: 1.1; margin: 22px 0 6px; }
+  h2 { font-family: Fraunces, serif; font-weight: 600; font-size: 24px; margin: 34px 0 8px; }
+  .date { color: var(--muted); font-size: 15px; margin: 0 0 24px; }
+  .card { background: var(--surface); border: 1px solid var(--outline); border-radius: 18px; padding: 22px 26px; }
+  p, li { color: var(--secondary); }
+  ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  hr { border: 0; border-top: 1px solid var(--outline); margin: 44px 0 24px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← PadBox</a>
+  <h1>Política de privacidad de PadBox</h1>
+  <p class="date">Última actualización: 29 de octubre de 2026</p>
+
+  <div class="card">
+    <p><strong>En resumen:</strong> PadBox no recoge, no envía y no comparte ningún dato personal. Funciona por completo en tu computador y no se conecta a internet.</p>
+  </div>
+
+  <h2>Qué datos usa PadBox</h2>
+  <ul>
+    <li><strong>Tu configuración</strong> (presets, colores, notas de los pads, opciones): se guarda solo en tu computador, en el archivo <code>padbox-config.json</code>. Nunca sale de tu equipo.</li>
+    <li><strong>Los sonidos que agregas</strong>: PadBox guarda una copia en su carpeta «Sonidos» de tu computador para que sigan funcionando si mueves el original. No se envían a ningún lado.</li>
+    <li><strong>Tu controlador MIDI</strong>: PadBox lee las notas que mandan tus pads para saber cuál tocaste y, en los modelos compatibles, cambia el color de los pads. Esa información no se guarda ni se envía.</li>
+    <li><strong>Atajos de teclado</strong>: en el modo Oficina, PadBox simula las teclas que tú asignaste a cada pad (por ejemplo, Ctrl + C), solo cuando tocas ese pad. No registra lo que escribes ni lee tu teclado.</li>
+  </ul>
+
+  <h2>Lo que PadBox no hace</h2>
+  <ul>
+    <li>No tiene cuentas ni pide registrarse.</li>
+    <li>No usa analítica, publicidad ni rastreadores.</li>
+    <li>No se conecta a internet. Los únicos enlaces web son los que tú abras, como un pad configurado para abrir una página o un enlace a esta página.</li>
+  </ul>
+
+  <h2>Cómo borrar tus datos</h2>
+  <p>Desinstala PadBox o borra su archivo de configuración y su carpeta «Sonidos». En la versión de la Microsoft Store están en <code>%LOCALAPPDATA%\PadBox</code>; en la versión portable, junto a <code>PadBox.exe</code>.</p>
+
+  <h2>Contacto</h2>
+  <p>Si tienes preguntas sobre esta política, abre un reporte en <a href="https://github.com/yekam97/PadBox/issues">github.com/yekam97/PadBox/issues</a>.</p>
+
+  <hr>
+  <p lang="en"><strong>English:</strong> PadBox does not collect, send or share any personal data. It runs entirely on your computer and does not connect to the internet. Your settings and the sounds you add are stored only on your device. MIDI input is read only to react to your pads, and Office mode only simulates the shortcuts you assign, when you press that pad.</p>
+</main>
+</body>
+</html>
