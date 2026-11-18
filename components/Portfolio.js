@@ -62,6 +62,7 @@ export default function Portfolio() {
                     <span className={styles.imgWrap}>
                       <img src={project.image} alt={project.title} loading="lazy" />
                       <span className={styles.num} style={{ background: accent }}>{String(i + 1).padStart(2, '0')}</span>
+                      {project.badge && <span className={styles.badge}>{project.badge}</span>}
                       <span className={styles.go} aria-hidden="true">→</span>
                     </span>
                     <span className={styles.cap}>

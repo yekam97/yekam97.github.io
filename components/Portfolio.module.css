@@ -77,6 +77,23 @@
     transform: scale(1.06);
 }
 
+/* "published" label, bottom-left of the image */
+.badge {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(14, 16, 20, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(6px);
+}
+
 /* number sticker, top-left */
 .num {
     position: absolute;

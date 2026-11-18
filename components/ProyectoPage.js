@@ -96,6 +96,12 @@ export default function ProyectoPage({ slug }) {
             </ul>
           )}
 
+          {project.badge && (
+            <p className={styles.published}>
+              <span aria-hidden="true">✓</span> {project.badge}
+            </p>
+          )}
+
           {project.links && (
             <div className={styles.links}>
               {project.links.map((l) => (
@@ -118,7 +124,7 @@ export default function ProyectoPage({ slug }) {
         <div className={styles.more}>
           {project.details && (
             <section>
-              <h2 className={styles.h2}>{t('detalles')}</h2>
+              <h2 className={styles.h2}>{project.detailsTitle || t('detalles')}</h2>
               <ul className={subpage.bullets}>
                 {project.details.map((d, i) => (
                   <li key={i}>{d}</li>
@@ -137,6 +143,44 @@ export default function ProyectoPage({ slug }) {
             </section>
           )}
         </div>
+      )}
+
+      {project.apps && (
+        <section className={styles.apps}>
+          <h2 className={styles.h2}>{isEs ? 'Más apps que he desarrollado' : 'More apps I have built'}</h2>
+          <div className={styles.appList}>
+            {project.apps.map((app) => (
+              <article key={app.name} className={styles.app}>
+                <img className={styles.appImg} src={app.image} alt={`${app.name}: ${app.kind}`} loading="lazy" />
+                <div className={styles.appBody}>
+                  <span className={styles.appStatus} style={{ color: accent }}>{app.status}</span>
+                  <h3 className={styles.appName}>{app.name}</h3>
+                  <p className={styles.appKind}>{app.kind}</p>
+                  <p className={styles.appText}>{app.description}</p>
+                  <ul className={subpage.bullets}>
+                    {app.points.map((pt, i) => (
+                      <li key={i}>{pt}</li>
+                    ))}
+                  </ul>
+                  <div className={styles.tags}>
+                    {app.technologies.map((tag, i) => (
+                      <span key={i} className={styles.tag}>{tag}</span>
+                    ))}
+                  </div>
+                  {app.links && (
+                    <div className={styles.links}>
+                      {app.links.map((l) => (
+                        <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn-neon">
+                          {l.label} →
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       )}
 
       <div className={styles.nextRow}>

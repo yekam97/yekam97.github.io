@@ -218,6 +218,100 @@
     color: var(--muted);
 }
 
+/* Sello de "publicada" bajo los datos del proyecto */
+.published {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+
+.published span {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    color: var(--bg);
+    background: var(--primary);
+}
+
+/* Otras apps de la misma familia */
+.apps {
+    margin-top: var(--spacing-16);
+    padding-top: var(--spacing-8);
+    border-top: 1px solid var(--outline);
+}
+
+.appList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12);
+}
+
+.app {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--spacing-8);
+    align-items: center;
+}
+
+.appImg {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--outline);
+    background: var(--surface);
+}
+
+.appBody {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-4);
+}
+
+.appStatus {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.appName {
+    font-family: var(--ff-display);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.05;
+    color: var(--ink);
+}
+
+.appKind {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.appText {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--secondary);
+}
+
+@media (max-width: 1024px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 1024px) {
     .grid,
     .more {
